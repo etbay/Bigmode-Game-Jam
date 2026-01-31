@@ -245,7 +245,12 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         {
             float targetSpeed = _state.Stance is Stance.Stand ? walkSpeed : crouchSpeed;
             float response = _state.Stance is Stance.Stand ? walkResponse : crouchResponse;
-            currentVelocity = Vector3.Lerp(currentVelocity, groundedMovement * targetSpeed, 1f - Mathf.Exp(-response * deltaTime));
+            float currentSpeed = currentVelocity.magnitude;
+            Vector3 desiredDir = groundedMovement.sqrMagnitude > 0.0001f ? groundedMovement.normalized : Vector3.zero;
+
+            currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed * groundedMovement.magnitude, 1f - Mathf.Exp(-response * deltaTime));
+            currentVelocity = desiredDir * currentSpeed;
+            //currentVelocity = Vector3.Lerp(currentVelocity, groundedMovement * targetSpeed, 1f - Mathf.Exp(-response * deltaTime));
         }
     }
 
