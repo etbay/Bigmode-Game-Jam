@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class roboyAI : MonoBehaviour
+public class RoboyAI : MonoBehaviour
 {
     Vector3 initialPos;
     Vector3 yPos;
@@ -17,10 +17,10 @@ public class roboyAI : MonoBehaviour
     void FixedUpdate()
     {
         if (!disrupted)
-            move();
+            Move();
     }
 
-    void move()
+    void Move()
     {
         yPos = transform.position.y * Vector3.up;
         transform.position = (Mathf.Sin(Time.fixedTime) * amplitude * direction) + (initialPos.x * Vector3.right) + (initialPos.z * Vector3.right) + yPos;

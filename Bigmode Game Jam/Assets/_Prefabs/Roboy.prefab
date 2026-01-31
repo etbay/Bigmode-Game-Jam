@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8097679796423917143}
   - component: {fileID: 9060339229742646310}
   - component: {fileID: 6929654540016064642}
+  - component: {fileID: 1550998015017761073}
   m_Layer: 0
   m_Name: Roboy
   m_TagString: Untagged
@@ -158,3 +159,15 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 64
   m_CollisionDetection: 0
+--- !u!114 &1550998015017761073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8317558886544349352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0af6cf9622cd1f4ea6ef40ec1d06efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Destructible

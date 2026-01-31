@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class droneAI : MonoBehaviour
+public class DroneAI : MonoBehaviour
 {
     Vector3 initialPos;
     public Transform transform;
@@ -11,13 +11,13 @@ public class droneAI : MonoBehaviour
         initialPos = transform.position;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        move();
+        Move();
     }
 
-    void move()
+    void Move()
     {
-        transform.position = initialPos + Mathf.Sin(Time.time) * amplitude * direction;
+        transform.position = initialPos + Mathf.Sin(Time.fixedTime) * amplitude * direction;
     }
 }
