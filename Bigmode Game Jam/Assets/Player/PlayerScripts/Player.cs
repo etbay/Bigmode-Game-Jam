@@ -53,9 +53,9 @@ public class Player : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
-        if (escaped && Mouse.current.leftButton.wasPressedThisFrame)// If escaped, allow refocus on left mouse click
+        // If escaped, allow refocus on left mouse click
+        if (escaped && Mouse.current.leftButton.wasPressedThisFrame)
         {
-            
             escaped = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -73,7 +73,6 @@ public class Player : MonoBehaviour
         //get chracterinput and update
         var characterInput = new CharacterInput
         {
-            
             Rotation = playerCamera.transform.rotation,
             Move = input.Move.ReadValue<Vector2>(),
             Sprint = input.Sprint.IsPressed(),
@@ -90,10 +89,7 @@ public class Player : MonoBehaviour
         playerCharacter.UpdateInput(characterInput);
         playerCharacter.UpdateBody(deltaTime);
 
-
-
-
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         if (Keyboard.current.tKey.wasPressedThisFrame)
         {
             Debug.Log("Teleport");
@@ -104,20 +100,13 @@ public class Player : MonoBehaviour
             }
         }
 
-
         if (input.Restart.WasPressedThisFrame())
         {
             _inputActions.Disable();
             string currentSceneName = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(currentSceneName);
         }
-
-
-
-#endif
-
-
-
+        #endif
     }
 
     private void LateUpdate()
@@ -131,8 +120,4 @@ public class Player : MonoBehaviour
         cameraSpring.UpdateSpring(deltaTime, cameraTarget.up);
         cameraLean.UpdateLean(deltaTime ,state.Stance is Stance.Slide ,state.Acceleration , cameraTarget.up);
     }
-
-    
-
-
 }
