@@ -59,12 +59,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     [SerializeField] private float mantlStepHeight = 2f;
 
     [Header("Sprint Turning (Realism)")]
-    [Tooltip("How much speed you keep during a turn. 0 = Full stop on sharp turns, 1 = No speed loss.")]
-    [SerializeField] private float turnMomentumRetention = 0.5f;
     [SerializeField] private float sprintDeceleration = 50f;
-    [SerializeField] private float sprintRecoveryAcceleration = 60f; 
-    [SerializeField] private float minTurnAngleForSpeedLoss = 10f;
-    [SerializeField] private float maxTurnAngleForFullStop = 150f;
+    [SerializeField] private float sprintRecoveryAcceleration = 60f;
 
     #endregion
 
@@ -121,7 +117,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region Initialization & Input
     public void Initialize()
     {
-        _state.Stance = Stance.Stand;
+        _state.Stance = Stance.Slide;
         _lastState = _state;
         _uncrouchOverLapResults = new Collider[8];
         motor.CharacterController = this;
@@ -218,7 +214,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         bool moving = groundedMovement.sqrMagnitude > 0f;
         bool crouching = _state.Stance is Stance.Crouch;
         bool stanceTransition = _lastState.Stance is Stance.Stand || !_lastState.Grounded;
-        return moving && crouching && stanceTransition && currentVelocity.magnitude > slideEndSpeed;
+        
+        return moving && stanceTransition && currentVelocity.magnitude > slideEndSpeed;
     }
 
     private void StartSlide(ref Vector3 currentVelocity)
@@ -248,7 +245,12 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         {
             float targetSpeed = _state.Stance is Stance.Stand ? walkSpeed : crouchSpeed;
             float response = _state.Stance is Stance.Stand ? walkResponse : crouchResponse;
-            currentVelocity = Vector3.Lerp(currentVelocity, groundedMovement * targetSpeed, 1f - Mathf.Exp(-response * deltaTime));
+            float currentSpeed = currentVelocity.magnitude;
+            Vector3 desiredDir = groundedMovement.sqrMagnitude > 0.0001f ? groundedMovement.normalized : Vector3.zero;
+
+            currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed * groundedMovement.magnitude, 1f - Mathf.Exp(-response * deltaTime));
+            currentVelocity = desiredDir * currentSpeed;
+            //currentVelocity = Vector3.Lerp(currentVelocity, groundedMovement * targetSpeed, 1f - Mathf.Exp(-response * deltaTime));
         }
     }
 
@@ -258,30 +260,6 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         float currentSpeed = currentVelocity.magnitude;
         Vector3 desiredDir = groundedMovement.normalized;
         Vector3 currentDir = currentVelocity.sqrMagnitude > 0.0001f ? currentVelocity.normalized : desiredDir;
-
-        //PROJECT TO 2D PLANE
-        Vector3 planarDesired = Vector3.ProjectOnPlane(desiredDir, motor.CharacterUp).normalized;
-        Vector3 planarCurrent = Vector3.ProjectOnPlane(currentDir, motor.CharacterUp).normalized;
-
-        float turnAngle = 0f;
-        if (planarDesired.sqrMagnitude > 0f && planarCurrent.sqrMagnitude > 0f)
-        {
-            turnAngle = Vector3.Angle(planarCurrent, planarDesired);
-        }
-
-        //PAUSE
-        if (turnAngle > maxTurnAngleForFullStop)
-        {
-            //float turnSeverity = Mathf.InverseLerp(90f, maxTurnAngleForFullStop, turnAngle);
-            //// Force speed down to near-zero on sharp 180s
-            //currentSpeed = Mathf.Lerp(currentSpeed, 0.1f, turnSeverity);
-        }
-        else if (turnAngle > minTurnAngleForSpeedLoss)
-        {
-            turnMomentumRetention = 1;
-            //float turnSeverity = Mathf.InverseLerp(minTurnAngleForSpeedLoss, 90f, turnAngle);
-            //currentSpeed *= Mathf.Pow(Mathf.Lerp(1f, turnMomentumRetention, turnSeverity), 2f);
-        }
 
         //RECOVERY
         if (currentSpeed < walkSpeed * 0.9f)
