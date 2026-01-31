@@ -15,7 +15,7 @@ public class PlayerAttackSystem : MonoBehaviour
     {
         if (_reqestedAttack)
         {
-            Debug.Log("Attack requested");
+            //Debug.Log("Attack requested");
             // Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
             // if (Physics.Raycast(ray,out var hitInfo, 100))
             // {
