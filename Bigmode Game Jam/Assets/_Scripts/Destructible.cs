@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Destructible : MonoBehaviour
 {
-    void Kill()
+    public void Kill()
     {
         // Create an explosion partical effect
         Destroy(gameObject);
