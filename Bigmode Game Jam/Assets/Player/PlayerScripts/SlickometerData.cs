@@ -12,4 +12,5 @@ public static class SlickometerData
     public static float BaseSlickDrainRate { get; } = 0.2f;
     public static float CurrentSlickDrainRate { get; set; } = 0.2f;
     public static float DestructibleSlickGain { get; } = 0.5f;
+    public static float CappedSpeed { get; } = 30f;
 }

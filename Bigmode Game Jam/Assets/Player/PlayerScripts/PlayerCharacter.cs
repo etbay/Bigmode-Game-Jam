@@ -168,8 +168,10 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         _state.Acceleration = Vector3.zero;
         if (isSpeedCapped)
         {
-            currentVelocity.x = Mathf.Clamp(currentVelocity.x, 0f, 30f);
-            currentVelocity.z = Mathf.Clamp(currentVelocity.z, 0f, 30f);
+            Vector3 planarVelocity = new Vector3(currentVelocity.x, 0f, currentVelocity.z);
+            planarVelocity = Vector3.ClampMagnitude(planarVelocity, SlickometerData.CappedSpeed);
+            currentVelocity.x = planarVelocity.x;
+            currentVelocity.z = planarVelocity.z;
         }
 
         if (motor.GroundingStatus.IsStableOnGround)
