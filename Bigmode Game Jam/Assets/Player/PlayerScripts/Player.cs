@@ -47,7 +47,6 @@ public class Player : MonoBehaviour
         cameraLean.Initialize();
     }
 
-
     private void OnDestroy()
     {
         _inputActions.Dispose();
@@ -57,8 +56,9 @@ public class Player : MonoBehaviour
     void Update()
     {
         Debug.Log(slickValue);
-        slickValue -= Time.deltaTime * 0.5f;
+        slickValue -= Time.deltaTime * 0.2f;
         slickValue = Mathf.Clamp(slickValue, 1f, 3f);
+        playerCharacter.isSpeedCapped = slickValue <= 1f;
         playerCharacter.speedBoostMultiplier = slickValue;
 
         var input = _inputActions.Player;
