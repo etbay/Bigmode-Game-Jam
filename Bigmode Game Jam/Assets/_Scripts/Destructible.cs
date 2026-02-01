@@ -1,10 +1,33 @@
+using System.Collections;
+using System.Diagnostics;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class Destructible : MonoBehaviour
 {
-    public void Kill()
+    private int order = 0;
+    private bool dead = false;
+    public void Kill(int num)
     {
-        // Create an explosion partical effect
+        dead = true;
+        if (Timeslow.IsSlowed)
+        {
+            order = num;
+        }
+    }
+
+    void Update()
+    {
+        if (dead && !Timeslow.IsSlowed)
+        {
+            
+            StartCoroutine(DeathScript(order));
+        }
+    }
+
+    private IEnumerator DeathScript(int timeWait)
+    {
+        yield return new WaitForSeconds(timeWait / 15f);
         Destroy(gameObject);
     }
 }

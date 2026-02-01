@@ -11,11 +11,11 @@ public class Gun : MonoBehaviour
 
     void Shoot()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit))
-        {
-            hit.collider.gameObject.GetComponent<Destructible>()?.Kill();
-            Debug.DrawRay(cam.transform.position, cam.transform.forward, Color.red);
-        }
+        // RaycastHit hit;
+        // if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit))
+        // {
+        //     hit.collider.gameObject.GetComponent<Destructible>()?.Kill();
+        //     Debug.DrawRay(cam.transform.position, cam.transform.forward, Color.red);
+        // }
     }
 }
