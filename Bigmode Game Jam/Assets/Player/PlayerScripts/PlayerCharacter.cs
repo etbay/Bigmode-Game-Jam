@@ -118,6 +118,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     // Floats for timing walking sounds
     private float footstepInterval = 0.6f;
     private float footstepTimer = 0f;
+    private bool stopped = true;
     #endregion
 
     #region Initialization & Input
@@ -275,8 +276,16 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         currentVelocity = desiredDir * currentSpeed;
 
         footstepInterval = Mathf.Clamp(5/currentSpeed , 0.15f, 1f);
-        footstepTimer += deltaTime;
-        if (footstepTimer >= footstepInterval)
+        if (currentSpeed > 0)
+        {
+            footstepTimer += deltaTime;
+            stopped = false;
+        }
+        else
+        {
+            stopped = true;
+        }
+        if ((footstepTimer >= footstepInterval && !stopped))
         {
             footstepTimer = 0f;
             AudioManager.instance.PlaySoundClipFromList(sfxBank.WalkSounds(), root, 1f, true, true);
