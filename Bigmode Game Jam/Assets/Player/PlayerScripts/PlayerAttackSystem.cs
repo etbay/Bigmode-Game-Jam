@@ -41,7 +41,7 @@ public class PlayerAttackSystem : MonoBehaviour
                     }
                 }
             }
-            AudioManager.instance.PlayOmnicientSoundClip(gunshot, 1f, true);
+            AudioManager.instance.PlayOmnicientSoundClip(gunshot, 1f, true, true);
         }
     }
 
