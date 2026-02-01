@@ -13,7 +13,7 @@ using Debug = UnityEngine.Debug;
 public class Timeslow : MonoBehaviour
 {
     public static Timeslow instance;
-    private static bool IsSlowed = false;
+    public static bool IsSlowed = false;
     private PlayerInputActions _inputActions;
 
     void Start()

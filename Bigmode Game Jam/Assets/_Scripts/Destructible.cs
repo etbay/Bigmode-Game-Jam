@@ -2,9 +2,17 @@ using UnityEngine;
 
 public class Destructible : MonoBehaviour
 {
+    private bool dead = false;
     public void Kill()
     {
-        // Create an explosion partical effect
-        Destroy(gameObject);
+        dead = true;
+    }
+
+    void Update()
+    {
+        if (dead && !Timeslow.IsSlowed)
+        {
+            Destroy(gameObject);
+        }
     }
 }
