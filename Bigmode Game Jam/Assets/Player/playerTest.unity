@@ -297,6 +297,23 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &487960268 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3760759753895213583, guid: 7c84707092aa1a948a33a4ce88d5200d, type: 3}
+  m_PrefabInstance: {fileID: 1164573351}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &487960271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487960268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89a86c8544ec7bc428d9ead4ad69de8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Timeslow
 --- !u!114 &617962086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -599,7 +616,7 @@ MonoBehaviour:
   - Assets/External/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Blue1.mat
   currentMaterialIndex: 0
   renderableMesh:
-    name: UM_OperatedMesh_29ca23a0-2702-4adf-a6ad-4a6e04282d46
+    name: UM_OperatedMesh_57590d56-1681-489f-bdce-2eedce1510b8
     skinnedMesh: 0
     sharedMesh: {fileID: 1080648232}
     buidVersion:
@@ -612,7 +629,7 @@ MonoBehaviour:
       OptimizedTopology: 0
       TransformVersion: 0
   sourceMesh: {fileID: 0}
-  sourceMeshRendererGUID: 29ca23a0-2702-4adf-a6ad-4a6e04282d46
+  sourceMeshRendererGUID: 57590d56-1681-489f-bdce-2eedce1510b8
   guid: f645f521-df0f-4638-b9dc-84eb12dc83b3
   localOptions:
     RecalculateTangents: 0
@@ -1079,7 +1096,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3760759753895213583, guid: 7c84707092aa1a948a33a4ce88d5200d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 487960271}
   m_SourcePrefab: {fileID: 100100000, guid: 7c84707092aa1a948a33a4ce88d5200d, type: 3}
 --- !u!114 &1449973791
 MonoBehaviour:
@@ -1174,7 +1194,7 @@ MonoBehaviour:
   - Assets/External/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Blue1.mat
   currentMaterialIndex: 0
   renderableMesh:
-    name: UM_OperatedMesh_77d3d1b4-1ff3-41b6-8457-71294eea89bf
+    name: UM_OperatedMesh_57b9f217-8765-4075-8108-212bf368193e
     skinnedMesh: 0
     sharedMesh: {fileID: 1739290812}
     buidVersion:
@@ -1187,7 +1207,7 @@ MonoBehaviour:
       OptimizedTopology: 0
       TransformVersion: 0
   sourceMesh: {fileID: 0}
-  sourceMeshRendererGUID: 77d3d1b4-1ff3-41b6-8457-71294eea89bf
+  sourceMeshRendererGUID: 57b9f217-8765-4075-8108-212bf368193e
   guid: 9c3d102a-1d48-4327-8398-7dc0d30ecc31
   localOptions:
     RecalculateTangents: 0
@@ -1520,7 +1540,7 @@ MonoBehaviour:
   - Assets/External/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Blue1.mat
   currentMaterialIndex: 0
   renderableMesh:
-    name: UM_OperatedMesh_344dec8c-28d0-4ed0-baef-8b569496611e
+    name: UM_OperatedMesh_320b1e77-f759-4b66-bcba-576cfcdcd26b
     skinnedMesh: 0
     sharedMesh: {fileID: 2106768323}
     buidVersion:
@@ -1533,7 +1553,7 @@ MonoBehaviour:
       OptimizedTopology: 0
       TransformVersion: 0
   sourceMesh: {fileID: 0}
-  sourceMeshRendererGUID: 344dec8c-28d0-4ed0-baef-8b569496611e
+  sourceMeshRendererGUID: 320b1e77-f759-4b66-bcba-576cfcdcd26b
   guid: f645f521-df0f-4638-b9dc-84eb12dc83b3
   localOptions:
     RecalculateTangents: 0
@@ -1745,7 +1765,7 @@ MonoBehaviour:
   - Assets/External/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Blue1.mat
   currentMaterialIndex: 0
   renderableMesh:
-    name: UM_OperatedMesh_cb6e0213-ae3d-4eda-979b-a4b84895d298
+    name: UM_OperatedMesh_af9e11ed-10b9-4007-8f32-196a98e97df0
     skinnedMesh: 0
     sharedMesh: {fileID: 646933944}
     buidVersion:
@@ -1758,7 +1778,7 @@ MonoBehaviour:
       OptimizedTopology: 0
       TransformVersion: 0
   sourceMesh: {fileID: 0}
-  sourceMeshRendererGUID: cb6e0213-ae3d-4eda-979b-a4b84895d298
+  sourceMeshRendererGUID: af9e11ed-10b9-4007-8f32-196a98e97df0
   guid: f645f521-df0f-4638-b9dc-84eb12dc83b3
   localOptions:
     RecalculateTangents: 0
@@ -1882,7 +1902,7 @@ MonoBehaviour:
   - Assets/External/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Blue1.mat
   currentMaterialIndex: 0
   renderableMesh:
-    name: UM_OperatedMesh_bdb8193a-d767-4824-a509-771a1e559981
+    name: UM_OperatedMesh_97be5bf5-9ac6-473c-96c0-0fd169ec9610
     skinnedMesh: 0
     sharedMesh: {fileID: 284460922}
     buidVersion:
@@ -1895,7 +1915,7 @@ MonoBehaviour:
       OptimizedTopology: 0
       TransformVersion: 0
   sourceMesh: {fileID: 0}
-  sourceMeshRendererGUID: bdb8193a-d767-4824-a509-771a1e559981
+  sourceMeshRendererGUID: 97be5bf5-9ac6-473c-96c0-0fd169ec9610
   guid: cd7df648-06d6-4eff-ad4c-1d4ebeda60ef
   localOptions:
     RecalculateTangents: 0
