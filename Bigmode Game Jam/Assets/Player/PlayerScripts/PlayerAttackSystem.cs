@@ -51,7 +51,6 @@ public class PlayerAttackSystem : MonoBehaviour
                     {
                         target.GetComponent<Destructible>().Kill(0);
                     }
-                    Player.SlickValue += 0.5f;
                 } 
                 Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward, Color.red);
             }
