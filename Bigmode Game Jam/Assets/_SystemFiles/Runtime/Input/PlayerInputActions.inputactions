@@ -371,6 +371,17 @@
                 },
                 {
                     "name": "",
+                    "id": "b6e9c12f-052d-4827-a03d-cb5fd80ee05f",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "46484eb8-1d56-4cf6-98ba-0618c8b97445",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",

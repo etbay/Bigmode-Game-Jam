@@ -151,6 +151,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7245846414668031441}
   - {fileID: 1186829192078883416}
   m_Father: {fileID: 7271064865773795391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -293,19 +294,16 @@ MonoBehaviour:
   crouchResponse: 10.5
   groundedStepHeight: 0.5
   mantlStepHeight: 2
-  turnMomentumRetention: 0
   sprintDeceleration: 50
   sprintRecoveryAcceleration: 45
-  minTurnAngleForSpeedLoss: 15
-  maxTurnAngleForFullStop: 1000
   airSpeed: 10
   airAcceleration: 25
   jumpSpeed: 20
   coyoteTime: 0.3
   jumpSustainGravity: 1
   gravity: -60
-  slideStartSpeed: 35
-  slideEndSpeed: 15
+  slideStartSpeed: 20
+  slideEndSpeed: 8
   slideFriction: 0.1
   slideSteerAccelleration: 5
   slideGravity: -90
@@ -395,7 +393,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7245846414668031441}
   - {fileID: 962992541220186797}
   m_Father: {fileID: 3462388249240776093}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -447,7 +444,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1186829192078883416}
+  m_Father: {fileID: 3462388249240776093}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &7714564643024645890
 Camera:
