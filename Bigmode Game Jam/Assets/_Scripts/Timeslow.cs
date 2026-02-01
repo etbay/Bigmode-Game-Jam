@@ -34,10 +34,10 @@ public class Timeslow : MonoBehaviour
             }
             IsSlowed = true;
             ActivateSlowMode();
-            audioSource = AudioManager.instance?.PlayOmnicientSoundClip(timeSlow, 1f);
+            audioSource = AudioManager.instance?.PlayOmnicientSoundClip(timeSlow, 1f, false);
             SlickometerData.CurrentSlickDrainRate = SlickometerData.TimeslowSlickDrainRate;
         }
-        else if ((Player.SlickValue <= 1.0f) || _inputActions.Player.Ability.WasPressedThisFrame() && IsSlowed)
+        else if (((Player.SlickValue <= 1.0f) && IsSlowed) || (Player.SlickValue > 1.0f && _inputActions.Player.Ability.WasPressedThisFrame() && IsSlowed))
         {
             if (audioSource != null)
             {
@@ -45,7 +45,7 @@ public class Timeslow : MonoBehaviour
             }
             IsSlowed = false;
             DeactivateSlowMode();
-            audioSource = AudioManager.instance?.PlayOmnicientSoundClip(timeResume, 1f);
+            audioSource = AudioManager.instance?.PlayOmnicientSoundClip(timeResume, 1f, false);
             SlickometerData.CurrentSlickDrainRate = SlickometerData.BaseSlickDrainRate;
         }
     }
