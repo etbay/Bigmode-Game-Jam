@@ -86,8 +86,6 @@ public class Player : MonoBehaviour
             playerCamera.UpdateRotation(cameraInput);
         }
 
-
-
         //Debug.Log(PlayerCharacter.instance.gameObject.transform.position);
         //get chracterinput and update
         var characterInput = new CharacterInput
