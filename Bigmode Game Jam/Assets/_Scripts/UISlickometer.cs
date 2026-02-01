@@ -11,6 +11,6 @@ public class UISlickometer : MonoBehaviour
 
     void Update()
     {
-        slider.value = TestPlayer.SlickValue;
+        slider.value = Player.SlickValue;
     }
 }

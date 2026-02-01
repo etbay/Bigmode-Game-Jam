@@ -48,6 +48,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
     #region Serialized Fields - Movement Settings
     [Header("Grounded Movement")]
+    public float speedBoostMultiplier = 1f;
+    public bool isSpeedCapped = true;
     [SerializeField] private bool slick;
     [SerializeField] private float walkSpeed = 20f;
     //[SerializeField] private float sprintAcceleration = 30f;
@@ -164,6 +166,11 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
     {
         _state.Acceleration = Vector3.zero;
+        if (isSpeedCapped)
+        {
+            currentVelocity.x = Mathf.Clamp(currentVelocity.x, 0f, 30f);
+            currentVelocity.z = Mathf.Clamp(currentVelocity.z, 0f, 30f);
+        }
 
         if (motor.GroundingStatus.IsStableOnGround)
         {
@@ -249,6 +256,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
         float targetSpeed = _state.Stance is Stance.Stand ? walkSpeed : crouchSpeed;
         float response = _state.Stance is Stance.Stand ? walkResponse : crouchResponse;
+        targetSpeed *= speedBoostMultiplier;
 
         float currentSpeed = currentVelocity.magnitude;
         Vector3 desiredDir = groundedMovement.sqrMagnitude > 0.0001f ? groundedMovement.normalized : Vector3.zero;
