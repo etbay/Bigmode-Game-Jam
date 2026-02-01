@@ -131,4 +131,38 @@ public class AudioManager : MonoBehaviour
         }
         timeSlowedGroup.audioMixer.SetFloat("TimeSlowedPitch", finalValue);
     }
+    public AudioSource GetLoopableAudioSource(AudioClip audioClip, float vol, bool slowable, bool pitchRandomly)
+    {
+        GameObject obj = Instantiate(sfxObject, player.position, Quaternion.identity);
+        AudioSource source = obj.GetComponent<AudioSource>();
+        source.clip = audioClip;
+        source.volume = vol;
+        if (slowable) // Does the sound pitch down and slow during slowed time
+        {
+            source.outputAudioMixerGroup = timeSlowedGroup;
+        }
+        else
+        {
+            source.outputAudioMixerGroup = environmentGroup;
+        }
+        if (pitchRandomly)
+        {
+            source.pitch += Random.Range(-0.15f, 0.15f);
+        }
+        source.loop = true;
+        float clipLength = audioClip.length;
+        return source;
+    }
+
+    public IEnumerator FadeToVolume(AudioSource source, float initial, float final, float time)
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < time)
+        {
+            source.volume = Mathf.Clamp01(Mathf.Lerp(initial, final, elapsedTime));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        source.volume = final;
+    }
 }

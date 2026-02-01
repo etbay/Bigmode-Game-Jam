@@ -7,10 +7,12 @@ public class PlayerSFXBank : MonoBehaviour
     [SerializeField] private AudioClip slidingSound;
     [SerializeField] private AudioClip slideFailedSound;
     [SerializeField] private AudioClip[] walkSounds;
+    [SerializeField] private AudioClip airAmbience;
 
     public AudioClip JumpSound() { return jumpSound; }
     public AudioClip LandSound() { return landSound; }
     public AudioClip SlidingSound() { return slidingSound; }
     public AudioClip SlideFailedSound() { return slideFailedSound; }
-    public AudioClip[] WalkSounds() { return walkSounds; }  
+    public AudioClip[] WalkSounds() { return walkSounds; }
+    public AudioClip AirAmbience() { return airAmbience; }
 }
