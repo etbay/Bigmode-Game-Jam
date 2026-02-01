@@ -1,5 +1,6 @@
 using KinematicCharacterController;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 #region Enums
@@ -109,10 +110,14 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     private bool _requestedCrouch;
     private bool _requestedCrouchInAir;
     private Vector3 _landingImpactVelocity;
-    private float _timeSinceUngrounded = 0f;
+    private float _timeSinceUngrounded = 0f; // Set to 0 at default to prevent audio from playing immediately
     private float _timeSinceJumpRequest;
     private bool _ungroundedDueToJump;
     private Collider[] _uncrouchOverLapResults;
+
+    // Floats for timing walking sounds
+    private float footstepInterval = 0.6f;
+    private float footstepTimer = 0f;
     #endregion
 
     #region Initialization & Input
@@ -268,6 +273,14 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed * groundedMovement.magnitude, 1f - Mathf.Exp(-response * deltaTime));
         currentVelocity = desiredDir * currentSpeed;
+
+        footstepInterval = Mathf.Clamp(5/currentSpeed , 0.15f, 1f);
+        footstepTimer += deltaTime;
+        if (footstepTimer >= footstepInterval)
+        {
+            footstepTimer = 0f;
+            AudioManager.instance.PlaySoundClipFromList(sfxBank.WalkSounds(), root, 1f, true, true);
+        }
     }
 
     private void UpdateSlideMovement(ref Vector3 currentVelocity, Vector3 groundedMovement, float deltaTime)
