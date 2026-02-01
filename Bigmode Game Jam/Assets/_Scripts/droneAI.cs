@@ -5,12 +5,12 @@ using Vector3 = UnityEngine.Vector3;
 public class DroneAI : MonoBehaviour
 {
     Vector3 initialPos;
-    public Transform transform;
+    public Transform droneTransform;
     public Vector3 direction;
     public float amplitude = 1f;
 
     void Start() {
-        initialPos = transform.position;
+        initialPos = droneTransform.position;
     }
 
     void FixedUpdate()
@@ -27,7 +27,7 @@ public class DroneAI : MonoBehaviour
         }
         else
         {
-            newPos += transform.position.x * Vector3.right;
+            newPos += droneTransform.position.x * Vector3.right;
         }
 
         if (direction.y != 0)
@@ -36,7 +36,7 @@ public class DroneAI : MonoBehaviour
         }
         else
         {
-            newPos += transform.position.y * Vector3.up;
+            newPos += droneTransform.position.y * Vector3.up;
         }
 
         if (direction.z != 0)
@@ -45,9 +45,9 @@ public class DroneAI : MonoBehaviour
         }
         else
         {
-            newPos += transform.position.z * Vector3.forward;
+            newPos += droneTransform.position.z * Vector3.forward;
         }
         
-        transform.position = newPos;
+        droneTransform.position = newPos;
     }
 }

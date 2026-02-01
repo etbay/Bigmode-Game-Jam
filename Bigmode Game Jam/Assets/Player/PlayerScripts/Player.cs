@@ -16,13 +16,26 @@ public class Player : MonoBehaviour
     [SerializeField] private CameraSpring cameraSpring;
     [SerializeField] private CameraLean cameraLean;
     [SerializeField] private bool useCrouchToggle = true;
-
+    private static float slickValue = 3f;
     private bool escaped = false;
     private PlayerInputActions _inputActions;
+
+    public static float SlickValue
+    {
+        get
+        {
+            return slickValue;
+        }
+        set
+        {
+            slickValue = value;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        slickValue = 3f;
         Cursor.lockState = CursorLockMode.Locked;
         _inputActions = new PlayerInputActions();
         _inputActions.Enable();
@@ -43,6 +56,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(slickValue);
+        slickValue -= Time.deltaTime * 0.5f;
+        slickValue = Mathf.Clamp(slickValue, 1f, 3f);
+        playerCharacter.speedBoostMultiplier = slickValue;
+
         var input = _inputActions.Player;
         var deltaTime = Time.deltaTime;
 

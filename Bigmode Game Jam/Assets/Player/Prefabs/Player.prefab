@@ -287,6 +287,7 @@ MonoBehaviour:
   root: {fileID: 1678162088219780939}
   cameraTarget: {fileID: 3339237782811569501}
   playerCamera: {fileID: 7714564643024645890}
+  speedBoostMultiplier: 1
   slick: 0
   walkSpeed: 9
   crouchSpeed: 7
@@ -299,7 +300,7 @@ MonoBehaviour:
   jumpSpeed: 20
   coyoteTime: 0.3
   jumpSustainGravity: 1
-  gravity: -60
+  gravity: -30
   slamGravity: -90
   slideStartSpeed: 20
   slideEndSpeed: 8
@@ -710,6 +711,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackSystem
   playerCamera: {fileID: 7714564643024645890}
+  player: {fileID: 900245704161562928}
 --- !u!4 &5675754648483511736 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7380096638552147770, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
