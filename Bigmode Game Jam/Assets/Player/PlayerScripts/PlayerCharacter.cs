@@ -44,6 +44,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     [SerializeField] private Transform root;
     [SerializeField] private Transform cameraTarget;
     [SerializeField] private Camera playerCamera;
+    [SerializeField] private PlayerSFXBank sfxBank;
     #endregion
 
     #region Serialized Fields - Movement Settings
@@ -108,7 +109,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     private bool _requestedCrouch;
     private bool _requestedCrouchInAir;
     private Vector3 _landingImpactVelocity;
-    private float _timeSinceUngrounded;
+    private float _timeSinceUngrounded = 0f;
     private float _timeSinceJumpRequest;
     private bool _ungroundedDueToJump;
     private Collider[] _uncrouchOverLapResults;
@@ -192,6 +193,10 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region Grounded Logic
     private void HandleGroundedMovement(ref Vector3 currentVelocity, float deltaTime)
     {
+        if (!_state.Grounded && _timeSinceUngrounded > 0.3f)
+        {
+            AudioManager.instance.PlayOmnicientSoundClip(sfxBank.LandSound(), 1f, true, true);
+        }
         _ungroundedDueToJump = false;
         _timeSinceUngrounded = 0f;
 
@@ -380,6 +385,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
             currentVelocity += motor.CharacterUp * (Mathf.Max(currentVertSpeed, jumpSpeed) - currentVertSpeed);
             //currentVelocity += motor.CharacterForward * (Mathf.Max(currentVertSpeed, jumpSpeed) - currentVertSpeed);
             
+            AudioManager.instance.PlayOmnicientSoundClip(sfxBank.JumpSound(), 1f, true, true);
         }
         else
         {

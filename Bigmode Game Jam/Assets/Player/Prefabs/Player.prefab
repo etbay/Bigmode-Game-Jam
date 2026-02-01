@@ -287,10 +287,12 @@ MonoBehaviour:
   root: {fileID: 1678162088219780939}
   cameraTarget: {fileID: 3339237782811569501}
   playerCamera: {fileID: 7714564643024645890}
+  sfxBank: {fileID: 8742350059407653686}
   speedBoostMultiplier: 1
+  isSpeedCapped: 0
   slick: 0
   walkSpeed: 9
-  crouchSpeed: 7
+  crouchSpeed: 9
   walkResponse: 22.5
   crouchResponse: 10.5
   groundedStepHeight: 0.5
@@ -300,14 +302,14 @@ MonoBehaviour:
   jumpSpeed: 20
   coyoteTime: 0.3
   jumpSustainGravity: 1
-  gravity: -30
+  gravity: -45
   slamGravity: -90
-  slideStartSpeed: 20
+  slideStartSpeed: 15
   slideEndSpeed: 8
-  slideFriction: 0.1
+  slideFriction: 0.5
   slideSteerAccelleration: 5
   slideGravity: -90
-  fallToSlideRatio: 1
+  fallToSlideRatio: 0.2
   standHeight: 2
   crouchHeight: 1
   crouchHeightResponse: 15
@@ -324,6 +326,7 @@ GameObject:
   - component: {fileID: 7271064865773795391}
   - component: {fileID: 900245704161562928}
   - component: {fileID: 3969533954021389893}
+  - component: {fileID: 8742350059407653686}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -381,6 +384,31 @@ MonoBehaviour:
   timeSlow: {fileID: 8300000, guid: 5f120a1ff743ef244a31b829422060ef, type: 3}
   timeResume: {fileID: 8300000, guid: 127c5b2217ada2c419149fbb4d1ebb4d, type: 3}
   slowFactor: 0.2
+--- !u!114 &8742350059407653686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3760759753895213583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b625671ebeaf60459eb47c009ef83e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSFXBank
+  jumpSound: {fileID: 8300000, guid: a659afbd62f5c0f4998d705949245217, type: 3}
+  landSound: {fileID: 8300000, guid: 92100aa306a706641bc66b07cd786d8c, type: 3}
+  slidingSound: {fileID: 8300000, guid: f82362496d195bd468d0a3352a953b0c, type: 3}
+  slideFailedSound: {fileID: 8300000, guid: 2d704bec2598e554aa13677b01feb26f, type: 3}
+  walkSounds:
+  - {fileID: 8300000, guid: 5f711cd82d1b85a4a8cbc4a95d741544, type: 3}
+  - {fileID: 8300000, guid: 8df2685b7358ad94989bd4775ade97ef, type: 3}
+  - {fileID: 8300000, guid: 7a6ae2aa4bddcc14dbde398f6dd5eeda, type: 3}
+  - {fileID: 8300000, guid: 26055620f975b394dbc69f466dd4b337, type: 3}
+  - {fileID: 8300000, guid: 5182061d7ae93ce43859260b6d168186, type: 3}
+  - {fileID: 8300000, guid: 270020fcfd8706f4cb6595aa6ce51874, type: 3}
+  - {fileID: 8300000, guid: 6bf29fe5f9257ae4ca5d5f47e06f0bdf, type: 3}
+  - {fileID: 8300000, guid: f12dc21d228c5f6449f7ec4d451c0231, type: 3}
 --- !u!1 &5553833818521036052
 GameObject:
   m_ObjectHideFlags: 0
@@ -727,7 +755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackSystem
   playerCamera: {fileID: 7714564643024645890}
-  player: {fileID: 900245704161562928}
+  gunshot: {fileID: 8300000, guid: ffb1101f35dfd014f93de2354081ed5d, type: 3}
 --- !u!4 &5675754648483511736 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7380096638552147770, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
