@@ -35,8 +35,9 @@ public class Timeslow : MonoBehaviour
             IsSlowed = true;
             ActivateSlowMode();
             audioSource = AudioManager.instance?.PlayOmnicientSoundClip(timeSlow, 1f);
+            SlickometerData.CurrentSlickDrainRate = SlickometerData.TimeslowSlickDrainRate;
         }
-        else if (_inputActions.Player.Ability.WasPressedThisFrame() && IsSlowed)
+        else if ((Player.SlickValue <= 1.0f) || _inputActions.Player.Ability.WasPressedThisFrame() && IsSlowed)
         {
             if (audioSource != null)
             {
@@ -45,6 +46,7 @@ public class Timeslow : MonoBehaviour
             IsSlowed = false;
             DeactivateSlowMode();
             audioSource = AudioManager.instance?.PlayOmnicientSoundClip(timeResume, 1f);
+            SlickometerData.CurrentSlickDrainRate = SlickometerData.BaseSlickDrainRate;
         }
     }
 

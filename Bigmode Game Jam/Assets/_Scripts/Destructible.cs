@@ -20,7 +20,6 @@ public class Destructible : MonoBehaviour
     {
         if (dead && !Timeslow.IsSlowed)
         {
-            
             StartCoroutine(DeathScript(order));
         }
     }
@@ -28,6 +27,7 @@ public class Destructible : MonoBehaviour
     private IEnumerator DeathScript(int timeWait)
     {
         yield return new WaitForSeconds(timeWait / 15f); // controls deletion after resuming time
+        Player.SlickValue += SlickometerData.DestructibleSlickGain;
         Destroy(gameObject);
     }
 }
