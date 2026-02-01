@@ -46,7 +46,10 @@ public class PlayerCamera : MonoBehaviour
 
             // 2. If it was a step (sudden Y change), add it to our visual offset
             // We subtract it so the camera stays at its old height for a moment
-            _visualOffsetColor -= deltaY;
+            if (deltaY > 0.01f)
+            {
+                _visualOffsetColor -= deltaY;
+            }
         }
         else
         {
