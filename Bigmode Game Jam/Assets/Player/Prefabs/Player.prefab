@@ -378,8 +378,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Timeslow
   timeSlow: {fileID: 8300000, guid: 5f120a1ff743ef244a31b829422060ef, type: 3}
-  timeResume: {fileID: 8300000, guid: b664875f1b77d6a40b5138fb0c0919cc, type: 3}
-  slowedTimeAmbience: {fileID: 0}
+  timeResume: {fileID: 8300000, guid: 127c5b2217ada2c419149fbb4d1ebb4d, type: 3}
+  slowFactor: 0.2
 --- !u!1 &5553833818521036052
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ public class Timeslow : MonoBehaviour
 {
     [SerializeField] private AudioClip timeSlow;
     [SerializeField] private AudioClip timeResume;
+    [SerializeField] private float slowFactor = 0.2f; // 1 is full speed, 0.2 is 1/5 speed
 
     private AudioSource audioSource = null; 
     //[SerializeField] private AudioClip slowedTimeAmbience;
@@ -29,7 +30,7 @@ public class Timeslow : MonoBehaviour
         {
             if (audioSource != null)
             {
-                audioSource.volume = 0f;
+                audioSource.volume = 0f; // stops overlaying time related sfx
             }
             IsSlowed = true;
             ActivateSlowMode();
@@ -49,7 +50,7 @@ public class Timeslow : MonoBehaviour
 
     private void ActivateSlowMode()
     {
-        Time.timeScale = 0.2f;
+        Time.timeScale = slowFactor;
     }
 
     private void DeactivateSlowMode()

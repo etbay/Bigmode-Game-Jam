@@ -17,6 +17,8 @@ public class AudioManager : MonoBehaviour
         }
 
     }
+
+    // Plays at the player's position
     public AudioSource PlayOmnicientSoundClip(AudioClip audioClip, float vol)
     {
         GameObject audioSource = Instantiate(sfxObject, player.transform.position, Quaternion.identity);
@@ -27,6 +29,8 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(KillAudioSource(audioSource, clipLength));
         return audioSource.GetComponent<AudioSource>();
     }
+
+    // Plays at a passed transform's position, typically an enemy or something similar
     public AudioSource PlaySoundClip(AudioClip audioClip, Transform spawnTransform, float vol)
     {        
         GameObject audioSource = Instantiate(sfxObject, spawnTransform.position, Quaternion.identity);
@@ -41,6 +45,6 @@ public class AudioManager : MonoBehaviour
     private IEnumerator KillAudioSource(GameObject target, float timeWait)
     {
         yield return new WaitForSeconds(timeWait);
-        Destroy(target);
+        Destroy(target); // Controls waiting until a sfx has finished to delete the gameobject audiosource
     }
 }

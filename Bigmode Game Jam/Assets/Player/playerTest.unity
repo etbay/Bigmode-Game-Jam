@@ -326,7 +326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54217deaefc27cf4086c99466901c01a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  sfxObject: {fileID: 8198808060558767412, guid: 4255d9a2602452e4fae9465739314cb9, type: 3}
+  sfxObject: {fileID: 8890320875599689599, guid: 4255d9a2602452e4fae9465739314cb9, type: 3}
   player: {fileID: 487960268}
 --- !u!4 &378160188
 Transform:
@@ -1063,10 +1063,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3969533954021389893, guid: 7c84707092aa1a948a33a4ce88d5200d, type: 3}
-      propertyPath: timeResume
-      value: 
-      objectReference: {fileID: 8300000, guid: 127c5b2217ada2c419149fbb4d1ebb4d, type: 3}
     - target: {fileID: 7271064865773795391, guid: 7c84707092aa1a948a33a4ce88d5200d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -23.77
