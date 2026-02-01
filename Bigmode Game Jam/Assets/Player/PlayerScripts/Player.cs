@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private PlayerCharacter playerCharacter;
     [SerializeField] private PlayerCamera playerCamera;
+    [SerializeField] private PlayerAttackSystem playerAttackSystem;
     [Space]
     [SerializeField] private CameraSpring cameraSpring;
     [SerializeField] private CameraLean cameraLean;
@@ -88,6 +89,7 @@ public class Player : MonoBehaviour
 
         playerCharacter.UpdateInput(characterInput);
         playerCharacter.UpdateBody(deltaTime);
+        playerAttackSystem.updateInput(characterInput);
 
         #if UNITY_EDITOR
         if (Keyboard.current.tKey.wasPressedThisFrame)
