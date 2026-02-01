@@ -1,6 +1,8 @@
 using KinematicCharacterController;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 #region Enums
 public enum CrouchInput
@@ -44,6 +46,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     [SerializeField] private Transform root;
     [SerializeField] private Transform cameraTarget;
     [SerializeField] private Camera playerCamera;
+    [SerializeField] private PlayerSFXBank sfxBank;
     #endregion
 
     #region Serialized Fields - Movement Settings
@@ -108,10 +111,18 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     private bool _requestedCrouch;
     private bool _requestedCrouchInAir;
     private Vector3 _landingImpactVelocity;
-    private float _timeSinceUngrounded;
+    private float _timeSinceUngrounded = 0f; // Set to 0 at default to prevent audio from playing immediately
     private float _timeSinceJumpRequest;
     private bool _ungroundedDueToJump;
     private Collider[] _uncrouchOverLapResults;
+
+    // Floats for timing walking sounds
+    private float footstepInterval = 0.6f;
+    private float footstepTimer = 0f;
+    private bool stopped = true;
+    private AudioSource slidingAudio;
+    private AudioSource airAmbience;
+    private Coroutine volumeFade;
     #endregion
 
     #region Initialization & Input
@@ -192,6 +203,15 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region Grounded Logic
     private void HandleGroundedMovement(ref Vector3 currentVelocity, float deltaTime)
     {
+        if (!_state.Grounded && _timeSinceUngrounded > 0.3f)
+        {
+            AudioManager.instance.PlayOmnicientSoundClip(sfxBank.LandSound(), 1f, true, true);
+        }
+        if (airAmbience != null && airAmbience.isPlaying)
+        {
+            airAmbience.Stop();
+        }
+        
         _ungroundedDueToJump = false;
         _timeSinceUngrounded = 0f;
 
@@ -247,12 +267,24 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         currentVelocity = dir * slideSpeed;
 
         _requestedCrouchInAir = false;
+
+        if (slidingAudio == null)
+        {
+            slidingAudio = AudioManager.instance.GetLoopableAudioSource(sfxBank.SlidingSound(), 1f, true, false);
+        }
+        else if (!slidingAudio.isPlaying){
+            slidingAudio.Play();
+        }
     }
 
     private void UpdateStandardMovement(ref Vector3 currentVelocity, Vector3 groundedMovement, float deltaTime)
     {
         //bool isSprinting = _state.Stance is Stance.Stand && _reqestedSprint && groundedMovement.sqrMagnitude > 0f;
-
+        if (slidingAudio != null && slidingAudio.isPlaying)
+        {
+            slidingAudio.Stop();
+            AudioManager.instance.PlaySoundClipFromList(sfxBank.WalkSounds(), root, 1f, true, true);
+        }
 
         float targetSpeed = _state.Stance is Stance.Stand ? walkSpeed : crouchSpeed;
         float response = _state.Stance is Stance.Stand ? walkResponse : crouchResponse;
@@ -263,6 +295,20 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed * groundedMovement.magnitude, 1f - Mathf.Exp(-response * deltaTime));
         currentVelocity = desiredDir * currentSpeed;
+
+        footstepInterval = Mathf.Clamp(5/currentSpeed , 0.15f, 1f); // the higher the speed, the faster the footsteps, clamped so its not unreasonable (5/x is the equation)
+        if (currentSpeed > 0)
+        {
+            footstepTimer += deltaTime;
+            stopped = false;
+        }
+        else stopped = true;
+        
+        if ((footstepTimer >= footstepInterval && !stopped))
+        {
+            footstepTimer = 0f;
+            AudioManager.instance.PlaySoundClipFromList(sfxBank.WalkSounds(), root, 1f, true, true);
+        }
     }
 
     private void UpdateSlideMovement(ref Vector3 currentVelocity, Vector3 groundedMovement, float deltaTime)
@@ -308,7 +354,10 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region Airborne Logic
     private void HandleAirborneMovement(ref Vector3 currentVelocity, float deltaTime)
     {
-
+        if (slidingAudio != null && slidingAudio.isPlaying)
+        {
+            slidingAudio.Stop();
+        }
         _timeSinceUngrounded += deltaTime;
 
         if (_reqestedMovement.sqrMagnitude > 0f)
@@ -331,9 +380,54 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         {
             effectiveGravity *= jumpSustainGravity;
         }
-
-
         currentVelocity += motor.CharacterUp * effectiveGravity * deltaTime;
+
+        // Sound effect managing for the air sfx
+        if (currentVelocity.magnitude > 20f)
+        {
+            if (airAmbience == null)
+            {
+                airAmbience = AudioManager.instance.GetLoopableAudioSource(sfxBank.AirAmbience(), 0f, true, false);
+            }
+            else if (!airAmbience.isPlaying){
+                airAmbience.volume = 0f;
+                airAmbience.Play();
+            }
+        }
+
+        if (currentVelocity.magnitude > 60f)
+        {
+            if (airAmbience.volume < 0.5 && volumeFade != null)
+            {
+                StopCoroutine(volumeFade);
+            }
+            volumeFade = StartCoroutine(AudioManager.instance.FadeToVolume(airAmbience, airAmbience.volume, 1f, 0.3f));
+        }
+        else if (currentVelocity.magnitude > 40f)
+        {
+            if (volumeFade != null)
+            {
+                StopCoroutine(volumeFade);
+            }
+            volumeFade = StartCoroutine(AudioManager.instance.FadeToVolume(airAmbience, airAmbience.volume, 0.5f, 0.2f));
+        }
+        else if (currentVelocity.magnitude > 20f)
+        {
+            if (volumeFade != null)
+            {
+                StopCoroutine(volumeFade);
+            }
+            volumeFade = StartCoroutine(AudioManager.instance.FadeToVolume(airAmbience, airAmbience.volume, 0.3f, 0.2f));
+        }
+        else if (currentVelocity.magnitude < 20f)
+        {
+            if (volumeFade != null)
+            {
+                StopCoroutine(volumeFade);
+            }
+            volumeFade = StartCoroutine(AudioManager.instance.FadeToVolume(airAmbience, airAmbience.volume, 0f, 0.1f));
+        }
+        
     }
 
     private void ApplyAirControl(ref Vector3 currentVelocity, float deltaTime)
@@ -380,6 +474,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
             currentVelocity += motor.CharacterUp * (Mathf.Max(currentVertSpeed, jumpSpeed) - currentVertSpeed);
             //currentVelocity += motor.CharacterForward * (Mathf.Max(currentVertSpeed, jumpSpeed) - currentVertSpeed);
             
+            AudioManager.instance.PlayOmnicientSoundClip(sfxBank.JumpSound(), 1f, true, true);
         }
         else
         {

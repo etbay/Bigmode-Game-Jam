@@ -8,7 +8,6 @@ using UnityEngine.Windows;
 
 public class Player : MonoBehaviour
 {
-
     [SerializeField] private PlayerCharacter playerCharacter;
     [SerializeField] private PlayerCamera playerCamera;
     [SerializeField] private PlayerAttackSystem playerAttackSystem;
