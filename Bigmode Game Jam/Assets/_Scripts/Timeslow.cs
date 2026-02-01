@@ -28,13 +28,11 @@ public class Timeslow : MonoBehaviour
     {
         if (_inputActions.Player.Ability.WasPressedThisFrame() && !IsSlowed)
         {
-            Debug.Log("Slowing Time");
             IsSlowed = true;
             ActivateSlowMode();
         }
         else if (_inputActions.Player.Ability.WasPressedThisFrame() && IsSlowed)
         {
-            Debug.Log("Speeding up again");
             IsSlowed = false;
             DeactivateSlowMode();
         }
