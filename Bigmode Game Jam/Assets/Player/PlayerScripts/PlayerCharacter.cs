@@ -383,21 +383,21 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         currentVelocity += motor.CharacterUp * effectiveGravity * deltaTime;
 
         // Sound effect managing for the air sfx
-        if (currentVelocity.magnitude > 60f)
+        if (currentVelocity.magnitude > 100f)
         {
             if (airAmbience.volume < 0.5 && volumeFade != null)
             {
                 StopCoroutine(volumeFade);
             }
-            volumeFade = StartCoroutine(AudioManager.instance.FadeToVolume(airAmbience, airAmbience.volume, 1f, 0.3f));
+            volumeFade = StartCoroutine(AudioManager.instance.FadeToVolume(airAmbience, airAmbience.volume, 1f, 0.2f));
         }
-        else if (currentVelocity.magnitude > 40f)
+        else if (currentVelocity.magnitude > 50f)
         {
             if (volumeFade != null)
             {
                 StopCoroutine(volumeFade);
             }
-            volumeFade = StartCoroutine(AudioManager.instance.FadeToVolume(airAmbience, airAmbience.volume, 0.5f, 0.2f));
+            volumeFade = StartCoroutine(AudioManager.instance.FadeToVolume(airAmbience, airAmbience.volume, 0.8f, 0.2f));
         }
         else if (currentVelocity.magnitude > 20f)
         {
