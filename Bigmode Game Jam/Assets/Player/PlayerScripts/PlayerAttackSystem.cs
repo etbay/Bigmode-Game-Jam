@@ -5,6 +5,7 @@ using Debug = UnityEngine.Debug;
 public class PlayerAttackSystem : MonoBehaviour
 {
     [SerializeField] private Camera playerCamera;
+    [SerializeField] private AudioClip gunshot;
     private bool _reqestedAttack = false;
     private PlayerInputActions _inputActions;
     private int targetsShotInSlow = 0;
@@ -22,19 +23,6 @@ public class PlayerAttackSystem : MonoBehaviour
         }
         if (_reqestedAttack)
         {
-            //Debug.Log("Attack requested");
-            // Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-            // if (Physics.Raycast(ray,out var hitInfo, 100))
-            // {
-            //     Renderer renderer = hitInfo.collider.GetComponent<Renderer>();
-            //     //HealthSystem healthSystem;
-            //     //if (hitInfo.collider.TryGetComponent<HealthSystem>(out healthSystem))
-            //     //{
-            //     //    healthSystem?.onHit?.Invoke();
-            //     //}
-            //     Debug.Log($"Hit: { hitInfo.collider.name} || Texture: {renderer.material}");
-            // }
-            
             RaycastHit hit;
             if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit))
             {
@@ -51,9 +39,9 @@ public class PlayerAttackSystem : MonoBehaviour
                     {
                         target.GetComponent<Destructible>().Kill(0);
                     }
-                } 
-                Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward, Color.red);
+                }
             }
+            AudioManager.instance.PlayOmnicientSoundClip(gunshot, 1f, true, true);
         }
     }
 
