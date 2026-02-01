@@ -26,7 +26,7 @@ public class Timeslow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_inputActions.Player.Ability.WasPressedThisFrame() && !IsSlowed)
+        if (_inputActions.Player.Ability.WasPressedThisFrame() && !IsSlowed && Player.SlickValue > 1.0f)
         {
             if (audioSource != null)
             {

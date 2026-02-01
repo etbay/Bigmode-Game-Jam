@@ -133,6 +133,10 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         _uncrouchOverLapResults = new Collider[8];
         motor.CharacterController = this;
         instance = this;
+
+        slidingAudio = AudioManager.instance.GetLoopableAudioSource(sfxBank.SlidingSound(), 0f, true, false);
+        airAmbience = AudioManager.instance.GetLoopableAudioSource(sfxBank.AirAmbience(), 0f, true, false);
+        airAmbience.Play();
     }
 
     public void UpdateInput(CharacterInput input)
@@ -209,10 +213,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         {
             AudioManager.instance.PlayOmnicientSoundClip(sfxBank.LandSound(), 1f, true, true);
         }
-        if (airAmbience != null && airAmbience.isPlaying)
-        {
-            airAmbience.Stop();
-        }
+        airAmbience.volume = 0f;
         
         _ungroundedDueToJump = false;
         _timeSinceUngrounded = 0f;
@@ -270,11 +271,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
         _requestedCrouchInAir = false;
 
-        if (slidingAudio == null)
-        {
-            slidingAudio = AudioManager.instance.GetLoopableAudioSource(sfxBank.SlidingSound(), 1f, true, false);
-        }
-        else if (!slidingAudio.isPlaying){
+        if (!slidingAudio.isPlaying || slidingAudio.volume == 0f) {
+            slidingAudio.volume = 1f;
             slidingAudio.Play();
         }
     }
@@ -282,7 +280,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     private void UpdateStandardMovement(ref Vector3 currentVelocity, Vector3 groundedMovement, float deltaTime)
     {
         //bool isSprinting = _state.Stance is Stance.Stand && _reqestedSprint && groundedMovement.sqrMagnitude > 0f;
-        if (slidingAudio != null && slidingAudio.isPlaying)
+        if (slidingAudio.isPlaying)
         {
             slidingAudio.Stop();
             AudioManager.instance.PlaySoundClipFromList(sfxBank.WalkSounds(), root, 1f, true, true);
@@ -356,7 +354,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region Airborne Logic
     private void HandleAirborneMovement(ref Vector3 currentVelocity, float deltaTime)
     {
-        if (slidingAudio != null && slidingAudio.isPlaying)
+        if (slidingAudio.isPlaying)
         {
             slidingAudio.Stop();
         }
@@ -385,18 +383,6 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         currentVelocity += motor.CharacterUp * effectiveGravity * deltaTime;
 
         // Sound effect managing for the air sfx
-        if (currentVelocity.magnitude > 20f)
-        {
-            if (airAmbience == null)
-            {
-                airAmbience = AudioManager.instance.GetLoopableAudioSource(sfxBank.AirAmbience(), 0f, true, false);
-            }
-            else if (!airAmbience.isPlaying){
-                airAmbience.volume = 0f;
-                airAmbience.Play();
-            }
-        }
-
         if (currentVelocity.magnitude > 60f)
         {
             if (airAmbience.volume < 0.5 && volumeFade != null)
