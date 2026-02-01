@@ -48,19 +48,14 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
     #region Serialized Fields - Movement Settings
     [Header("Grounded Movement")]
+    [SerializeField] private bool slick;
     [SerializeField] private float walkSpeed = 20f;
-    [SerializeField] private float sprintSpeed = 40f;
     //[SerializeField] private float sprintAcceleration = 30f;
     [SerializeField] private float crouchSpeed = 7f;
     [SerializeField] private float walkResponse = 25f;
-    [SerializeField] private float sprintResponse = 25f;
     [SerializeField] private float crouchResponse = 20f;
     [SerializeField] private float groundedStepHeight = 0.5f;
     [SerializeField] private float mantlStepHeight = 2f;
-
-    [Header("Sprint Turning (Realism)")]
-    [SerializeField] private float sprintDeceleration = 50f;
-    [SerializeField] private float sprintRecoveryAcceleration = 60f;
 
     #endregion
 
@@ -73,6 +68,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     [Range(0f, 1f)]
     [SerializeField] private float jumpSustainGravity = 0.4f;
     [SerializeField] private float gravity = -90f;
+    [SerializeField] private float slamGravity = -90f;
     #endregion
 
     #region Serialized Fields - Slide Settings
@@ -82,6 +78,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     [SerializeField] private float slideFriction = 0.8f;
     [SerializeField] private float slideSteerAccelleration = 5f;
     [SerializeField] private float slideGravity = -90f;
+    [Tooltip("How much downward (fall) speed is converted into planar slide speed on landing (0 = none, 1 = full).")]
+    [SerializeField] private float fallToSlideRatio = 1f;
     #endregion
 
     #region Serialized Fields - Height Settings
@@ -102,12 +100,12 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
     private Quaternion _reqestedRotation;
     private Vector3 _reqestedMovement;
-    private bool _reqestedSprint;
+    private bool _reqestedSlam;
     private bool _requestedJump;
     private bool _requestedSustainedJump;
     private bool _requestedCrouch;
     private bool _requestedCrouchInAir;
-
+    private Vector3 _landingImpactVelocity;
     private float _timeSinceUngrounded;
     private float _timeSinceJumpRequest;
     private bool _ungroundedDueToJump;
@@ -117,7 +115,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region Initialization & Input
     public void Initialize()
     {
-        _state.Stance = Stance.Slide;
+        _state.Stance = Stance.Stand;
         _lastState = _state;
         _uncrouchOverLapResults = new Collider[8];
         motor.CharacterController = this;
@@ -128,7 +126,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     {
         _reqestedRotation = input.Rotation;
         _reqestedMovement = input.Rotation * Vector3.ClampMagnitude(new Vector3(input.Move.x, 0f, input.Move.y), 1f);
-        _reqestedSprint = input.Sprint;
+        _reqestedSlam = input.Sprint;
 
         var wasRequestingJump = _requestedJump;
         _requestedJump = _requestedJump || input.Jump;
@@ -214,96 +212,84 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         bool moving = groundedMovement.sqrMagnitude > 0f;
         bool crouching = _state.Stance is Stance.Crouch;
         bool stanceTransition = _lastState.Stance is Stance.Stand || !_lastState.Grounded;
-        
-        return moving && stanceTransition && currentVelocity.magnitude > slideEndSpeed;
+
+        float incomingSpeed = !_lastState.Grounded ? _lastState.Velocity.magnitude : currentVelocity.magnitude;
+
+        return _requestedCrouch && moving && stanceTransition && incomingSpeed > slideEndSpeed;
     }
 
     private void StartSlide(ref Vector3 currentVelocity)
     {
         _state.Stance = Stance.Slide;
-        if (!_lastState.Grounded)
-        {
-            currentVelocity = Vector3.ProjectOnPlane(_lastState.Velocity, motor.GroundingStatus.GroundNormal);
-        }
 
-        float effectiveStartSpeed = (!_lastState.Grounded && !_requestedCrouchInAir) ? 0f : slideStartSpeed;
+        Vector3 groundNormal = motor.GroundingStatus.GroundNormal;
+
+        Vector3 sourceVelocity = (!_lastState.Grounded && _state.Grounded) ? _landingImpactVelocity
+            : (!_lastState.Grounded ? _lastState.Velocity : currentVelocity);
+
+        float downwardSpeed = Mathf.Max(0f, -Vector3.Dot(sourceVelocity, motor.CharacterUp));
+        Vector3 planar = Vector3.ProjectOnPlane(sourceVelocity, groundNormal);
+        float planarSpeed = planar.magnitude;
+
+        float slideSpeed = Mathf.Max(slideStartSpeed, planarSpeed + (downwardSpeed * fallToSlideRatio));
+
+        Vector3 dir = planar.sqrMagnitude > 0.0001f
+            ? planar.normalized
+            : motor.GetDirectionTangentToSurface(motor.CharacterForward, groundNormal).normalized;
+
+        currentVelocity = dir * slideSpeed;
+
         _requestedCrouchInAir = false;
-
-        float slideSpeed = Mathf.Max(effectiveStartSpeed, currentVelocity.magnitude);
-        currentVelocity = motor.GetDirectionTangentToSurface(currentVelocity, motor.GroundingStatus.GroundNormal) * slideSpeed;
     }
 
     private void UpdateStandardMovement(ref Vector3 currentVelocity, Vector3 groundedMovement, float deltaTime)
     {
-        bool isSprinting = _state.Stance is Stance.Stand && _reqestedSprint && groundedMovement.sqrMagnitude > 0f;
+        //bool isSprinting = _state.Stance is Stance.Stand && _reqestedSprint && groundedMovement.sqrMagnitude > 0f;
 
-        if (isSprinting)
-        {
-            currentVelocity = CalculateSprintVelocity(currentVelocity, groundedMovement, deltaTime);
-        }
-        else
-        {
-            float targetSpeed = _state.Stance is Stance.Stand ? walkSpeed : crouchSpeed;
-            float response = _state.Stance is Stance.Stand ? walkResponse : crouchResponse;
-            float currentSpeed = currentVelocity.magnitude;
-            Vector3 desiredDir = groundedMovement.sqrMagnitude > 0.0001f ? groundedMovement.normalized : Vector3.zero;
 
-            currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed * groundedMovement.magnitude, 1f - Mathf.Exp(-response * deltaTime));
-            currentVelocity = desiredDir * currentSpeed;
-            //currentVelocity = Vector3.Lerp(currentVelocity, groundedMovement * targetSpeed, 1f - Mathf.Exp(-response * deltaTime));
-        }
-    }
-
-    private Vector3 CalculateSprintVelocity(Vector3 currentVelocity, Vector3 groundedMovement, float deltaTime)
-    {
+        float targetSpeed = _state.Stance is Stance.Stand ? walkSpeed : crouchSpeed;
+        float response = _state.Stance is Stance.Stand ? walkResponse : crouchResponse;
 
         float currentSpeed = currentVelocity.magnitude;
-        Vector3 desiredDir = groundedMovement.normalized;
-        Vector3 currentDir = currentVelocity.sqrMagnitude > 0.0001f ? currentVelocity.normalized : desiredDir;
+        Vector3 desiredDir = groundedMovement.sqrMagnitude > 0.0001f ? groundedMovement.normalized : Vector3.zero;
 
-        //RECOVERY
-        if (currentSpeed < walkSpeed * 0.9f)
-        {
-            // Use walkResponse for snappy recovery from a dead stop
-            float lerpFactor = 1f - Mathf.Exp(-walkResponse * deltaTime);
-            currentSpeed = Mathf.Lerp(currentSpeed, walkSpeed, lerpFactor);
-        }
-        else
-        {
-            float dynamicTargetSpeed = sprintSpeed;
-            float currentAccel = (currentSpeed < dynamicTargetSpeed) ? sprintRecoveryAcceleration : sprintDeceleration;
-            currentSpeed = Mathf.MoveTowards(currentSpeed, dynamicTargetSpeed, currentAccel * deltaTime);
-        }
-
-        //DIRECTION BLENDING
-        float rotationSharpness = (currentSpeed < walkSpeed) ? 50f : sprintResponse;
-        Vector3 blendedDir = Vector3.Lerp(currentDir, desiredDir, 1f - Mathf.Exp(-rotationSharpness * deltaTime));
-
-        // Normalize safely to handle the exact moment Lerp crosses zero
-        if (blendedDir.sqrMagnitude > 0.001f)
-        {
-            blendedDir.Normalize();
-        }
-        else
-        {
-            blendedDir = desiredDir;
-        }
-
-        return blendedDir * currentSpeed;
+        currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed * groundedMovement.magnitude, 1f - Mathf.Exp(-response * deltaTime));
+        currentVelocity = desiredDir * currentSpeed;
     }
+
     private void UpdateSlideMovement(ref Vector3 currentVelocity, Vector3 groundedMovement, float deltaTime)
     {
-        currentVelocity -= currentVelocity * (slideFriction * deltaTime);
-        Vector3 slopeForce = Vector3.ProjectOnPlane(-motor.CharacterUp, motor.GroundingStatus.GroundNormal) * slideGravity;
-        currentVelocity -= slopeForce * deltaTime;
+        if (slick)
+        {
+            // Only apply slope forces (gravity along the slope)
+            Vector3 slopeForce = Vector3.ProjectOnPlane(-motor.CharacterUp, motor.GroundingStatus.GroundNormal) * slideGravity;
+            currentVelocity -= slopeForce * deltaTime;
+        }
+        else
+        {
+            // Apply slide friction
+                float slopeDecelerationFactor = 0.6f;
+            currentVelocity -= currentVelocity * (slopeDecelerationFactor* slideFriction * deltaTime);
+        }
+
+        // Preserve the velocity after friction/slope so steering doesn't further reduce speed
+        Vector3 prevVelocity = currentVelocity;
 
         if (groundedMovement.sqrMagnitude > 0f)
         {
-            float currentSpeed = currentVelocity.magnitude;
-            Vector3 steerForce = (groundedMovement * currentSpeed - currentVelocity) * slideSteerAccelleration * deltaTime;
-            Vector3 steerVelocity = Vector3.ClampMagnitude(currentVelocity + steerForce, currentSpeed);
+            float speed = prevVelocity.magnitude;
+            Vector3 currentDir = prevVelocity.sqrMagnitude > 0.0001f ? prevVelocity.normalized : groundedMovement.normalized;
+            Vector3 desiredDir = groundedMovement.normalized;
 
-            _state.Acceleration = (steerVelocity - currentVelocity) / deltaTime;
+            // Smoothly blend direction based on slideSteerAccelleration
+            float steerFactor = 1f - Mathf.Exp(-slideSteerAccelleration * deltaTime);
+            Vector3 newDir = Vector3.Lerp(currentDir, desiredDir, steerFactor);
+            if (newDir.sqrMagnitude > 0.001f) newDir.Normalize();
+            else newDir = desiredDir;
+
+            Vector3 steerVelocity = newDir * speed;
+
+            _state.Acceleration = (steerVelocity - prevVelocity) / deltaTime;
             currentVelocity = steerVelocity;
         }
 
@@ -314,6 +300,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region Airborne Logic
     private void HandleAirborneMovement(ref Vector3 currentVelocity, float deltaTime)
     {
+
         _timeSinceUngrounded += deltaTime;
 
         if (_reqestedMovement.sqrMagnitude > 0f)
@@ -327,8 +314,17 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
             currentVelocity -= (planarVel - targetPlanar);
 
         }
+        //float effectiveGravity = (_requestedSustainedJump && Vector3.Dot(currentVelocity, motor.CharacterUp) > 0f) ? gravity * jumpSustainGravity : gravity;
+        // Ground slam: heavier gravity when sprinting in air
+        float effectiveGravity = _reqestedSlam ? slamGravity : gravity;
 
-        float effectiveGravity = (_requestedSustainedJump && Vector3.Dot(currentVelocity, motor.CharacterUp) > 0f) ? gravity * jumpSustainGravity : gravity;
+        // Apply jump sustain gravity reduction if holding jump while ascending
+        if (_requestedSustainedJump && Vector3.Dot(currentVelocity, motor.CharacterUp) > 0f)
+        {
+            effectiveGravity *= jumpSustainGravity;
+        }
+
+
         currentVelocity += motor.CharacterUp * effectiveGravity * deltaTime;
     }
 
@@ -415,7 +411,15 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
             else _state.Stance = Stance.Stand;
         }
 
-        _state.Grounded = motor.GroundingStatus.IsStableOnGround;
+        // detect landing and cache the last airborne velocity as impact velocity
+        bool wasGrounded = _state.Grounded;
+        bool isGroundedNow = motor.GroundingStatus.IsStableOnGround;
+        if (!wasGrounded && isGroundedNow)
+        {
+            _landingImpactVelocity = _lastState.Velocity;
+        }
+
+        _state.Grounded = isGroundedNow;
         _state.Velocity = motor.Velocity;
         _lastState = _tempState;
     }
