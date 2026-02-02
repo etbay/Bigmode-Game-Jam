@@ -8,7 +8,6 @@ using UnityEngine.Windows;
 
 public class Player : MonoBehaviour
 {
-
     [SerializeField] private PlayerCharacter playerCharacter;
     [SerializeField] private PlayerCamera playerCamera;
     [SerializeField] private PlayerAttackSystem playerAttackSystem;
@@ -55,7 +54,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(slickValue);
+        //Debug.Log(slickValue);
         slickValue -= Time.deltaTime * SlickometerData.CurrentSlickDrainRate;
         slickValue = Mathf.Clamp(slickValue, 1f, 3f);
         playerCharacter.isSpeedCapped = slickValue <= 1f;

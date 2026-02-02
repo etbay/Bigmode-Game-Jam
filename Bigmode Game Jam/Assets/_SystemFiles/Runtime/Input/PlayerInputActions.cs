@@ -424,6 +424,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""beff5d71-b104-42b1-a109-fd168ee9bc2b"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""46484eb8-1d56-4cf6-98ba-0618c8b97445"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",

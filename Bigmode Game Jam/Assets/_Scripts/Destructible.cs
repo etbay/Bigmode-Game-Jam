@@ -26,7 +26,7 @@ public class Destructible : MonoBehaviour
 
     private IEnumerator DeathScript(int timeWait)
     {
-        yield return new WaitForSeconds(timeWait / 15f);
+        yield return new WaitForSeconds(timeWait / 15f); // controls deletion after resuming time
         Player.SlickValue += SlickometerData.DestructibleSlickGain;
         Destroy(gameObject);
     }
