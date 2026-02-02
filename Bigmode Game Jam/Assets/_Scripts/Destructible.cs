@@ -9,10 +9,13 @@ public class Destructible : MonoBehaviour
     private bool dead = false;
     public void Kill(int num)
     {
-        dead = true;
-        if (Timeslow.IsSlowed)
+        if (!dead)
         {
-            order = num;
+            dead = true;
+            if (Timeslow.IsSlowed)
+            {
+                order = num;
+            }
         }
     }
 

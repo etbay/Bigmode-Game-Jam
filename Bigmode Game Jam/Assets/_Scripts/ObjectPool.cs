@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using Mono.Cecil.Cil;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class ObjectPool<T> : MonoBehaviour
+public class ObjectPool : MonoBehaviour
 {
     Queue<GameObject> pool = new Queue<GameObject>();
 
@@ -16,7 +17,7 @@ public class ObjectPool<T> : MonoBehaviour
             pool.Enqueue(temp);
         }
     }
-    public T RequestFromPool(GameObject prefab)
+    public GameObject RequestFromPool(GameObject prefab)
     {
         GameObject obj;
         if (pool.Count > 0)
@@ -28,9 +29,9 @@ public class ObjectPool<T> : MonoBehaviour
             obj = Instantiate(prefab, Vector3.zero, Quaternion.identity);
         }
         obj.SetActive(true);
-        return obj.GetComponent<T>();
+        return obj;
     }
-    public T RequestAndReturnToPool(GameObject prefab)
+    public GameObject RequestAndReturnToPool(GameObject prefab)
     {
         GameObject obj;
         if (pool.Count > 0)
@@ -43,7 +44,7 @@ public class ObjectPool<T> : MonoBehaviour
         }
         pool.Enqueue(obj);
         obj.SetActive(true);
-        return obj.GetComponent<T>();
+        return obj;
     }
     public void Enqueue(GameObject obj)
     {

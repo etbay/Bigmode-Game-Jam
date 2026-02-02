@@ -203,6 +203,7 @@ MonoBehaviour:
   tracerWidth: 0.7
   shotDelay: 0.085
   lightTimer: 0.08
+  lightIntensity: 2
 --- !u!114 &5399679669009971225
 MonoBehaviour:
   m_ObjectHideFlags: 0
