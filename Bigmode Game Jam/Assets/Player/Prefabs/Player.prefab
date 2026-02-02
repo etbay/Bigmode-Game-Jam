@@ -365,7 +365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCharacter: {fileID: 7514226201734778419}
   playerCamera: {fileID: 235520489252397107}
-  playerAttackSystem: {fileID: 5514867910161112735}
+  playerAttackSystem: {fileID: 5458232539511459596}
   cameraSpring: {fileID: 7410904314794892351}
   cameraLean: {fileID: 3751641708404328717}
   useCrouchToggle: 0
@@ -383,6 +383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Timeslow
   timeSlow: {fileID: 8300000, guid: 5f120a1ff743ef244a31b829422060ef, type: 3}
   timeResume: {fileID: 8300000, guid: 127c5b2217ada2c419149fbb4d1ebb4d, type: 3}
+  gun: {fileID: 5458232539511459596}
   slowFactor: 0.2
 --- !u!114 &8742350059407653686
 MonoBehaviour:
@@ -689,6 +690,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gun
       objectReference: {fileID: 0}
+    - target: {fileID: 7138350072216565134, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 7714564643024645890}
     - target: {fileID: 7380096638552147770, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.712
@@ -729,34 +734,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3889060674361220469, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3286510217446998175, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5514867910161112735}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
---- !u!1 &374658191462234653 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3286510217446998175, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
+--- !u!114 &5458232539511459596 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7138350072216565134, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
   m_PrefabInstance: {fileID: 2931572888627919490}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5514867910161112735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 374658191462234653}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b642c1a29133814ea4efc5835020d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackSystem
-  playerCamera: {fileID: 7714564643024645890}
-  gunshot: {fileID: 8300000, guid: ffb1101f35dfd014f93de2354081ed5d, type: 3}
 --- !u!4 &5675754648483511736 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7380096638552147770, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}

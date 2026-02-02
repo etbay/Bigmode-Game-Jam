@@ -137,7 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3027604306129983509, guid: f3e7efd3f6d8bfb4ab3fb172f45deeb8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.75
+      value: 27.6
       objectReference: {fileID: 0}
     - target: {fileID: 3027604306129983509, guid: f3e7efd3f6d8bfb4ab3fb172f45deeb8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -718,7 +718,7 @@ MonoBehaviour:
   - Assets/External/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Blue1.mat
   currentMaterialIndex: 0
   renderableMesh:
-    name: UM_OperatedMesh_bf660bd8-aa3f-4e6a-9aaa-4a588134cdbc
+    name: UM_OperatedMesh_fcec4299-0e49-4743-9178-c3c2f548ee24
     skinnedMesh: 0
     sharedMesh: {fileID: 1080648232}
     buidVersion:
@@ -731,7 +731,7 @@ MonoBehaviour:
       OptimizedTopology: 0
       TransformVersion: 0
   sourceMesh: {fileID: 0}
-  sourceMeshRendererGUID: bf660bd8-aa3f-4e6a-9aaa-4a588134cdbc
+  sourceMeshRendererGUID: fcec4299-0e49-4743-9178-c3c2f548ee24
   guid: f645f521-df0f-4638-b9dc-84eb12dc83b3
   localOptions:
     RecalculateTangents: 0
@@ -798,15 +798,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6776378143358868797, guid: 9850762175d108b4b8978180717d586d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -65.16417
+      value: -58.99
       objectReference: {fileID: 0}
     - target: {fileID: 6776378143358868797, guid: 9850762175d108b4b8978180717d586d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.8000019
+      value: 6.16
       objectReference: {fileID: 0}
     - target: {fileID: 6776378143358868797, guid: 9850762175d108b4b8978180717d586d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.7193775
+      value: -14.1
       objectReference: {fileID: 0}
     - target: {fileID: 6776378143358868797, guid: 9850762175d108b4b8978180717d586d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -881,7 +881,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6776378143358868797, guid: 9850762175d108b4b8978180717d586d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -35.80913
+      value: -44.34
       objectReference: {fileID: 0}
     - target: {fileID: 6776378143358868797, guid: 9850762175d108b4b8978180717d586d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -946,7 +946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3027604306129983509, guid: f3e7efd3f6d8bfb4ab3fb172f45deeb8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.7500002
+      value: 8.5
       objectReference: {fileID: 0}
     - target: {fileID: 3027604306129983509, guid: f3e7efd3f6d8bfb4ab3fb172f45deeb8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1302,6 +1302,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5458232539511459596, guid: 7c84707092aa1a948a33a4ce88d5200d, type: 3}
+      propertyPath: shotDelay
+      value: 0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 7271064865773795391, guid: 7c84707092aa1a948a33a4ce88d5200d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -23.77
@@ -1440,7 +1444,7 @@ MonoBehaviour:
   - Assets/External/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Blue1.mat
   currentMaterialIndex: 0
   renderableMesh:
-    name: UM_OperatedMesh_eb729206-edc2-42ab-bef1-9e4f35d82cf9
+    name: UM_OperatedMesh_d807064c-1858-4087-b488-2f22843ffb4f
     skinnedMesh: 0
     sharedMesh: {fileID: 1739290812}
     buidVersion:
@@ -1453,7 +1457,7 @@ MonoBehaviour:
       OptimizedTopology: 0
       TransformVersion: 0
   sourceMesh: {fileID: 0}
-  sourceMeshRendererGUID: eb729206-edc2-42ab-bef1-9e4f35d82cf9
+  sourceMeshRendererGUID: d807064c-1858-4087-b488-2f22843ffb4f
   guid: 9c3d102a-1d48-4327-8398-7dc0d30ecc31
   localOptions:
     RecalculateTangents: 0
@@ -1577,7 +1581,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6776378143358868797, guid: 9850762175d108b4b8978180717d586d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -48.193233
+      value: -56.7
       objectReference: {fileID: 0}
     - target: {fileID: 6776378143358868797, guid: 9850762175d108b4b8978180717d586d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1843,7 +1847,7 @@ MonoBehaviour:
   - Assets/External/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Blue1.mat
   currentMaterialIndex: 0
   renderableMesh:
-    name: UM_OperatedMesh_daa4dc03-f5ae-4a01-9db0-fd2a649c873f
+    name: UM_OperatedMesh_5c65000c-27dd-42b8-bf91-cf46e688c939
     skinnedMesh: 0
     sharedMesh: {fileID: 2106768323}
     buidVersion:
@@ -1856,7 +1860,7 @@ MonoBehaviour:
       OptimizedTopology: 0
       TransformVersion: 0
   sourceMesh: {fileID: 0}
-  sourceMeshRendererGUID: daa4dc03-f5ae-4a01-9db0-fd2a649c873f
+  sourceMeshRendererGUID: 5c65000c-27dd-42b8-bf91-cf46e688c939
   guid: f645f521-df0f-4638-b9dc-84eb12dc83b3
   localOptions:
     RecalculateTangents: 0
@@ -2095,7 +2099,7 @@ MonoBehaviour:
   - Assets/External/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Blue1.mat
   currentMaterialIndex: 0
   renderableMesh:
-    name: UM_OperatedMesh_5c9e1c88-b93e-4b9f-a618-14ebb7d9e2e0
+    name: UM_OperatedMesh_2ff03a00-4d89-4ed7-be52-6967f10d9f7c
     skinnedMesh: 0
     sharedMesh: {fileID: 646933944}
     buidVersion:
@@ -2108,7 +2112,7 @@ MonoBehaviour:
       OptimizedTopology: 0
       TransformVersion: 0
   sourceMesh: {fileID: 0}
-  sourceMeshRendererGUID: 5c9e1c88-b93e-4b9f-a618-14ebb7d9e2e0
+  sourceMeshRendererGUID: 2ff03a00-4d89-4ed7-be52-6967f10d9f7c
   guid: f645f521-df0f-4638-b9dc-84eb12dc83b3
   localOptions:
     RecalculateTangents: 0
@@ -2232,7 +2236,7 @@ MonoBehaviour:
   - Assets/External/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Blue1.mat
   currentMaterialIndex: 0
   renderableMesh:
-    name: UM_OperatedMesh_b8d9155d-9917-4484-9099-a2f62a5d74db
+    name: UM_OperatedMesh_4eae43a8-a40a-4629-9338-c99d8d6a2f16
     skinnedMesh: 0
     sharedMesh: {fileID: 284460922}
     buidVersion:
@@ -2245,7 +2249,7 @@ MonoBehaviour:
       OptimizedTopology: 0
       TransformVersion: 0
   sourceMesh: {fileID: 0}
-  sourceMeshRendererGUID: b8d9155d-9917-4484-9099-a2f62a5d74db
+  sourceMeshRendererGUID: 4eae43a8-a40a-4629-9338-c99d8d6a2f16
   guid: cd7df648-06d6-4eff-ad4c-1d4ebeda60ef
   localOptions:
     RecalculateTangents: 0
@@ -2377,7 +2381,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3027604306129983509, guid: f3e7efd3f6d8bfb4ab3fb172f45deeb8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.7499994
+      value: 15.8
       objectReference: {fileID: 0}
     - target: {fileID: 3027604306129983509, guid: f3e7efd3f6d8bfb4ab3fb172f45deeb8, type: 3}
       propertyPath: m_LocalPosition.z
