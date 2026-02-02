@@ -7,6 +7,7 @@ public class Timeslow : MonoBehaviour
 {
     [SerializeField] private AudioClip timeSlow;
     [SerializeField] private AudioClip timeResume;
+    [SerializeField] private PlayerAttackSystem gun;
     [SerializeField] private float slowFactor = 0.2f; // 1 is full speed, 0.2 is 1/5 speed
 
     private AudioSource audioSource = null; 
@@ -57,6 +58,7 @@ public class Timeslow : MonoBehaviour
 
     private void DeactivateSlowMode()
     {
+        StartCoroutine(gun.FireTimeslowTracers());
         Time.timeScale = 1f;
         audioSource = AudioManager.instance?.PlayOmnicientSoundClip(timeResume, 1f, false, false);
         AudioManager.instance.TimeAudioStretch(1f);
