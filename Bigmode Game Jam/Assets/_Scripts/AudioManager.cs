@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,16 +10,17 @@ using Debug = UnityEngine.Debug;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
+    public static AudioManager instance; // certified single ton
     [SerializeField] public AudioMixer mixer;
+    [SerializeField] private GameObject sfxObject;
+    [SerializeField] private Transform player;
+    [SerializeField] private float timeForAudioStretch = 0.5f;
+
     private AudioMixerGroup sfxGroup;
     private AudioMixerGroup timeSlowedGroup;
     private AudioMixerGroup environmentGroup;
     private AudioMixerGroup musicGroup;
-
-    [SerializeField] private GameObject sfxObject;
-    [SerializeField] private Transform player;
-    [SerializeField] private float timeForAudioStretch = 0.5f;
+    private Queue<GameObject> sfxPlayerPool = new Queue<GameObject>();
 
     private void Awake()
     {
@@ -32,10 +34,23 @@ public class AudioManager : MonoBehaviour
         musicGroup = mixer.FindMatchingGroups("Music")[0];
     }
 
+    private void Start()
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            // Add many sfxplayers to the pool to prevent runtime instantiation
+            var sfxPlayer = Instantiate(sfxObject, sfxObject.transform.position, Quaternion.identity);
+            sfxPlayer.gameObject.SetActive(false);
+            sfxPlayerPool.Enqueue(sfxPlayer);
+        }
+    }
+
     // Plays at the player's position
     public AudioSource PlayOmnicientSoundClip(AudioClip audioClip, float vol, bool slowable, bool pitchRandomly)
     {
-        GameObject obj = Instantiate(sfxObject, player.position, Quaternion.identity);
+        GameObject obj = sfxPlayerPool.Dequeue();
+        obj.transform.position = player.transform.position;
+        obj.SetActive(true);
         AudioSource source = obj.GetComponent<AudioSource>();
         source.clip = audioClip;
         source.volume = vol;
@@ -60,7 +75,9 @@ public class AudioManager : MonoBehaviour
     // Plays at a passed transform's position, typically an enemy or something similar
     public AudioSource PlaySoundClip(AudioClip audioClip, Vector3 spawnpos, float vol, bool slowable, bool pitchRandomly)
     {        
-        GameObject obj = Instantiate(sfxObject, spawnpos, Quaternion.identity);
+        GameObject obj = sfxPlayerPool.Dequeue();
+        obj.transform.position = player.transform.position;
+        obj.SetActive(true);
         AudioSource source = obj.GetComponent<AudioSource>();
         source.clip = audioClip;
         source.volume = vol;
@@ -84,7 +101,9 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource PlaySoundClipFromList(AudioClip[] audioClips, Vector3 spawnpos, float vol, bool slowable, bool pitchRandomly)
     {        
-        GameObject obj = Instantiate(sfxObject, spawnpos, Quaternion.identity);
+        GameObject obj = sfxPlayerPool.Dequeue();
+        obj.transform.position = player.transform.position;
+        obj.SetActive(true);
         AudioSource source = obj.GetComponent<AudioSource>();
         int num = Random.Range(0, audioClips.Length);
         source.clip = audioClips[num];
@@ -96,7 +115,7 @@ public class AudioManager : MonoBehaviour
         else source.outputAudioMixerGroup = sfxGroup;
         if (pitchRandomly)
         {
-            source.pitch += Random.Range(-0.1f, 0.1f);
+            source.pitch += Random.Range(-0.15f, 0.15f);
         }
         source.Play();
         float clipLength = source.clip.length;
@@ -107,7 +126,8 @@ public class AudioManager : MonoBehaviour
     private IEnumerator KillAudioSource(GameObject target, float timeWait)
     {
         yield return new WaitForSeconds(timeWait);
-        Destroy(target); // Controls waiting until a sfx has finished to delete the gameobject audiosource
+        target.SetActive(false);
+        sfxPlayerPool.Enqueue(target); // Controls waiting until a sfx has finished to delete the gameobject audiosource
     }
 
     public void TimeAudioStretch(float finalValue)
