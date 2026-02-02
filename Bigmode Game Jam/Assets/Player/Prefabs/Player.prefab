@@ -299,7 +299,7 @@ MonoBehaviour:
   mantlStepHeight: 2
   airSpeed: 10
   airAcceleration: 25
-  jumpSpeed: 20
+  jumpSpeed: 25
   coyoteTime: 0.3
   jumpSustainGravity: 1
   gravity: -45
