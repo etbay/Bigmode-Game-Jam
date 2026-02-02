@@ -13,6 +13,7 @@ public class PlayerAttackSystem : MonoBehaviour
     [SerializeField] private Transform bulletSpawn;
     [SerializeField] private ParticleSystem impact;
     [SerializeField] private BulletTracer tracerPrefab;
+    [SerializeField] private BulletTracer timeSlowTracerPrefab;
     [SerializeField] private float tracerDecay = 0.6f;
     [SerializeField] private float tracerWidth = 0.7f;
     [SerializeField] private float shotDelay = 0.05f;
@@ -22,16 +23,24 @@ public class PlayerAttackSystem : MonoBehaviour
     private int targetsShotInSlow = 0;
     private float delayTimer;
     private Queue<BulletTracer> tracerPool = new Queue<BulletTracer>();
-    private Queue<Tuple<BulletTracer, Vector3, Vector3, float, float>> timeSlowTracers = new Queue<Tuple<BulletTracer, Vector3, Vector3, float, float>>();
+    private Queue<BulletTracer> timeSlowTracerPool = new Queue<BulletTracer>();
+    private Queue<Tuple<BulletTracer, Vector3, Vector3, float, float>> tracerTracker = new Queue<Tuple<BulletTracer, Vector3, Vector3, float, float>>();
     
     private void Start()
     {
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 20; i++)
         {
             // Add tracers to the pool to prevent runtime instantiation
             var tracer = Instantiate(tracerPrefab, bulletSpawn.position, Quaternion.identity);
             tracer.gameObject.SetActive(false);
             tracerPool.Enqueue(tracer);
+        }
+        for (int i = 0; i < 20; i++)
+        {
+            // Add tracers to the pool to prevent runtime instantiation
+            var tracer = Instantiate(timeSlowTracerPrefab, bulletSpawn.position, Quaternion.identity);
+            tracer.gameObject.SetActive(false);
+            timeSlowTracerPool.Enqueue(tracer);
         }
     }
 
@@ -50,7 +59,7 @@ public class PlayerAttackSystem : MonoBehaviour
         {
             Shoot();
         }
-        else if (_reqestedAttack && delayTimer + (shotDelay / 3) >= shotDelay)
+        else if (_reqestedAttack && delayTimer + (shotDelay / 4) >= shotDelay)
         {
             StartCoroutine(BufferShoot());
         }
@@ -82,10 +91,17 @@ public class PlayerAttackSystem : MonoBehaviour
                 }
                 if (Timeslow.IsSlowed)
                 {
-                    // Wait to display most effects if time is slowed
-                    BulletTracer tracer = tracerPool.Dequeue();
+                    // Shoot out a timeslow indicator
+                    BulletTracer tracer = timeSlowTracerPool.Dequeue();
                     tracer.gameObject.SetActive(true);
-                    timeSlowTracers.Enqueue(new Tuple<BulletTracer, Vector3, Vector3, float, float>(tracer, bulletSpawn.position, hit.point, tracerWidth, tracerDecay));
+                    tracer.FireTracer(bulletSpawn.position, hit.point, tracerWidth);
+                    timeSlowTracerPool.Enqueue(tracer);
+
+                    // Wait to display most effects if time is slowed
+                    // Add real tracers to the tracker pool
+                    tracer = tracerPool.Dequeue();
+                    tracer.gameObject.SetActive(true);
+                    tracerTracker.Enqueue(new Tuple<BulletTracer, Vector3, Vector3, float, float>(tracer, bulletSpawn.position, hit.point, tracerWidth, tracerDecay));
                     tracerPool.Enqueue(tracer);
                 }
                 else
@@ -102,10 +118,16 @@ public class PlayerAttackSystem : MonoBehaviour
                 Vector3 maxDistance = playerCamera.transform.position + playerCamera.transform.forward * 100f;
                 if (Timeslow.IsSlowed)
                 {
-                    // Wait to display most effects if time is slowed
-                    BulletTracer tracer = tracerPool.Dequeue();
+                    // Shoot out a timeslow indicator
+                    BulletTracer tracer = timeSlowTracerPool.Dequeue();
                     tracer.gameObject.SetActive(true);
-                    timeSlowTracers.Enqueue(new Tuple<BulletTracer, Vector3, Vector3, float, float>(tracer, bulletSpawn.position, maxDistance, tracerWidth, tracerDecay));
+                    tracer.FireTracer(bulletSpawn.position, maxDistance, tracerWidth);
+                    timeSlowTracerPool.Enqueue(tracer);
+
+                    // Wait to display most effects if time is slowed
+                     tracer = tracerPool.Dequeue();
+                    tracer.gameObject.SetActive(true);
+                    tracerTracker.Enqueue(new Tuple<BulletTracer, Vector3, Vector3, float, float>(tracer, bulletSpawn.position, maxDistance, tracerWidth, tracerDecay));
                     tracerPool.Enqueue(tracer);
                 }
                 else
@@ -119,17 +141,17 @@ public class PlayerAttackSystem : MonoBehaviour
             AudioManager.instance.PlayOmnicientSoundClip(gunshot, 1f, true, true);
     }
 
-    public IEnumerator FireTimeslowTracers()
+    public IEnumerator FireTrackedTracers()
     {
         while (Timeslow.IsSlowed)
         {
             yield return null;
         }
-        while (timeSlowTracers.Count > 0)
+        while (tracerTracker.Count > 0)
         {
             yield return new WaitForSeconds(1/15f);
             targetsShotInSlow = 0;
-            var tracer = timeSlowTracers.Dequeue();
+            var tracer = tracerTracker.Dequeue();
             tracer.Item1.FireTracer(tracer.Item2, tracer.Item3, tracer.Item4, tracer.Item5);
         }
     }

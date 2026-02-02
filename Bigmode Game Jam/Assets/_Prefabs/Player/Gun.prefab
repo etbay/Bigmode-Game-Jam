@@ -195,6 +195,7 @@ MonoBehaviour:
   bulletSpawn: {fileID: 8296141156053797861}
   impact: {fileID: 8947031527597039232, guid: a721fbb320cc7404ebc2bf699b1904c9, type: 3}
   tracerPrefab: {fileID: 1540676930395797113, guid: a7dbd02c8d617c74fb3fb610844668ff, type: 3}
+  timeSlowTracerPrefab: {fileID: 1540676930395797113, guid: 005b871557da41c42bf3f247d96dfca6, type: 3}
   tracerDecay: 0.6
   tracerWidth: 0.7
   shotDelay: 0.085

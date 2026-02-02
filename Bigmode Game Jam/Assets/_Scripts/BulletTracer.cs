@@ -14,7 +14,15 @@ public class BulletTracer : MonoBehaviour
         StartCoroutine(BulletDecay(line, decay));
         return this;
     }
-
+    public BulletTracer FireTracer(Vector3 start, Vector3 end, float startWidth)
+    {
+        line.enabled = true;
+        line.widthMultiplier = startWidth;
+        line.SetPosition(0, start);
+        line.SetPosition(1, end);
+        StartCoroutine(BulletDecay(line));
+        return this;
+    }
     private IEnumerator BulletDecay(LineRenderer line, float time)
     {
         float initialWidth = line.widthMultiplier;
@@ -26,6 +34,14 @@ public class BulletTracer : MonoBehaviour
             elapsedTime += Time.deltaTime;
         }
         line.widthMultiplier = 0f;
+        line.gameObject.SetActive(false);
+    }
+    private IEnumerator BulletDecay(LineRenderer line)
+    {
+        while (Timeslow.IsSlowed)
+        {
+            yield return null;
+        }
         line.gameObject.SetActive(false);
     }
 }

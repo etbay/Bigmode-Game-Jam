@@ -58,7 +58,7 @@ public class Timeslow : MonoBehaviour
 
     private void DeactivateSlowMode()
     {
-        StartCoroutine(gun.FireTimeslowTracers());
+        StartCoroutine(gun.FireTrackedTracers());
         Time.timeScale = 1f;
         audioSource = AudioManager.instance?.PlayOmnicientSoundClip(timeResume, 1f, false, false);
         AudioManager.instance.TimeAudioStretch(1f);
