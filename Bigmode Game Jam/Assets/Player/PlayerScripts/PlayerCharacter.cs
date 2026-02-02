@@ -289,7 +289,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         if (slidingAudio.isPlaying)
         {
             slidingAudio.Stop();
-            AudioManager.instance.PlaySoundClipFromList(sfxBank.WalkSounds(), root, 1f, true, true);
+            AudioManager.instance.PlaySoundClipFromList(sfxBank.WalkSounds(), root.position, 1f, true, true);
         }
 
         float targetSpeed = _state.Stance is Stance.Stand ? walkSpeed : crouchSpeed;
@@ -313,7 +313,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         if ((footstepTimer >= footstepInterval && !stopped))
         {
             footstepTimer = 0f;
-            AudioManager.instance.PlaySoundClipFromList(sfxBank.WalkSounds(), root, 1f, true, true);
+            AudioManager.instance.PlaySoundClipFromList(sfxBank.WalkSounds(), root.position, 1f, true, true);
         }
     }
 

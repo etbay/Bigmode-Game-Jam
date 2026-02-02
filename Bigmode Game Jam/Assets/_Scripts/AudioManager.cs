@@ -58,9 +58,9 @@ public class AudioManager : MonoBehaviour
     }
 
     // Plays at a passed transform's position, typically an enemy or something similar
-    public AudioSource PlaySoundClip(AudioClip audioClip, Transform spawnTransform, float vol, bool slowable, bool pitchRandomly)
+    public AudioSource PlaySoundClip(AudioClip audioClip, Vector3 spawnpos, float vol, bool slowable, bool pitchRandomly)
     {        
-        GameObject obj = Instantiate(sfxObject, spawnTransform.position, Quaternion.identity);
+        GameObject obj = Instantiate(sfxObject, spawnpos, Quaternion.identity);
         AudioSource source = obj.GetComponent<AudioSource>();
         source.clip = audioClip;
         source.volume = vol;
@@ -82,9 +82,9 @@ public class AudioManager : MonoBehaviour
         return source;
     }
 
-    public AudioSource PlaySoundClipFromList(AudioClip[] audioClips, Transform spawnTransform, float vol, bool slowable, bool pitchRandomly)
+    public AudioSource PlaySoundClipFromList(AudioClip[] audioClips, Vector3 spawnpos, float vol, bool slowable, bool pitchRandomly)
     {        
-        GameObject obj = Instantiate(sfxObject, spawnTransform.position, Quaternion.identity);
+        GameObject obj = Instantiate(sfxObject, spawnpos, Quaternion.identity);
         AudioSource source = obj.GetComponent<AudioSource>();
         int num = Random.Range(0, audioClips.Length);
         source.clip = audioClips[num];
@@ -93,10 +93,7 @@ public class AudioManager : MonoBehaviour
         {
             source.outputAudioMixerGroup = timeSlowedGroup;
         }
-        else
-        {
-            source.outputAudioMixerGroup = sfxGroup;
-        }
+        else source.outputAudioMixerGroup = sfxGroup;
         if (pitchRandomly)
         {
             source.pitch += Random.Range(-0.1f, 0.1f);

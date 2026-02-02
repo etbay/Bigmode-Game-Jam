@@ -4,19 +4,22 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using Debug = UnityEngine.Debug;
 
 public class PlayerAttackSystem : MonoBehaviour
 {
     [SerializeField] private Camera playerCamera;
-    [SerializeField] private AudioClip gunshot;
+    [SerializeField] private WeaponSFXBank sfxBank;
     [SerializeField] private Transform bulletSpawn;
     [SerializeField] private ParticleSystem impact;
+    [SerializeField] private Light muzzleFlashLight;
     [SerializeField] private BulletTracer tracerPrefab;
     [SerializeField] private BulletTracer timeSlowTracerPrefab;
     [SerializeField] private float tracerDecay = 0.6f;
     [SerializeField] private float tracerWidth = 0.7f;
     [SerializeField] private float shotDelay = 0.05f;
+    [SerializeField] private float lightTimer = 0.08f;
 
     private bool _reqestedAttack = false;
     // private PlayerInputActions _inputActions;
@@ -42,6 +45,7 @@ public class PlayerAttackSystem : MonoBehaviour
             tracer.gameObject.SetActive(false);
             timeSlowTracerPool.Enqueue(tracer);
         }
+        muzzleFlashLight.enabled = false;
     }
 
     public void updateInput(CharacterInput input)
@@ -72,6 +76,7 @@ public class PlayerAttackSystem : MonoBehaviour
         {
             targetsShotInSlow += 1;
         }
+        StartCoroutine(MuzzleFlash(lightTimer));
         RaycastHit hit;
             if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit))
             {
@@ -138,7 +143,7 @@ public class PlayerAttackSystem : MonoBehaviour
                     tracerPool.Enqueue(tracer);
                 }
             }
-            AudioManager.instance.PlayOmnicientSoundClip(gunshot, 1f, true, true);
+            AudioManager.instance.PlayOmnicientSoundClip(sfxBank.GunshotSound(), 1f, true, true);
     }
 
     public IEnumerator FireTrackedTracers()
@@ -153,6 +158,9 @@ public class PlayerAttackSystem : MonoBehaviour
             targetsShotInSlow = 0;
             var tracer = tracerTracker.Dequeue();
             tracer.Item1.FireTracer(tracer.Item2, tracer.Item3, tracer.Item4, tracer.Item5);
+            // tuple is: bullettracer, its recorded spawn, its recorded end point, its recordedwidth, and its recorded decayrate
+
+            AudioManager.instance.PlaySoundClipFromList(sfxBank.TracerSounds(), tracer.Item2, 1f, true, true);
         }
     }
     
@@ -163,5 +171,19 @@ public class PlayerAttackSystem : MonoBehaviour
             yield return null;
         }
         Shoot();
+    }
+    private IEnumerator MuzzleFlash(float time)
+    {
+        muzzleFlashLight.enabled = true;
+        float initialIntensity = muzzleFlashLight.intensity;
+        float elapsedTime = 0f;
+        while (elapsedTime < time)
+        {
+            elapsedTime += Time.deltaTime;
+            muzzleFlashLight.intensity = Mathf.Lerp(initialIntensity, 0f, elapsedTime);
+            yield return null;
+        }
+        muzzleFlashLight.enabled = false;
+        muzzleFlashLight.intensity = initialIntensity;
     }
 }
