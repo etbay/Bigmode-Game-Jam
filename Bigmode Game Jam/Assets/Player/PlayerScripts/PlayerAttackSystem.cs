@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -12,13 +13,14 @@ public class PlayerAttackSystem : MonoBehaviour
     [SerializeField] private Transform bulletSpawn;
     [SerializeField] private ParticleSystem impact;
     [SerializeField] private BulletTracer tracerPrefab;
-    [SerializeField] private float tracerDecay = 1.2f;
-    [SerializeField] private float tracerWidth = 0.4f;
-    
-    
+    [SerializeField] private float tracerDecay = 0.6f;
+    [SerializeField] private float tracerWidth = 0.7f;
+    [SerializeField] private float shotDelay = 0.05f;
+
     private bool _reqestedAttack = false;
     // private PlayerInputActions _inputActions;
     private int targetsShotInSlow = 0;
+    private float delayTimer;
     private Queue<BulletTracer> tracerPool = new Queue<BulletTracer>();
     private Queue<Tuple<BulletTracer, Vector3, Vector3, float, float>> timeSlowTracers = new Queue<Tuple<BulletTracer, Vector3, Vector3, float, float>>();
     
@@ -40,14 +42,23 @@ public class PlayerAttackSystem : MonoBehaviour
 
     private void Update()
     {
-        if (_reqestedAttack)
+        if (delayTimer <= shotDelay)
+        {
+            delayTimer += Time.deltaTime;
+        }
+        if (_reqestedAttack && delayTimer >= shotDelay)
         {
             Shoot();
+        }
+        else if (_reqestedAttack && delayTimer + (shotDelay / 3) >= shotDelay)
+        {
+            StartCoroutine(BufferShoot());
         }
     }
 
     private void Shoot()
     {
+        delayTimer = 0;
         if (Timeslow.IsSlowed)
         {
             targetsShotInSlow += 1;
@@ -121,5 +132,14 @@ public class PlayerAttackSystem : MonoBehaviour
             var tracer = timeSlowTracers.Dequeue();
             tracer.Item1.FireTracer(tracer.Item2, tracer.Item3, tracer.Item4, tracer.Item5);
         }
+    }
+    
+    private IEnumerator BufferShoot()
+    {
+        while (delayTimer < shotDelay)
+        {
+            yield return null;
+        }
+        Shoot();
     }
 }

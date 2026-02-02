@@ -197,6 +197,7 @@ MonoBehaviour:
   tracerPrefab: {fileID: 1540676930395797113, guid: a7dbd02c8d617c74fb3fb610844668ff, type: 3}
   tracerDecay: 0.6
   tracerWidth: 0.7
+  shotDelay: 0.085
 --- !u!1 &6419946184600289934
 GameObject:
   m_ObjectHideFlags: 0
