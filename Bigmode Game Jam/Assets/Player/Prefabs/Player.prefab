@@ -756,6 +756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackSystem
   playerCamera: {fileID: 7714564643024645890}
+  gunshot: {fileID: 8300000, guid: ffb1101f35dfd014f93de2354081ed5d, type: 3}
 --- !u!4 &5675754648483511736 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7380096638552147770, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
