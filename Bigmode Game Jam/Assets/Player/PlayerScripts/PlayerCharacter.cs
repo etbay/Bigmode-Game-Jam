@@ -141,9 +141,17 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
     public void UpdateInput(CharacterInput input)
     {
+
+
         _reqestedRotation = input.Rotation;
         _reqestedMovement = input.Rotation * Vector3.ClampMagnitude(new Vector3(input.Move.x, 0f, input.Move.y), 1f);
-        _reqestedSlam = input.Sprint;
+        _reqestedSlam = input.Crouch switch
+        {
+            CrouchInput.Toggle => !_requestedCrouch,
+            CrouchInput.Crouch => true,
+            CrouchInput.UnCrouch => false,
+            _ => _requestedCrouch
+        };
 
         var wasRequestingJump = _requestedJump;
         _requestedJump = _requestedJump || input.Jump;
@@ -263,9 +271,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
         float slideSpeed = Mathf.Max(slideStartSpeed, planarSpeed + (downwardSpeed * fallToSlideRatio));
 
-        Vector3 dir = planar.sqrMagnitude > 0.0001f
-            ? planar.normalized
-            : motor.GetDirectionTangentToSurface(motor.CharacterForward, groundNormal).normalized;
+        Vector3 dir = motor.GetDirectionTangentToSurface(motor.CharacterForward, groundNormal).normalized;
 
         currentVelocity = dir * slideSpeed;
 

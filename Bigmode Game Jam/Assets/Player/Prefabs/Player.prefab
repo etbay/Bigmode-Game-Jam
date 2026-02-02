@@ -289,7 +289,7 @@ MonoBehaviour:
   playerCamera: {fileID: 7714564643024645890}
   sfxBank: {fileID: 8742350059407653686}
   speedBoostMultiplier: 1
-  isSpeedCapped: 0
+  isSpeedCapped: 1
   slick: 0
   walkSpeed: 9
   crouchSpeed: 9
