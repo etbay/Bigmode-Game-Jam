@@ -25,34 +25,16 @@ public class PlayerAttackSystem : MonoBehaviour
     // private PlayerInputActions _inputActions;
     private int targetsShotInSlow = 0;
     private float delayTimer;
-    private Queue<BulletTracer> tracerPool = new Queue<BulletTracer>();
-    private Queue<BulletTracer> timeSlowTracerPool = new Queue<BulletTracer>();
+    ObjectPool<BulletTracer> tracerPool = new ObjectPool<BulletTracer>();
+    ObjectPool<BulletTracer> timeSlowTracerPool = new ObjectPool<BulletTracer>();
+    ObjectPool<ParticleSystem> impactParticles = new ObjectPool<ParticleSystem>();
     private Queue<Tuple<BulletTracer, Vector3, Vector3, float, float>> tracerTracker = new Queue<Tuple<BulletTracer, Vector3, Vector3, float, float>>();
-    private Queue<ParticleSystem> impactParticles = new Queue<ParticleSystem>();
     
     private void Start()
     {
-        for (int i = 0; i < 20; i++)
-        {
-            // Add tracers to the pool to prevent runtime instantiation
-            var tracer = Instantiate(tracerPrefab, bulletSpawn.position, Quaternion.identity);
-            tracer.gameObject.SetActive(false);
-            tracerPool.Enqueue(tracer);
-        }
-        for (int i = 0; i < 20; i++)
-        {
-            // Add tracers to the pool to prevent runtime instantiation
-            var tracer = Instantiate(timeSlowTracerPrefab, bulletSpawn.position, Quaternion.identity);
-            tracer.gameObject.SetActive(false);
-            timeSlowTracerPool.Enqueue(tracer);
-        }
-        for (int i = 0; i < 20; i++)
-        {
-            // Add particles to the pool to prevent runtime instantiation
-            var particle = Instantiate(impact, bulletSpawn.position, Quaternion.identity);
-            particle.gameObject.SetActive(false);
-            impactParticles.Enqueue(particle);
-        }
+        tracerPool.GeneratePool(20, tracerPrefab.gameObject);
+        timeSlowTracerPool.GeneratePool(20, timeSlowTracerPrefab.gameObject);
+        impactParticles.GeneratePool(20, impact.gameObject);
         muzzleFlashLight.enabled = false;
     }
 
@@ -105,24 +87,20 @@ public class PlayerAttackSystem : MonoBehaviour
                 if (Timeslow.IsSlowed)
                 {
                     // Shoot out a timeslow indicator
-                    BulletTracer tracer = timeSlowTracerPool.Dequeue();
+                    var tracer = timeSlowTracerPool.RequestAndReturnToPool(timeSlowTracerPrefab.gameObject);
                     tracer.gameObject.SetActive(true);
                     tracer.FireTracer(bulletSpawn.position, hit.point, tracerWidth);
-                    timeSlowTracerPool.Enqueue(tracer);
 
                     // Wait to display most effects if time is slowed
                     // Add real tracers to the tracker pool
-                    tracer = tracerPool.Dequeue();
-                    tracer.gameObject.SetActive(true);
+                    tracer = tracerPool.RequestAndReturnToPool(tracerPrefab.gameObject);
                     tracerTracker.Enqueue(new Tuple<BulletTracer, Vector3, Vector3, float, float>(tracer, bulletSpawn.position, hit.point, tracerWidth, tracerDecay));
-                    tracerPool.Enqueue(tracer);
                 }
                 else
                 {
-                    BulletTracer tracer = tracerPool.Dequeue();
+                    var tracer = tracerPool.RequestAndReturnToPool(tracerPrefab.gameObject);
                     tracer.gameObject.SetActive(true);
                     tracer.FireTracer(bulletSpawn.position, hit.point, tracerWidth, tracerDecay);
-                    tracerPool.Enqueue(tracer);
                     ActivateImpactParticles(hit);
                 }
 
@@ -133,23 +111,19 @@ public class PlayerAttackSystem : MonoBehaviour
                 if (Timeslow.IsSlowed)
                 {
                     // Shoot out a timeslow indicator
-                    BulletTracer tracer = timeSlowTracerPool.Dequeue();
+                    var tracer = timeSlowTracerPool.RequestAndReturnToPool(timeSlowTracerPrefab.gameObject);
                     tracer.gameObject.SetActive(true);
                     tracer.FireTracer(bulletSpawn.position, maxDistance, tracerWidth);
-                    timeSlowTracerPool.Enqueue(tracer);
 
                     // Wait to display most effects if time is slowed
-                    tracer = tracerPool.Dequeue();
-                    tracer.gameObject.SetActive(true);
+                    tracer = tracerPool.RequestAndReturnToPool(tracerPrefab.gameObject);
                     tracerTracker.Enqueue(new Tuple<BulletTracer, Vector3, Vector3, float, float>(tracer, bulletSpawn.position, maxDistance, tracerWidth, tracerDecay));
-                    tracerPool.Enqueue(tracer);
                 }
                 else
                 {
-                    BulletTracer tracer = tracerPool.Dequeue();
+                    var tracer = tracerPool.RequestAndReturnToPool(tracerPrefab.gameObject);
                     tracer.gameObject.SetActive(true);
                     tracer.FireTracer(bulletSpawn.position, maxDistance, tracerWidth, tracerDecay);
-                    tracerPool.Enqueue(tracer);
                 }
             }
             AudioManager.instance.PlayOmnicientSoundClip(sfxBank.GunshotSound(), 1f, true, true);
@@ -166,6 +140,7 @@ public class PlayerAttackSystem : MonoBehaviour
             yield return new WaitForSeconds(1/15f);
             targetsShotInSlow = 0;
             var tracer = tracerTracker.Dequeue();
+            tracer.Item1.gameObject.SetActive(true);
             tracer.Item1.FireTracer(tracer.Item2, tracer.Item3, tracer.Item4, tracer.Item5);
             // tuple is: bullettracer, its recorded spawn, its recorded end point, its recordedwidth, and its recorded decayrate
             AudioManager.instance.PlaySoundClipFromList(sfxBank.TracerSounds(), tracer.Item2, 1f, true, true);
@@ -196,11 +171,9 @@ public class PlayerAttackSystem : MonoBehaviour
     }
     private void ActivateImpactParticles(RaycastHit hit)
     {
-        ParticleSystem impactFX = impactParticles.Dequeue();
-        impactFX.gameObject.SetActive(true);
+        ParticleSystem impactFX = impactParticles.RequestAndReturnToPool(impact.gameObject);
         impactFX.gameObject.transform.position = hit.point;
         impactFX.gameObject.transform.forward = hit.normal;
         impactFX.Play();
-        impactParticles.Enqueue(impactFX);
     }
 }
