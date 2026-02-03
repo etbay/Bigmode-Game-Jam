@@ -214,6 +214,12 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     }
     #endregion
 
+    // FOV effect
+    private void updateFOV(float velMag)
+    {
+        playerCamera.fieldOfView = 90f + Mathf.Clamp((velMag - 30f) / 3, 0f, 30f);
+    }
+
     #region Grounded Logic
     private void HandleGroundedMovement(ref Vector3 currentVelocity, float deltaTime)
     {
@@ -222,6 +228,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
             AudioManager.instance.PlayOmnicientSoundClip(sfxBank.LandSound(), 1f, true, true);
         }
         airAmbience.volume = Mathf.Clamp01(currentVelocity.magnitude / 400);
+        updateFOV(currentVelocity.magnitude);
         
         _ungroundedDueToJump = false;
         _timeSinceUngrounded = 0f;
@@ -360,6 +367,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region Airborne Logic
     private void HandleAirborneMovement(ref Vector3 currentVelocity, float deltaTime)
     {
+        updateFOV(currentVelocity.magnitude);
         if (slidingAudio.isPlaying)
         {
             slidingAudio.Stop();
