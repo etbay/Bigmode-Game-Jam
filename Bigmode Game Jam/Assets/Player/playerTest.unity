@@ -119,6 +119,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &35468996
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1983244839222557795, guid: 6efca1720bf6c774192bc3575e08e980, type: 3}
+      propertyPath: m_Name
+      value: PoolManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944194595281289809, guid: 6efca1720bf6c774192bc3575e08e980, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.76201
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944194595281289809, guid: 6efca1720bf6c774192bc3575e08e980, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944194595281289809, guid: 6efca1720bf6c774192bc3575e08e980, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.44449
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944194595281289809, guid: 6efca1720bf6c774192bc3575e08e980, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944194595281289809, guid: 6efca1720bf6c774192bc3575e08e980, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944194595281289809, guid: 6efca1720bf6c774192bc3575e08e980, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944194595281289809, guid: 6efca1720bf6c774192bc3575e08e980, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944194595281289809, guid: 6efca1720bf6c774192bc3575e08e980, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944194595281289809, guid: 6efca1720bf6c774192bc3575e08e980, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944194595281289809, guid: 6efca1720bf6c774192bc3575e08e980, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6efca1720bf6c774192bc3575e08e980, type: 3}
 --- !u!1001 &109460774
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -718,7 +775,7 @@ MonoBehaviour:
   - Assets/External/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Blue1.mat
   currentMaterialIndex: 0
   renderableMesh:
-    name: UM_OperatedMesh_fbf10637-957f-4e8d-856c-f839c60cd5c6
+    name: UM_OperatedMesh_9b185044-95b5-49d5-ad91-71e88deaa6e5
     skinnedMesh: 0
     sharedMesh: {fileID: 1080648232}
     buidVersion:
@@ -731,7 +788,7 @@ MonoBehaviour:
       OptimizedTopology: 0
       TransformVersion: 0
   sourceMesh: {fileID: 0}
-  sourceMeshRendererGUID: fbf10637-957f-4e8d-856c-f839c60cd5c6
+  sourceMeshRendererGUID: 9b185044-95b5-49d5-ad91-71e88deaa6e5
   guid: f645f521-df0f-4638-b9dc-84eb12dc83b3
   localOptions:
     RecalculateTangents: 0
@@ -1440,7 +1497,7 @@ MonoBehaviour:
   - Assets/External/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Blue1.mat
   currentMaterialIndex: 0
   renderableMesh:
-    name: UM_OperatedMesh_5d520f9f-22b6-4503-9e79-a99924740eef
+    name: UM_OperatedMesh_68dcda53-7dd2-4788-ac86-38ea1991d165
     skinnedMesh: 0
     sharedMesh: {fileID: 1739290812}
     buidVersion:
@@ -1453,7 +1510,7 @@ MonoBehaviour:
       OptimizedTopology: 0
       TransformVersion: 0
   sourceMesh: {fileID: 0}
-  sourceMeshRendererGUID: 5d520f9f-22b6-4503-9e79-a99924740eef
+  sourceMeshRendererGUID: 68dcda53-7dd2-4788-ac86-38ea1991d165
   guid: 9c3d102a-1d48-4327-8398-7dc0d30ecc31
   localOptions:
     RecalculateTangents: 0
@@ -1843,7 +1900,7 @@ MonoBehaviour:
   - Assets/External/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Blue1.mat
   currentMaterialIndex: 0
   renderableMesh:
-    name: UM_OperatedMesh_49154ef7-5297-4bf2-9f5d-4ef987f7782a
+    name: UM_OperatedMesh_b69d1eeb-ed48-4912-9bec-90c9d891cdcc
     skinnedMesh: 0
     sharedMesh: {fileID: 2106768323}
     buidVersion:
@@ -1856,7 +1913,7 @@ MonoBehaviour:
       OptimizedTopology: 0
       TransformVersion: 0
   sourceMesh: {fileID: 0}
-  sourceMeshRendererGUID: 49154ef7-5297-4bf2-9f5d-4ef987f7782a
+  sourceMeshRendererGUID: b69d1eeb-ed48-4912-9bec-90c9d891cdcc
   guid: f645f521-df0f-4638-b9dc-84eb12dc83b3
   localOptions:
     RecalculateTangents: 0
@@ -2095,7 +2152,7 @@ MonoBehaviour:
   - Assets/External/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Blue1.mat
   currentMaterialIndex: 0
   renderableMesh:
-    name: UM_OperatedMesh_3e7ba1a2-73e0-49a5-99d2-205dcf351ef8
+    name: UM_OperatedMesh_995691da-95cc-4c78-a11d-a96bb927a645
     skinnedMesh: 0
     sharedMesh: {fileID: 646933944}
     buidVersion:
@@ -2108,7 +2165,7 @@ MonoBehaviour:
       OptimizedTopology: 0
       TransformVersion: 0
   sourceMesh: {fileID: 0}
-  sourceMeshRendererGUID: 3e7ba1a2-73e0-49a5-99d2-205dcf351ef8
+  sourceMeshRendererGUID: 995691da-95cc-4c78-a11d-a96bb927a645
   guid: f645f521-df0f-4638-b9dc-84eb12dc83b3
   localOptions:
     RecalculateTangents: 0
@@ -2232,7 +2289,7 @@ MonoBehaviour:
   - Assets/External/Gridbox Prototype Materials/Materials/URP/Prototype_512x512_Blue1.mat
   currentMaterialIndex: 0
   renderableMesh:
-    name: UM_OperatedMesh_9a747896-94f1-4ff0-a49f-a68d921ac7f0
+    name: UM_OperatedMesh_5f89d83a-2e4d-49fd-a07b-60550a8692d1
     skinnedMesh: 0
     sharedMesh: {fileID: 284460922}
     buidVersion:
@@ -2245,7 +2302,7 @@ MonoBehaviour:
       OptimizedTopology: 0
       TransformVersion: 0
   sourceMesh: {fileID: 0}
-  sourceMeshRendererGUID: 9a747896-94f1-4ff0-a49f-a68d921ac7f0
+  sourceMeshRendererGUID: 5f89d83a-2e4d-49fd-a07b-60550a8692d1
   guid: cd7df648-06d6-4eff-ad4c-1d4ebeda60ef
   localOptions:
     RecalculateTangents: 0
@@ -2891,6 +2948,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 7782815550518595060}
+  - {fileID: 35468996}
   - {fileID: 1044755968}
   - {fileID: 1164573351}
   - {fileID: 1498248722}
