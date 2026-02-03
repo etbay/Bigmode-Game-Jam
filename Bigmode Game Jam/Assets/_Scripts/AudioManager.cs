@@ -44,7 +44,7 @@ public class AudioManager : MonoBehaviour
     // Plays at the player's position
     public AudioSource PlayOmnicientSoundClip(AudioClip audioClip, float vol, bool slowable, bool pitchRandomly)
     {
-        GameObject obj = sfxPlayerPool.RequestFromPool(sfxObject);
+        GameObject obj = sfxPlayerPool.RequestFromPool();
         AudioSource source = obj.GetComponent<AudioSource>();
         source.clip = audioClip;
         source.volume = vol;
@@ -69,7 +69,7 @@ public class AudioManager : MonoBehaviour
     // Plays at a passed transform's position, typically an enemy or something similar
     public AudioSource PlaySoundClip(AudioClip audioClip, Vector3 spawnpos, float vol, bool slowable, bool pitchRandomly)
     {        
-        GameObject obj = sfxPlayerPool.RequestFromPool(sfxObject);
+        GameObject obj = sfxPlayerPool.RequestFromPool();
         AudioSource source = obj.GetComponent<AudioSource>();
         source.clip = audioClip;
         source.volume = vol;
@@ -93,7 +93,7 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource PlaySoundClipFromList(AudioClip[] audioClips, Vector3 spawnpos, float vol, bool slowable, bool pitchRandomly)
     {        
-        GameObject obj = sfxPlayerPool.RequestFromPool(sfxObject);
+        GameObject obj = sfxPlayerPool.RequestFromPool();
         AudioSource source = obj.GetComponent<AudioSource>();
         int num = Random.Range(0, audioClips.Length);
         source.clip = audioClips[num];
@@ -172,19 +172,4 @@ public class AudioManager : MonoBehaviour
         }
         source.volume = final;
     }
-    // private GameObject RequestSfxPlayerFromPool()
-    // {
-    //     GameObject obj;
-    //     if (sfxPlayerPool.Count > 0)
-    //     {
-    //         obj = sfxPlayerPool.Dequeue();
-    //         obj.transform.position = player.transform.position;
-    //         obj.SetActive(true);
-    //     }
-    //     else
-    //     {
-    //         obj = Instantiate(sfxObject, player.position, Quaternion.identity);
-    //     }
-    //     return obj;
-    // }
 }

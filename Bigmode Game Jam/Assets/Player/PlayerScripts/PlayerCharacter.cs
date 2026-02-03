@@ -214,6 +214,12 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     }
     #endregion
 
+    // FOV effect
+    private void updateFOV(float velMag)
+    {
+        playerCamera.fieldOfView = 90f + Mathf.Clamp((velMag - 30f) / 3, 0f, 30f);
+    }
+
     #region Grounded Logic
     private void HandleGroundedMovement(ref Vector3 currentVelocity, float deltaTime)
     {
@@ -221,7 +227,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         {
             AudioManager.instance.PlayOmnicientSoundClip(sfxBank.LandSound(), 1f, true, true);
         }
-        airAmbience.volume = 0f;
+        airAmbience.volume = Mathf.Clamp01(currentVelocity.magnitude / 400);
+        updateFOV(currentVelocity.magnitude);
         
         _ungroundedDueToJump = false;
         _timeSinceUngrounded = 0f;
@@ -313,7 +320,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         if ((footstepTimer >= footstepInterval && !stopped))
         {
             footstepTimer = 0f;
-            AudioManager.instance.PlaySoundClipFromList(sfxBank.WalkSounds(), root.position, 1f, true, true);
+            AudioManager.instance.PlaySoundClipFromList(sfxBank.WalkSounds(), root.position, 0.8f, true, true);
         }
     }
 
@@ -360,6 +367,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region Airborne Logic
     private void HandleAirborneMovement(ref Vector3 currentVelocity, float deltaTime)
     {
+        updateFOV(currentVelocity.magnitude);
         if (slidingAudio.isPlaying)
         {
             slidingAudio.Stop();
@@ -388,40 +396,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         }
         currentVelocity += motor.CharacterUp * effectiveGravity * deltaTime;
 
-        // Sound effect managing for the air sfx
-        if (currentVelocity.magnitude > 100f)
-        {
-            if (airAmbience.volume < 0.5 && volumeFade != null)
-            {
-                StopCoroutine(volumeFade);
-            }
-            volumeFade = StartCoroutine(AudioManager.instance.FadeToVolume(airAmbience, airAmbience.volume, 1f, 0.2f));
-        }
-        else if (currentVelocity.magnitude > 50f)
-        {
-            if (volumeFade != null)
-            {
-                StopCoroutine(volumeFade);
-            }
-            volumeFade = StartCoroutine(AudioManager.instance.FadeToVolume(airAmbience, airAmbience.volume, 0.8f, 0.2f));
-        }
-        else if (currentVelocity.magnitude > 20f)
-        {
-            if (volumeFade != null)
-            {
-                StopCoroutine(volumeFade);
-            }
-            volumeFade = StartCoroutine(AudioManager.instance.FadeToVolume(airAmbience, airAmbience.volume, 0.3f, 0.2f));
-        }
-        else if (currentVelocity.magnitude < 20f)
-        {
-            if (volumeFade != null)
-            {
-                StopCoroutine(volumeFade);
-            }
-            volumeFade = StartCoroutine(AudioManager.instance.FadeToVolume(airAmbience, airAmbience.volume, 0f, 0.1f));
-        }
-        
+        airAmbience.volume = Mathf.Clamp01(currentVelocity.magnitude / 200);        
     }
 
     private void ApplyAirControl(ref Vector3 currentVelocity, float deltaTime)

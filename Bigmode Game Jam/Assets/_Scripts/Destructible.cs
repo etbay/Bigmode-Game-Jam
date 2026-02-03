@@ -31,6 +31,9 @@ public class Destructible : MonoBehaviour
     {
         yield return new WaitForSeconds(timeWait / 15f); // controls deletion after resuming time
         Player.SlickValue += SlickometerData.DestructibleSlickGain;
+        var explosion = PoolManager.instance.GetItemFromPool("Explosives");
+        explosion.transform.position = gameObject.transform.position;
+        explosion.GetComponent<Explosion>()?.Play();
         Destroy(gameObject);
     }
 }
