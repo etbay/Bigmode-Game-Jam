@@ -14868,4 +14868,4 @@ MonoBehaviour:
   Smoke: {fileID: 5266286130894324694}
   Sparks: {fileID: 662202124420355822}
   ExplosionSoundEffects:
-  - {fileID: 8300000, guid: a659afbd62f5c0f4998d705949245217, type: 3}
+  - {fileID: 8300000, guid: 24df7129265f2db4dade990a20e81e8d, type: 3}
