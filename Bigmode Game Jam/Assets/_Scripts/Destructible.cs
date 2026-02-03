@@ -31,11 +31,9 @@ public class Destructible : MonoBehaviour
     {
         yield return new WaitForSeconds(timeWait / 15f); // controls deletion after resuming time
         Player.SlickValue += SlickometerData.DestructibleSlickGain;
-        // Create an explosion from an explosion pool. 
-        // Where is the pool stored:
-        // - general game manager singleton
-        // - unique explosionpool script singleton
-        // - objectpool pool script to hold a hash of each object pool by indifier <- most efficient?
+        var explosion = PoolManager.instance.GetItemFromPool("Explosives");
+        explosion.transform.position = this.transform.position;
+        explosion.GetComponent<Explosion>()?.Play();
         Destroy(gameObject);
     }
 }

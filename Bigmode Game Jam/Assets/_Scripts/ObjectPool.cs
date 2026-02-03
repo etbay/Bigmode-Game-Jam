@@ -8,11 +8,13 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour
 {
     Queue<GameObject> pool = new Queue<GameObject>();
+    GameObject prefab;
     GameObject parent;
 
     public void GeneratePool(int count, GameObject prefab)
     {
-        parent = Instantiate(new GameObject("Object Pool"), Vector3.zero, Quaternion.identity); // Instantiate the parent to this group of objects
+        this.prefab = prefab;
+        parent = new GameObject("Object Pool"); // Instantiate the parent to this group of objects
         for (int i = 0; i < count; i++)
         {
             var temp = Instantiate(prefab, Vector3.zero, Quaternion.identity, parent.transform);
@@ -20,7 +22,7 @@ public class ObjectPool : MonoBehaviour
             pool.Enqueue(temp);
         }
     }
-    public GameObject RequestFromPool(GameObject prefab)
+    public GameObject RequestFromPool()
     {
         GameObject obj;
         if (pool.Count > 0)
@@ -34,7 +36,7 @@ public class ObjectPool : MonoBehaviour
         obj.SetActive(true);
         return obj;
     }
-    public GameObject RequestAndReturnToPool(GameObject prefab)
+    public GameObject RequestAndReturnToPool()
     {
         GameObject obj;
         if (pool.Count > 0)
@@ -52,5 +54,9 @@ public class ObjectPool : MonoBehaviour
     public void Enqueue(GameObject obj)
     {
         pool.Enqueue(obj);
+    }
+    public GameObject GetPrefab()
+    {
+        return prefab;
     }
 }

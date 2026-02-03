@@ -59,16 +59,16 @@ public class PlayerAttackSystem : MonoBehaviour
     private void Start()
     {
         tracerPool = gameObject.AddComponent<ObjectPool>();
-        tracerPool.GeneratePool(20, tracerPrefab.gameObject);
+        tracerPool.GeneratePool(15, tracerPrefab.gameObject);
 
         timeSlowTracerPool = gameObject.AddComponent<ObjectPool>();
-        timeSlowTracerPool.GeneratePool(20, timeSlowTracerPrefab.gameObject);
+        timeSlowTracerPool.GeneratePool(15, timeSlowTracerPrefab.gameObject);
 
         impactParticles = gameObject.AddComponent<ObjectPool>();
-        impactParticles.GeneratePool(20, impact.gameObject);
+        impactParticles.GeneratePool(15, impact.gameObject);
 
         hitLights = gameObject.AddComponent<ObjectPool>();
-        hitLights.GeneratePool(20, muzzleFlashLight.gameObject);
+        hitLights.GeneratePool(15, muzzleFlashLight.gameObject);
 
         muzzleFlashLight.enabled = false;
     }
@@ -120,17 +120,17 @@ public class PlayerAttackSystem : MonoBehaviour
                 if (Timeslow.IsSlowed)
                 {
                     // Shoot out a timeslow indicator
-                    var tracer = timeSlowTracerPool.RequestAndReturnToPool(timeSlowTracerPrefab.gameObject);
+                    var tracer = timeSlowTracerPool.RequestAndReturnToPool();
                     tracer.GetComponent<BulletTracer>().FireTracer(bulletSpawn.position, hit.point, tracerWidth);
 
                     // Wait to display most effects if time is slowed
                     // Add real tracers to the tracker pool
-                    tracer = tracerPool.RequestAndReturnToPool(tracerPrefab.gameObject);
+                    tracer = tracerPool.RequestAndReturnToPool();
                     tracerTracker.Enqueue(new TracerDetails(tracer.GetComponent<BulletTracer>(), bulletSpawn.position, hit.point, tracerWidth, tracerDecay, true, hit));
                 }
                 else
                 {
-                    var tracer = tracerPool.RequestAndReturnToPool(tracerPrefab.gameObject);
+                    var tracer = tracerPool.RequestAndReturnToPool();
                     tracer.GetComponent<BulletTracer>().FireTracer(bulletSpawn.position, hit.point, tracerWidth, tracerDecay);
                     ActivateImpactParticles(hit);
                 }
@@ -142,16 +142,16 @@ public class PlayerAttackSystem : MonoBehaviour
                 if (Timeslow.IsSlowed)
                 {
                     // Shoot out a timeslow indicator
-                    var tracer = timeSlowTracerPool.RequestAndReturnToPool(timeSlowTracerPrefab.gameObject);
+                    var tracer = timeSlowTracerPool.RequestAndReturnToPool();
                     tracer.GetComponent<BulletTracer>().FireTracer(bulletSpawn.position, maxDistance, tracerWidth);
 
                     // Wait to display most effects if time is slowed
-                    tracer = tracerPool.RequestAndReturnToPool(tracerPrefab.gameObject);
+                    tracer = tracerPool.RequestAndReturnToPool();
                     tracerTracker.Enqueue(new TracerDetails(tracer.GetComponent<BulletTracer>(), bulletSpawn.position, maxDistance, tracerWidth, tracerDecay, false, new RaycastHit()));
                 }
                 else
                 {
-                    var tracer = tracerPool.RequestAndReturnToPool(tracerPrefab.gameObject);
+                    var tracer = tracerPool.RequestAndReturnToPool();
                     tracer.GetComponent<BulletTracer>().FireTracer(bulletSpawn.position, maxDistance, tracerWidth, tracerDecay);
                 }
             }
@@ -201,12 +201,12 @@ public class PlayerAttackSystem : MonoBehaviour
     }
     private void ActivateImpactParticles(RaycastHit hit)
     {
-        ParticleSystem impactFX = impactParticles.RequestAndReturnToPool(impact.gameObject).GetComponent<ParticleSystem>();
+        ParticleSystem impactFX = impactParticles.RequestAndReturnToPool().GetComponent<ParticleSystem>();
         impactFX.gameObject.transform.position = hit.point;
         impactFX.gameObject.transform.forward = hit.normal;
         impactFX.Play();
         
-        Light hitLight = hitLights.RequestAndReturnToPool(muzzleFlashLight.gameObject).GetComponent<Light>();
+        Light hitLight = hitLights.RequestAndReturnToPool().GetComponent<Light>();
         hitLight.transform.position = hit.point + hit.normal * 0.2f; // spawn a point light where it hits
         hitLight.range *= 3;
         StartCoroutine(MuzzleFlash(hitLight, lightTimer, lightIntensity / 2));

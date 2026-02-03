@@ -9187,6 +9187,52 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3e7efd3f6d8bfb4ab3fb172f45deeb8, type: 3}
+--- !u!1 &726893555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 726893557}
+  - component: {fileID: 726893556}
+  m_Layer: 0
+  m_Name: PoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &726893556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726893555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e7d58d000ca3c24897d33b0d8648c66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoolManager
+  explosionPrefab: {fileID: 8232712347657677558, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
+  explosivesPresent: 0
+--- !u!4 &726893557
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726893555}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.6087, y: 0.25, z: 0.65947}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &733023055
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29778,111 +29824,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4cea7417fc7f7a148a8cf181abb0585c, type: 3}
   m_PrefabInstance: {fileID: 2145183042}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &6040022886649794059
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 662202124420355822, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3228899915552720153, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 7.38896
-      objectReference: {fileID: 0}
-    - target: {fileID: 3228899915552720153, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 3228899915552720153, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.95817
-      objectReference: {fileID: 0}
-    - target: {fileID: 3228899915552720153, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3228899915552720153, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3228899915552720153, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3228899915552720153, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3228899915552720153, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3228899915552720153, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3228899915552720153, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266286130894324694, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266286130894324694, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: InitialModule.rotation3D
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266286130894324694, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: InitialModule.startRotation.scalar
-      value: 3.1415927
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266286130894324694, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: InitialModule.startRotationX.scalar
-      value: 3.1415927
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266286130894324694, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: InitialModule.startRotationY.scalar
-      value: 3.1415927
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266286130894324694, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: InitialModule.startRotation.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266286130894324694, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: InitialModule.startRotationX.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266286130894324694, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: InitialModule.startRotationY.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266286130894324694, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: InitialModule.startRotation.maxCurve.m_Curve.Array.data[0].value
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5266286130894324694, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: InitialModule.startRotation.maxCurve.m_Curve.Array.data[1].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6444637276532976006, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8232712347657677558, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
-      propertyPath: m_Name
-      value: Explosion
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7a6b9699d23d8e9468a2f1ea658ab7dc, type: 3}
 --- !u!1001 &7782815550518595060
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30058,10 +29999,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 7782815550518595060}
+  - {fileID: 726893557}
   - {fileID: 1044755968}
   - {fileID: 1164573351}
   - {fileID: 8050380643912839060}
   - {fileID: 1978279902}
   - {fileID: 840008375}
   - {fileID: 1273534447}
-  - {fileID: 6040022886649794059}
