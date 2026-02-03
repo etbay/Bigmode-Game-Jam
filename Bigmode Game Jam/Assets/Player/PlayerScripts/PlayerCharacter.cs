@@ -292,6 +292,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
     private void UpdateStandardMovement(ref Vector3 currentVelocity, Vector3 groundedMovement, float deltaTime)
     {
+        Vector3 prevVelocity = currentVelocity;
         //bool isSprinting = _state.Stance is Stance.Stand && _reqestedSprint && groundedMovement.sqrMagnitude > 0f;
         if (slidingAudio.isPlaying)
         {
@@ -308,6 +309,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed * groundedMovement.magnitude, 1f - Mathf.Exp(-response * deltaTime));
         currentVelocity = desiredDir * currentSpeed;
+        _state.Acceleration = (currentVelocity - prevVelocity) / deltaTime;
 
         footstepInterval = Mathf.Clamp(5/currentSpeed , 0.15f, 1f); // the higher the speed, the faster the footsteps, clamped so its not unreasonable (5/x is the equation)
         if (currentSpeed > 0)

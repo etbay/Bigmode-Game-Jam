@@ -151,7 +151,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7245846414668031441}
   - {fileID: 1186829192078883416}
   - {fileID: 5675754648483511736}
   m_Father: {fileID: 7271064865773795391}
@@ -492,7 +491,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3462388249240776093}
+  m_Father: {fileID: 962992541220186797}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &7714564643024645890
 Camera:
@@ -626,7 +625,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7245846414668031441}
   m_Father: {fileID: 1186829192078883416}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3751641708404328717
@@ -640,11 +640,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae8fbe7d7ec001a44894f27e0e5b3de1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraLean
   attackDamping: 0.5
   decayDamping: 0.3
   walkStrength: 0.075
-  slideStrength: 0.2
+  slideStrength: 0.075
   strengthResponse: 5
 --- !u!1 &9073483325040870367
 GameObject:
