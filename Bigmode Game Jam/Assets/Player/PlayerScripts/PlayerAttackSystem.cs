@@ -132,6 +132,7 @@ public class PlayerAttackSystem : MonoBehaviour
                 {
                     var tracer = tracerPool.RequestAndReturnToPool();
                     tracer.GetComponent<BulletTracer>().FireTracer(bulletSpawn.position, hit.point, tracerWidth, tracerDecay);
+                    AudioManager.instance.PlaySoundClipFromList(sfxBank.HitSounds(), hit.point, 1f, true, true);
                     ActivateImpactParticles(hit);
                 }
 
@@ -172,6 +173,7 @@ public class PlayerAttackSystem : MonoBehaviour
             tracer.tracer.FireTracer(tracer.spawn, tracer.end, tracer.width, tracer.decay);
             // tuple is: bullettracer, its recorded spawn, its recorded end point, its recordedwidth, and its recorded decayrate
             AudioManager.instance.PlaySoundClipFromList(sfxBank.TracerSounds(), tracer.spawn, 1f, true, true);
+            AudioManager.instance.PlaySoundClipFromList(sfxBank.HitSounds(), tracer.end, 1f, true, true);
             if (tracer.isHit)
             {
                 ActivateImpactParticles(tracer.hit);
