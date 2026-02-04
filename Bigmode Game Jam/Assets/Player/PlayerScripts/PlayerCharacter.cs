@@ -122,7 +122,6 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     private bool stopped = true;
     private AudioSource slidingAudio;
     private AudioSource airAmbience;
-    private Coroutine volumeFade;
     #endregion
 
     #region Initialization & Input
@@ -141,8 +140,6 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
     public void UpdateInput(CharacterInput input)
     {
-
-
         _reqestedRotation = input.Rotation;
         _reqestedMovement = input.Rotation * Vector3.ClampMagnitude(new Vector3(input.Move.x, 0f, input.Move.y), 1f);
         _reqestedSlam = input.Crouch switch
@@ -188,6 +185,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region Velocity Dispatcher
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
     {
+        updateFOV(currentVelocity.magnitude);
         _state.Acceleration = Vector3.zero;
         if (isSpeedCapped)
         {
@@ -217,7 +215,11 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     // FOV effect
     private void updateFOV(float velMag)
     {
-        playerCamera.fieldOfView = 90f + Mathf.Clamp((velMag - 30f) / 3, 0f, 30f);
+        if (playerCamera.fieldOfView >100f && velMag < 40f)
+        {
+            playerCamera.fieldOfView -= 1f;
+        }
+        else playerCamera.fieldOfView = 90f + Mathf.Clamp((velMag - 40f) / 3, 0f, 30f);
     }
 
     #region Grounded Logic
@@ -228,7 +230,6 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
             AudioManager.instance.PlayOmnicientSoundClip(sfxBank.LandSound(), 1f, true, true);
         }
         airAmbience.volume = Mathf.Clamp01(currentVelocity.magnitude / 400);
-        updateFOV(currentVelocity.magnitude);
         
         _ungroundedDueToJump = false;
         _timeSinceUngrounded = 0f;
@@ -369,7 +370,6 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region Airborne Logic
     private void HandleAirborneMovement(ref Vector3 currentVelocity, float deltaTime)
     {
-        updateFOV(currentVelocity.magnitude);
         if (slidingAudio.isPlaying)
         {
             slidingAudio.Stop();

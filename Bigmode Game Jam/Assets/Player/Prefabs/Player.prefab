@@ -48,7 +48,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 106764639285937428}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -368,6 +368,8 @@ MonoBehaviour:
   cameraSpring: {fileID: 7410904314794892351}
   cameraLean: {fileID: 3751641708404328717}
   useCrouchToggle: 0
+  slickSpeedMultStrength: 1.2
+  maxSlick: 4
 --- !u!114 &3969533954021389893
 MonoBehaviour:
   m_ObjectHideFlags: 0

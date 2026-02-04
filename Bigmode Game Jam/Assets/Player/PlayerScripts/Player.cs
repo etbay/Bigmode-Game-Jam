@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
     [SerializeField] private CameraSpring cameraSpring;
     [SerializeField] private CameraLean cameraLean;
     [SerializeField] private bool useCrouchToggle = true;
+
+    [SerializeField] private float slickSpeedMultStrength = 1.2f;
+    [SerializeField] private float maxSlick = 4f;
     private static float slickValue = 4f;
     private bool escaped = false;
     private PlayerInputActions _inputActions;
@@ -34,7 +37,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        slickValue = 4f;
+        slickValue = maxSlick;
         Cursor.lockState = CursorLockMode.Locked;
         _inputActions = new PlayerInputActions();
         _inputActions.Enable();
@@ -56,9 +59,9 @@ public class Player : MonoBehaviour
     {
         //Debug.Log(slickValue);
         slickValue -= Time.deltaTime * SlickometerData.CurrentSlickDrainRate;
-        slickValue = Mathf.Clamp(slickValue, 1f, 4f);
+        slickValue = Mathf.Clamp(slickValue, 1f, maxSlick);
         playerCharacter.isSpeedCapped = slickValue <= 1f;
-        playerCharacter.speedBoostMultiplier = slickValue;
+        playerCharacter.speedBoostMultiplier = slickValue * slickSpeedMultStrength;
 
         var input = _inputActions.Player;
         var deltaTime = Time.deltaTime;
