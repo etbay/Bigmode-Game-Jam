@@ -368,6 +368,8 @@ MonoBehaviour:
   cameraSpring: {fileID: 7410904314794892351}
   cameraLean: {fileID: 3751641708404328717}
   useCrouchToggle: 0
+  slickSpeedMultStrength: 1.2
+  maxSlick: 4
 --- !u!114 &3969533954021389893
 MonoBehaviour:
   m_ObjectHideFlags: 0
