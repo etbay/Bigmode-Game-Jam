@@ -8,7 +8,7 @@ public class Timeslow : MonoBehaviour
     [SerializeField] private AudioClip timeSlow;
     [SerializeField] private AudioClip timeResume;
     [SerializeField] private PlayerAttackSystem gun;
-    [SerializeField] private float slowFactor = 0.2f; // 1 is full speed, 0.2 is 1/5 speed
+    [SerializeField] public static readonly float slowFactor = 0.2f; // 1 is full speed, 0.2 is 1/5 speed
 
     private AudioSource audioSource = null; 
     //[SerializeField] private AudioClip slowedTimeAmbience;
@@ -16,6 +16,14 @@ public class Timeslow : MonoBehaviour
     public static Timeslow instance;
     public static bool IsSlowed = false;
     private PlayerInputActions _inputActions;
+
+    void Awake()
+    {
+        if (instance = null)
+        {
+            instance = this;
+        }
+    } 
 
     void Start()
     {
