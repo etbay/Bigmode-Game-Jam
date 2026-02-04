@@ -199,6 +199,33 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slickometer Toggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""175fe3d3-58d0-422b-8bd2-f3cadf96ba1d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slickometer Fill"",
+                    ""type"": ""Button"",
+                    ""id"": ""647a9f5f-a513-442f-b053-876387f9340b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slickometer Empty"",
+                    ""type"": ""Button"",
+                    ""id"": ""b09a3102-48fb-4ef2-97c2-546ba56fd225"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -476,6 +503,39 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Ability"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""097ad3ec-6b3f-46f0-8830-e936ab1de986"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slickometer Toggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7f093714-c6d2-4834-9eea-82a27d5baf26"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slickometer Fill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1a174bce-c307-499d-8a8d-577cd32e5d28"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slickometer Empty"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -557,6 +617,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Click = m_Player.FindAction("Click", throwIfNotFound: true);
         m_Player_Restart = m_Player.FindAction("Restart", throwIfNotFound: true);
         m_Player_Ability = m_Player.FindAction("Ability", throwIfNotFound: true);
+        m_Player_SlickometerToggle = m_Player.FindAction("Slickometer Toggle", throwIfNotFound: true);
+        m_Player_SlickometerFill = m_Player.FindAction("Slickometer Fill", throwIfNotFound: true);
+        m_Player_SlickometerEmpty = m_Player.FindAction("Slickometer Empty", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -649,6 +712,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Click;
     private readonly InputAction m_Player_Restart;
     private readonly InputAction m_Player_Ability;
+    private readonly InputAction m_Player_SlickometerToggle;
+    private readonly InputAction m_Player_SlickometerFill;
+    private readonly InputAction m_Player_SlickometerEmpty;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -708,6 +774,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Ability".
         /// </summary>
         public InputAction @Ability => m_Wrapper.m_Player_Ability;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SlickometerToggle".
+        /// </summary>
+        public InputAction @SlickometerToggle => m_Wrapper.m_Player_SlickometerToggle;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SlickometerFill".
+        /// </summary>
+        public InputAction @SlickometerFill => m_Wrapper.m_Player_SlickometerFill;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SlickometerEmpty".
+        /// </summary>
+        public InputAction @SlickometerEmpty => m_Wrapper.m_Player_SlickometerEmpty;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -770,6 +848,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Ability.started += instance.OnAbility;
             @Ability.performed += instance.OnAbility;
             @Ability.canceled += instance.OnAbility;
+            @SlickometerToggle.started += instance.OnSlickometerToggle;
+            @SlickometerToggle.performed += instance.OnSlickometerToggle;
+            @SlickometerToggle.canceled += instance.OnSlickometerToggle;
+            @SlickometerFill.started += instance.OnSlickometerFill;
+            @SlickometerFill.performed += instance.OnSlickometerFill;
+            @SlickometerFill.canceled += instance.OnSlickometerFill;
+            @SlickometerEmpty.started += instance.OnSlickometerEmpty;
+            @SlickometerEmpty.performed += instance.OnSlickometerEmpty;
+            @SlickometerEmpty.canceled += instance.OnSlickometerEmpty;
         }
 
         /// <summary>
@@ -817,6 +904,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Ability.started -= instance.OnAbility;
             @Ability.performed -= instance.OnAbility;
             @Ability.canceled -= instance.OnAbility;
+            @SlickometerToggle.started -= instance.OnSlickometerToggle;
+            @SlickometerToggle.performed -= instance.OnSlickometerToggle;
+            @SlickometerToggle.canceled -= instance.OnSlickometerToggle;
+            @SlickometerFill.started -= instance.OnSlickometerFill;
+            @SlickometerFill.performed -= instance.OnSlickometerFill;
+            @SlickometerFill.canceled -= instance.OnSlickometerFill;
+            @SlickometerEmpty.started -= instance.OnSlickometerEmpty;
+            @SlickometerEmpty.performed -= instance.OnSlickometerEmpty;
+            @SlickometerEmpty.canceled -= instance.OnSlickometerEmpty;
         }
 
         /// <summary>
@@ -1006,5 +1102,26 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAbility(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Slickometer Toggle" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSlickometerToggle(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Slickometer Fill" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSlickometerFill(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Slickometer Empty" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSlickometerEmpty(InputAction.CallbackContext context);
     }
 }

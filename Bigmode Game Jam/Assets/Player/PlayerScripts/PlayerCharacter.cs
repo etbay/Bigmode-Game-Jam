@@ -84,7 +84,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     [SerializeField] private float slideSteerAccelleration = 5f;
     [SerializeField] private float slideGravity = -90f;
     [Tooltip("How much downward (fall) speed is converted into planar slide speed on landing (0 = none, 1 = full).")]
-    [SerializeField] private float fallToSlideRatio = 1f;
+    [SerializeField] private float fallToSlideRatio = 2f;
     #endregion
 
     #region Serialized Fields - Height Settings
@@ -334,11 +334,12 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
             // Only apply slope forces (gravity along the slope)
             Vector3 slopeForce = Vector3.ProjectOnPlane(-motor.CharacterUp, motor.GroundingStatus.GroundNormal) * slideGravity;
             currentVelocity -= slopeForce * deltaTime;
+            currentVelocity -= currentVelocity * slideFriction * deltaTime * 0.5f;
         }
         else
         {
             // Apply slide friction
-                float slopeDecelerationFactor = 0.6f;
+            float slopeDecelerationFactor = 0.6f;
             currentVelocity -= currentVelocity * (slopeDecelerationFactor* slideFriction * deltaTime);
         }
 

@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxSlick = 4f;
     private static float slickValue = 4f;
     private bool escaped = false;
+    private bool slickDrains = true;
     private PlayerInputActions _inputActions;
 
     public static float SlickValue
@@ -37,7 +38,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        slickValue = maxSlick;
+        slickValue = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         _inputActions = new PlayerInputActions();
         _inputActions.Enable();
@@ -58,13 +59,31 @@ public class Player : MonoBehaviour
     void Update()
     {
         //Debug.Log(slickValue);
-        slickValue -= Time.deltaTime * SlickometerData.CurrentSlickDrainRate;
-        slickValue = Mathf.Clamp(slickValue, 1f, maxSlick);
+        if (slickDrains)
+        {
+            slickValue -= Time.deltaTime * SlickometerData.CurrentSlickDrainRate;
+            slickValue = Mathf.Clamp(slickValue, 1f, maxSlick);
+        }
         playerCharacter.isSpeedCapped = slickValue <= 1f;
         playerCharacter.speedBoostMultiplier = slickValue * slickSpeedMultStrength;
 
         var input = _inputActions.Player;
         var deltaTime = Time.deltaTime;
+
+        if (input.SlickometerToggle.WasPressedThisFrame())
+        {
+            slickDrains = !slickDrains;
+        }
+
+        if (input.SlickometerFill.WasPressedThisFrame())
+        {
+            slickValue = maxSlick;
+        }
+
+        if (input.SlickometerEmpty.WasPressedThisFrame())
+        {
+            slickValue = 1f;
+        }
 
         // gets camera input, update rotation
         // Handle Escape key to enter "escaped" state

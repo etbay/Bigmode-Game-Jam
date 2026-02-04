@@ -289,13 +289,13 @@ MonoBehaviour:
   sfxBank: {fileID: 8742350059407653686}
   speedBoostMultiplier: 1
   isSpeedCapped: 1
-  slick: 0
+  slick: 1
   walkSpeed: 9
   crouchSpeed: 9
   walkResponse: 22.5
   crouchResponse: 10.5
   groundedStepHeight: 0.5
-  mantlStepHeight: 2
+  mantlStepHeight: 0
   airSpeed: 10
   airAcceleration: 25
   jumpSpeed: 25
@@ -308,7 +308,7 @@ MonoBehaviour:
   slideFriction: 0.5
   slideSteerAccelleration: 5
   slideGravity: -90
-  fallToSlideRatio: 0.2
+  fallToSlideRatio: 0.4
   standHeight: 2
   crouchHeight: 1
   crouchHeightResponse: 15
@@ -385,7 +385,6 @@ MonoBehaviour:
   timeSlow: {fileID: 8300000, guid: 5f120a1ff743ef244a31b829422060ef, type: 3}
   timeResume: {fileID: 8300000, guid: 127c5b2217ada2c419149fbb4d1ebb4d, type: 3}
   gun: {fileID: 5458232539511459596}
-  slowFactor: 0.2
 --- !u!114 &8742350059407653686
 MonoBehaviour:
   m_ObjectHideFlags: 0
