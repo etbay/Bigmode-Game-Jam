@@ -51,4 +51,9 @@ public class TimerManager : MonoBehaviour
         // Set the text of the UI element
         timerText.text = timerString; 
     }
+
+    public TimeSpan GetTime()
+    {
+        return TimeSpan.FromSeconds(currentTime);
+    }
 }
