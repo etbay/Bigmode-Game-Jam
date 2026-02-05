@@ -23,6 +23,7 @@ public class AudioManager : MonoBehaviour
     private AudioMixerGroup musicGroup;
     //private Queue<GameObject> sfxPlayerPool = new Queue<GameObject>();
     private ObjectPool sfxPlayerPool;
+    private AudioSource musicPlayer;
 
     private void Awake()
     {
@@ -34,12 +35,23 @@ public class AudioManager : MonoBehaviour
         timeSlowedGroup = mixer.FindMatchingGroups("Time")[0];
         environmentGroup = mixer.FindMatchingGroups("Environment")[0];
         musicGroup = mixer.FindMatchingGroups("Music")[0];
+        SetupMusic();
+    }
+
+    private void SetupMusic()
+    {
+        musicPlayer = this.AddComponent<AudioSource>();
+        musicPlayer.clip = music;
+        musicPlayer.volume = 1f;
+        musicPlayer.outputAudioMixerGroup = musicGroup;
+        musicPlayer.loop = true;
     }
 
     private void Start()
     {
         sfxPlayerPool = gameObject.AddComponent<ObjectPool>();
         sfxPlayerPool.GeneratePool(100, sfxObject);
+        StartMusic();
     }
 
     // Plays at the player's position
@@ -174,5 +186,25 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
         source.volume = final;
+    }
+
+    public void StartMusic()
+    {
+        musicPlayer.Play();
+    }
+    public void StopMusic()
+    {
+        musicPlayer.Pause();
+    }
+    public void ResetMusic()
+    {
+        musicPlayer.Stop();
+        musicPlayer.time = 0f;
+    }
+    public void SetMusic(AudioClip newTrack)
+    {
+        music = newTrack;
+        StopMusic();
+        musicPlayer.clip = newTrack;
     }
 }
