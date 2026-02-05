@@ -26,5 +26,6 @@ public class LevelManager : MonoBehaviour
     public void NextLevel()
     {
         //LoadScene(data.nextLevel);
+        
     }
 }
