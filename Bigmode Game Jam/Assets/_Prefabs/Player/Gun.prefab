@@ -203,6 +203,7 @@ MonoBehaviour:
   tracerWidth: 0.7
   shotDelay: 0.085
   lightTimer: 0.08
+  lightIntensity: 2
 --- !u!114 &5399679669009971225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +223,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6115bb48f6f39464d963c1d074a3f034, type: 3}
   - {fileID: 8300000, guid: e345c5e8d74de9740ab2d064ce4e5ad7, type: 3}
   - {fileID: 8300000, guid: da80788ef5eff524da14be88dd317bb8, type: 3}
+  hitSounds:
+  - {fileID: 8300000, guid: e9d65f8cfbc22fc4aa7d29b44dae501d, type: 3}
+  - {fileID: 8300000, guid: 33bfcc67eaf13204399ab59226ad598b, type: 3}
+  - {fileID: 8300000, guid: 2087268178bfa304bada9619cb424c4c, type: 3}
+  - {fileID: 8300000, guid: 36662966b0d47b847811655c6ebf7830, type: 3}
 --- !u!1 &6419946184600289934
 GameObject:
   m_ObjectHideFlags: 0

@@ -83,5 +83,4 @@ public class PlayerCamera : MonoBehaviour
 
         _lastTargetY = targetPosition.y;
     }
-
 }

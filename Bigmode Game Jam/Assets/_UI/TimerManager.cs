@@ -1,0 +1,55 @@
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro; // Required for TextMeshProUGUI
+using System;
+using UnityEditor.PackageManager; // Required for TimeSpan
+
+public class TimerManager : MonoBehaviour
+{
+    public static TimerManager instance;
+    [SerializeField] TextMeshProUGUI timerText;
+    private float currentTime = 0;
+    private bool running = true;
+
+    void Awake()
+    {
+        if (instance == null) {
+            instance = this;
+        }
+    }
+    void Update()
+    {
+        if (running)
+        {
+            // Increase the time every frame by the time elapsed since the last frame
+            if (Timeslow.IsSlowed)
+            {
+                currentTime += Time.deltaTime / Timeslow.slowFactor;
+            }
+            else
+            {
+                currentTime += Time.deltaTime; 
+            }
+            // Update the UI display
+            UpdateTimerUI(); 
+        }
+    }
+
+    public void StopTimer()
+    {
+        running = false;
+    }
+
+    public void StartTimer()
+    {
+        running = true;
+    }
+
+    private void UpdateTimerUI()
+    {
+        TimeSpan timeSpan = TimeSpan.FromSeconds(currentTime);
+        string timerString = string.Format("{0:00}:{1:00}.{2:000}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds);
+        // Set the text of the UI element
+        timerText.text = timerString; 
+    }
+}

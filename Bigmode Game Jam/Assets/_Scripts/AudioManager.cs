@@ -20,7 +20,8 @@ public class AudioManager : MonoBehaviour
     private AudioMixerGroup timeSlowedGroup;
     private AudioMixerGroup environmentGroup;
     private AudioMixerGroup musicGroup;
-    private Queue<GameObject> sfxPlayerPool = new Queue<GameObject>();
+    //private Queue<GameObject> sfxPlayerPool = new Queue<GameObject>();
+    private ObjectPool sfxPlayerPool;
 
     private void Awake()
     {
@@ -36,19 +37,14 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < 100; i++)
-        {
-            // Add many sfxplayers to the pool to prevent runtime instantiation
-            var sfxPlayer = Instantiate(sfxObject, sfxObject.transform.position, Quaternion.identity);
-            sfxPlayer.gameObject.SetActive(false);
-            sfxPlayerPool.Enqueue(sfxPlayer);
-        }
+        sfxPlayerPool = gameObject.AddComponent<ObjectPool>();
+        sfxPlayerPool.GeneratePool(100, sfxObject);
     }
 
     // Plays at the player's position
     public AudioSource PlayOmnicientSoundClip(AudioClip audioClip, float vol, bool slowable, bool pitchRandomly)
     {
-        GameObject obj = RequestSfxPlayerFromPool();
+        GameObject obj = sfxPlayerPool.RequestFromPool();
         AudioSource source = obj.GetComponent<AudioSource>();
         source.clip = audioClip;
         source.volume = vol;
@@ -73,7 +69,7 @@ public class AudioManager : MonoBehaviour
     // Plays at a passed transform's position, typically an enemy or something similar
     public AudioSource PlaySoundClip(AudioClip audioClip, Vector3 spawnpos, float vol, bool slowable, bool pitchRandomly)
     {        
-        GameObject obj = RequestSfxPlayerFromPool();
+        GameObject obj = sfxPlayerPool.RequestFromPool();
         AudioSource source = obj.GetComponent<AudioSource>();
         source.clip = audioClip;
         source.volume = vol;
@@ -97,7 +93,7 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource PlaySoundClipFromList(AudioClip[] audioClips, Vector3 spawnpos, float vol, bool slowable, bool pitchRandomly)
     {        
-        GameObject obj = RequestSfxPlayerFromPool();
+        GameObject obj = sfxPlayerPool.RequestFromPool();
         AudioSource source = obj.GetComponent<AudioSource>();
         int num = Random.Range(0, audioClips.Length);
         source.clip = audioClips[num];
@@ -175,20 +171,5 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
         source.volume = final;
-    }
-    private GameObject RequestSfxPlayerFromPool()
-    {
-        GameObject obj;
-        if (sfxPlayerPool.Count > 0)
-        {
-            obj = sfxPlayerPool.Dequeue();
-            obj.transform.position = player.transform.position;
-            obj.SetActive(true);
-        }
-        else
-        {
-            obj = Instantiate(sfxObject, player.position, Quaternion.identity);
-        }
-        return obj;
     }
 }

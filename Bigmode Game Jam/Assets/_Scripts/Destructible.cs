@@ -9,10 +9,13 @@ public class Destructible : MonoBehaviour
     private bool dead = false;
     public void Kill(int num)
     {
-        dead = true;
-        if (Timeslow.IsSlowed)
+        if (!dead)
         {
-            order = num;
+            dead = true;
+            if (Timeslow.IsSlowed)
+            {
+                order = num;
+            }
         }
     }
 
@@ -28,6 +31,9 @@ public class Destructible : MonoBehaviour
     {
         yield return new WaitForSeconds(timeWait / 15f); // controls deletion after resuming time
         Player.SlickValue += SlickometerData.DestructibleSlickGain;
+        var explosion = PoolManager.instance.GetItemFromPool("Explosives");
+        explosion.transform.position = gameObject.transform.position;
+        explosion.GetComponent<Explosion>()?.Play();
         Destroy(gameObject);
     }
 }
