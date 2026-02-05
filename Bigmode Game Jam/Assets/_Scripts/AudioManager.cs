@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioMixer mixer;
     [SerializeField] private GameObject sfxObject;
     [SerializeField] private Transform player;
+    [SerializeField] private AudioClip music;
     [SerializeField] private float timeForAudioStretch = 0.5f;
 
     private AudioMixerGroup sfxGroup;
@@ -133,10 +134,12 @@ public class AudioManager : MonoBehaviour
         while (elapsedTime < time)
         {
             timeSlowedGroup.audioMixer.SetFloat("TimeSlowedPitch", Mathf.Lerp(initialValue, finalValue, elapsedTime / time));
+            timeSlowedGroup.audioMixer.SetFloat("MusicPitch", Mathf.Lerp(initialValue, finalValue, elapsedTime / time));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         timeSlowedGroup.audioMixer.SetFloat("TimeSlowedPitch", finalValue);
+        timeSlowedGroup.audioMixer.SetFloat("MusicPitch", finalValue);
     }
     public AudioSource GetLoopableAudioSource(AudioClip audioClip, float vol, bool slowable, bool pitchRandomly)
     {
