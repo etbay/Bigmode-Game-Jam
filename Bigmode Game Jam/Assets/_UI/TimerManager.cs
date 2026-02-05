@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro; // Required for TextMeshProUGUI
 using System;
-using UnityEditor.PackageManager; // Required for TimeSpan
 
 public class TimerManager : MonoBehaviour
 {

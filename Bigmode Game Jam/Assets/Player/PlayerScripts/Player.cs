@@ -70,6 +70,7 @@ public class Player : MonoBehaviour
         var input = _inputActions.Player;
         var deltaTime = Time.deltaTime;
 
+        #if UNITY_EDITOR
         if (input.SlickometerToggle.WasPressedThisFrame())
         {
             slickDrains = !slickDrains;
@@ -84,6 +85,7 @@ public class Player : MonoBehaviour
         {
             slickValue = 1f;
         }
+        #endif
 
         // gets camera input, update rotation
         // Handle Escape key to enter "escaped" state
@@ -138,6 +140,7 @@ public class Player : MonoBehaviour
                 playerCharacter.setPosition(hit.point);
             }
         }
+        #endif
 
         if (input.Restart.WasPressedThisFrame())
         {
@@ -145,7 +148,6 @@ public class Player : MonoBehaviour
             string currentSceneName = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(currentSceneName);
         }
-        #endif
     }
 
     private void LateUpdate()

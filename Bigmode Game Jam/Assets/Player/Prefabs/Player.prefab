@@ -308,7 +308,7 @@ MonoBehaviour:
   slideFriction: 0.5
   slideSteerAccelleration: 5
   slideGravity: -90
-  fallToSlideRatio: 0.4
+  fallToSlideRatio: 0.35
   standHeight: 2
   crouchHeight: 1
   crouchHeightResponse: 15
