@@ -132,10 +132,14 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         _uncrouchOverLapResults = new Collider[8];
         motor.CharacterController = this;
         instance = this;
+    }
 
-        slidingAudio = AudioManager.instance.GetLoopableAudioSource(sfxBank.SlidingSound(), 0f, true, false);
-        airAmbience = AudioManager.instance.GetLoopableAudioSource(sfxBank.AirAmbience(), 0f, true, false);
+    private void Start()
+    {
+        slidingAudio = AudioManager.instance.GetLoopableAudioSource(sfxBank.SlidingSound(), root.position, 0f, true, false);
+        airAmbience = AudioManager.instance.GetLoopableAudioSource(sfxBank.AirAmbience(), root.position, 0f, true, false);
         airAmbience.Play();
+
     }
 
     public void UpdateInput(CharacterInput input)
@@ -521,6 +525,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     public void OnDiscreteCollisionDetected(Collider hitCollider) { }
     public void OnGroundHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
     public void OnMovementHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
+    public Transform GetRoot() { return root; }
     #endregion
 
     #region Debug UI

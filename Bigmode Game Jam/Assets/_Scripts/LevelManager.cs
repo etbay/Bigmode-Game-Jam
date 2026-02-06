@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -25,15 +26,16 @@ public class LevelManager : MonoBehaviour
         TimerManager.instance.StopTimer();
         double playerTime = timerData.TotalSeconds;
         rank = Ranking.GenerateRank(data.requirements, playerTime);
+        RestartLevel();
         Debug.Log(rank);
     }
     private void DisplayResults()
     {
         
     }
-    public void NextLevel()
+    private void NextLevel()
     {
-        //LoadScene(data.nextLevel);
+        SceneManager.LoadScene(data.nextLevel);
         
     }
     public void RegisterEnemy()
@@ -43,5 +45,9 @@ public class LevelManager : MonoBehaviour
     public void RegisterKill()
     {
         numKills += 1;
+    }
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
