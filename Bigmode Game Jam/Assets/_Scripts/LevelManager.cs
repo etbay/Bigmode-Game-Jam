@@ -1,13 +1,16 @@
 using System;
+using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
     [SerializeField] LevelData data;
-    private float numEnemies;
-    private float numKills;
+    private int numEnemies;
+    private int numKills;
+    private float topSpeed;
     Ranking.Rank rank = Ranking.Rank.SRank;
 
     private void Awake()
@@ -25,15 +28,12 @@ public class LevelManager : MonoBehaviour
         TimerManager.instance.StopTimer();
         double playerTime = timerData.TotalSeconds;
         rank = Ranking.GenerateRank(data.requirements, playerTime);
-        Debug.Log(rank);
+        UIManager.instance.EndScript(timerData, numKills, numEnemies, topSpeed, rank);
+        StopPlayerInput();
     }
-    private void DisplayResults()
+    private void NextLevel()
     {
-        
-    }
-    public void NextLevel()
-    {
-        //LoadScene(data.nextLevel);
+        SceneManager.LoadScene(data.nextLevel);
         
     }
     public void RegisterEnemy()
@@ -43,5 +43,20 @@ public class LevelManager : MonoBehaviour
     public void RegisterKill()
     {
         numKills += 1;
+    }
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void TrackSpeed(float speed)
+    {
+        if (speed > topSpeed)
+        {
+            topSpeed = speed;
+        }
+    }
+    private void StopPlayerInput()
+    {
+        
     }
 }

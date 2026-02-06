@@ -4,7 +4,7 @@ using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
-
+using UnityEngine.UIElements;
 using Debug = UnityEngine.Debug;
 
 
@@ -13,7 +13,6 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance; // certified single ton
     [SerializeField] public AudioMixer mixer;
     [SerializeField] private GameObject sfxObject;
-    [SerializeField] private Transform player;
     [SerializeField] private AudioClip music;
     [SerializeField] private float timeForAudioStretch = 0.5f;
 
@@ -30,28 +29,42 @@ public class AudioManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
         sfxGroup = mixer.FindMatchingGroups("SFX")[0];
         timeSlowedGroup = mixer.FindMatchingGroups("Time")[0];
         environmentGroup = mixer.FindMatchingGroups("Environment")[0];
         musicGroup = mixer.FindMatchingGroups("Music")[0];
-        SetupMusic();
+        if (musicPlayer == null)
+        {
+            SetupMusic();
+        }
+        if (musicPlayer != null && !musicPlayer.isPlaying)
+        {
+            StartMusic();
+        }
+        
     }
 
     private void SetupMusic()
     {
-        musicPlayer = this.AddComponent<AudioSource>();
+        musicPlayer = gameObject.AddComponent<AudioSource>();
         musicPlayer.clip = music;
         musicPlayer.volume = 1f;
         musicPlayer.outputAudioMixerGroup = musicGroup;
         musicPlayer.loop = true;
     }
 
-    private void Start()
+    private void Update()
     {
-        sfxPlayerPool = gameObject.AddComponent<ObjectPool>();
-        sfxPlayerPool.GeneratePool(100, sfxObject);
-        StartMusic();
+        if (sfxPlayerPool == null)
+        {
+            sfxPlayerPool = PoolManager.instance.AddPool("Audio", sfxObject, 100);
+        }
     }
 
     // Plays at the player's position
@@ -129,8 +142,11 @@ public class AudioManager : MonoBehaviour
     private IEnumerator KillAudioSource(GameObject target, float timeWait)
     {
         yield return new WaitForSeconds(timeWait);
-        target.SetActive(false);
-        sfxPlayerPool.Enqueue(target); // Controls waiting until a sfx has finished to delete the gameobject audiosource
+        if (sfxPlayerPool != null && target != null)
+        {
+            target.SetActive(false);
+            sfxPlayerPool.Enqueue(target); // Controls waiting until a sfx has finished to delete the gameobject audiosource
+        }
     }
 
     public void TimeAudioStretch(float finalValue)
@@ -153,9 +169,9 @@ public class AudioManager : MonoBehaviour
         timeSlowedGroup.audioMixer.SetFloat("TimeSlowedPitch", finalValue);
         timeSlowedGroup.audioMixer.SetFloat("MusicPitch", finalValue);
     }
-    public AudioSource GetLoopableAudioSource(AudioClip audioClip, float vol, bool slowable, bool pitchRandomly)
+    public AudioSource GetLoopableAudioSource(AudioClip audioClip, Vector3 spawnpos, float vol, bool slowable, bool pitchRandomly)
     {
-        GameObject obj = Instantiate(sfxObject, player.position, Quaternion.identity);
+        GameObject obj = Instantiate(sfxObject, spawnpos, Quaternion.identity);
         AudioSource source = obj.GetComponent<AudioSource>();
         source.clip = audioClip;
         source.volume = vol;
