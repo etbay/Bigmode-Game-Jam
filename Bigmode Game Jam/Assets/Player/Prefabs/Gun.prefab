@@ -199,9 +199,9 @@ MonoBehaviour:
   muzzleFlashLight: {fileID: 6417283073715925234}
   tracerPrefab: {fileID: 1540676930395797113, guid: a7dbd02c8d617c74fb3fb610844668ff, type: 3}
   timeSlowTracerPrefab: {fileID: 1540676930395797113, guid: 005b871557da41c42bf3f247d96dfca6, type: 3}
-  tracerDecay: 0.6
+  tracerDecay: 0.4
   tracerWidth: 0.7
-  shotDelay: 0.085
+  shotDelay: 0.2
   lightTimer: 0.08
   lightIntensity: 2
 --- !u!114 &5399679669009971225
@@ -385,7 +385,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 0.9861534, b: 0.8660377, a: 1}
   m_Intensity: 2
-  m_Range: 6
+  m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 0.5, y: 0.5}
