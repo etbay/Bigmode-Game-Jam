@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        results.gameObject.SetActive(false);
         slickometer.gameObject.SetActive(true);
         crosshair.SetActive(true);
         timer.gameObject.SetActive(true);

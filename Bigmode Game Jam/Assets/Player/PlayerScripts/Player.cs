@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
             Cursor.visible = true;
         }
         // If escaped, allow refocus on left mouse click
-        else if (escaped && input.PauseMenu.WasPressedThisFrame())
+        else if (escaped && !LevelManager.gameEnded && input.PauseMenu.WasPressedThisFrame())
         {
             LevelManager.instance.ResumeGame();
             escaped = false;
@@ -145,7 +145,7 @@ public class Player : MonoBehaviour
             Attack = input.Attack.WasPressedThisFrame()
             //Attack = input.Attack.IsPressed()
         };
-        if (LevelManager.GameRunning)
+        if (LevelManager.gameRunning)
         {
             playerCharacter.UpdateInput(characterInput);
             playerCharacter.UpdateBody(deltaTime);

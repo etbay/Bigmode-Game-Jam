@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
-    public static bool GameRunning = true;
+    public static bool gameRunning = true;
+    public static bool gameEnded = false;
     [SerializeField] LevelData data;
     private int numEnemies;
     private int numKills;
@@ -21,7 +22,7 @@ public class LevelManager : MonoBehaviour
         {
             instance = this;
         }
-        GameRunning = true;
+        gameRunning = true;
         Time.timeScale = 1f;
         numEnemies = 0;
     }
@@ -32,7 +33,8 @@ public class LevelManager : MonoBehaviour
         double playerTime = timerData.TotalSeconds;
         rank = Ranking.GenerateRank(data.requirements, playerTime);
         UIManager.instance.EndScript(timerData, numKills, numEnemies, topSpeed, rank);
-        GameRunning = false;
+        gameRunning = false;
+        gameEnded = true;
         PauseGame();
     }
     public void NextLevel()
@@ -61,12 +63,14 @@ public class LevelManager : MonoBehaviour
     public void PauseGame()
     {
         float scaleBeforePause = Time.timeScale;
+        PlayerCharacter.instance.PauseSounds();
         Time.timeScale = 0f;
-        GameRunning = false;
+        gameRunning = false;
     }
     public void ResumeGame()
     {
+        PlayerCharacter.instance.ResumeSounds();
         Time.timeScale = scaleBeforePause;
-        GameRunning = true;
+        gameRunning = true;
     }
 }

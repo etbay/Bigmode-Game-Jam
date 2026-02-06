@@ -141,6 +141,17 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         airAmbience.Play();
 
     }
+    public void PauseSounds()
+    {
+        slidingAudio.Pause();
+        airAmbience.Pause();
+    }
+
+    public void ResumeSounds()
+    {
+        slidingAudio.Play();
+        airAmbience.Play();
+    }
 
     public void UpdateInput(CharacterInput input)
     {
