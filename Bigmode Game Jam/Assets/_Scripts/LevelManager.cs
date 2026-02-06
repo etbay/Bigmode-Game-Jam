@@ -7,8 +7,10 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
     [SerializeField] LevelData data;
-    private float numEnemies;
-    private float numKills;
+    [SerializeField] ResultsScreen results;
+    private int numEnemies;
+    private int numKills;
+    private float topSpeed;
     Ranking.Rank rank = Ranking.Rank.SRank;
 
     private void Awake()
@@ -26,12 +28,8 @@ public class LevelManager : MonoBehaviour
         TimerManager.instance.StopTimer();
         double playerTime = timerData.TotalSeconds;
         rank = Ranking.GenerateRank(data.requirements, playerTime);
-        RestartLevel();
+        results.DisplayResults(timerData, numKills, numEnemies, topSpeed, rank);
         Debug.Log(rank);
-    }
-    private void DisplayResults()
-    {
-        
     }
     private void NextLevel()
     {
@@ -49,5 +47,12 @@ public class LevelManager : MonoBehaviour
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void TrackSpeed(float speed)
+    {
+        if (speed > topSpeed)
+        {
+            topSpeed = speed;
+        }
     }
 }

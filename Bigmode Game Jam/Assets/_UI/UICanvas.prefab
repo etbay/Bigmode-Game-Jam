@@ -155,7 +155,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6565976800847549848
 RectTransform:
   m_ObjectHideFlags: 0
@@ -230,6 +230,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e1e08e89dfb8d419e8564990a5c99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  playerTime: {fileID: 6312549918327008890}
+  playerKills: {fileID: 5911400503890093850}
+  topSpeed: {fileID: 8737007598928720496}
+  rank: {fileID: 4540261183031879337}
 --- !u!1 &2528354503264920602
 GameObject:
   m_ObjectHideFlags: 0

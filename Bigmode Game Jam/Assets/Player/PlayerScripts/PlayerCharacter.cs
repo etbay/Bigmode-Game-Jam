@@ -190,6 +190,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
     {
         updateFOV(currentVelocity.magnitude);
+        Vector3 horizontalVel = currentVelocity - (Vector3.up * currentVelocity.y);
+        LevelManager.instance.TrackSpeed(horizontalVel.magnitude);
         _state.Acceleration = Vector3.zero;
         if (isSpeedCapped)
         {
@@ -543,7 +545,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         GUI.DrawTexture(new Rect(centerX - crosshairThickness / 2f, centerY - crosshairSize / 2f, crosshairThickness, crosshairSize), Texture2D.whiteTexture);
         GUI.color = Color.white;
 
-        var speedText = $"Speed: {_state.Velocity.magnitude:F1} u/s\nStance: {_state.Stance}\nGrounded: {_state.Grounded}";
+        var speedText = $"Speed: {(_state.Velocity - (Vector3.up * _state.Velocity.y)).magnitude:F1} u/s\nStance: {_state.Stance}\nGrounded: {_state.Grounded}";
         var style = new GUIStyle(GUI.skin.label) { fontSize = 16, fontStyle = FontStyle.Bold, alignment = TextAnchor.UpperCenter };
         var textSize = style.CalcSize(new GUIContent(speedText));
 
