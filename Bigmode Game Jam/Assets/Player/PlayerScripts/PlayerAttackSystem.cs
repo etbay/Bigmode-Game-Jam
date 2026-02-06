@@ -108,7 +108,8 @@ public class PlayerAttackSystem : MonoBehaviour
         }
         StartCoroutine(MuzzleFlash(muzzleFlashLight, lightTimer, lightIntensity));
         RaycastHit hit;
-            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit))
+        // Adding playercamera.transform.forward fixes a bug where the player could hit their own collider if moving backwards and shooting
+            if (Physics.Raycast(playerCamera.transform.position + (playerCamera.transform.forward * 2), playerCamera.transform.forward, out hit))
             {
                 var target = hit.collider.gameObject;
                 if (target.GetComponent<Destructible>() != null)
