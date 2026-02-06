@@ -9,12 +9,34 @@ public class ResultsScreen : MonoBehaviour
     [SerializeField] TextMeshProUGUI topSpeed;
     [SerializeField] TextMeshProUGUI rank;
 
+    void Start()
+    {
+        //gameObject.SetActive(false);
+    }
     public void DisplayResults(TimeSpan time, int kills, int totalEnemies, float speed, Ranking.Rank plRank)
     {
         gameObject.SetActive(true);
         playerTime.text = string.Format("Time: {0:00}:{1:00}.{2:000}", time.Minutes, time.Seconds, time.Milliseconds);
         playerKills.text = "Kills: " + kills + "/" + totalEnemies;
         topSpeed.text = "Top Speed: " + speed.ToString("F2") + "m/s";
-        rank.text = "Final Rank: " + plRank.ToString();
+        rank.text = "Final Rank: ";
+        switch (plRank)
+        {
+            case Ranking.Rank.DRank:
+                rank.text += "D";
+                break;
+            case Ranking.Rank.CRank:
+                rank.text += "C";
+                break;
+            case Ranking.Rank.BRank:
+                rank.text += "B";
+                break;
+            case Ranking.Rank.ARank:
+                rank.text += "A";
+                break;
+            case Ranking.Rank.SRank:
+                rank.text += "S";
+                break;
+        }
     }
 }

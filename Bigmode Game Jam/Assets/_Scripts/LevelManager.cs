@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,7 +8,6 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
     [SerializeField] LevelData data;
-    [SerializeField] ResultsScreen results;
     private int numEnemies;
     private int numKills;
     private float topSpeed;
@@ -28,8 +28,8 @@ public class LevelManager : MonoBehaviour
         TimerManager.instance.StopTimer();
         double playerTime = timerData.TotalSeconds;
         rank = Ranking.GenerateRank(data.requirements, playerTime);
-        results.DisplayResults(timerData, numKills, numEnemies, topSpeed, rank);
-        Debug.Log(rank);
+        UIManager.instance.EndScript(timerData, numKills, numEnemies, topSpeed, rank);
+        StopPlayerInput();
     }
     private void NextLevel()
     {
@@ -54,5 +54,9 @@ public class LevelManager : MonoBehaviour
         {
             topSpeed = speed;
         }
+    }
+    private void StopPlayerInput()
+    {
+        
     }
 }
