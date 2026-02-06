@@ -533,31 +533,31 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region Debug UI
     private void OnGUI()
     {
-        int crosshairSize = 20;
-        int crosshairThickness = 2;
-        Color crosshairColor = Color.white;
+        // int crosshairSize = 20;
+        // int crosshairThickness = 2;
+        // Color crosshairColor = Color.white;
 
-        var centerX = Screen.width / 2f;
-        var centerY = Screen.height / 2f;
+        // var centerX = Screen.width / 2f;
+        // var centerY = Screen.height / 2f;
 
-        GUI.color = crosshairColor;
-        GUI.DrawTexture(new Rect(centerX - crosshairSize / 2f, centerY - crosshairThickness / 2f, crosshairSize, crosshairThickness), Texture2D.whiteTexture);
-        GUI.DrawTexture(new Rect(centerX - crosshairThickness / 2f, centerY - crosshairSize / 2f, crosshairThickness, crosshairSize), Texture2D.whiteTexture);
-        GUI.color = Color.white;
+        // GUI.color = crosshairColor;
+        // GUI.DrawTexture(new Rect(centerX - crosshairSize / 2f, centerY - crosshairThickness / 2f, crosshairSize, crosshairThickness), Texture2D.whiteTexture);
+        // GUI.DrawTexture(new Rect(centerX - crosshairThickness / 2f, centerY - crosshairSize / 2f, crosshairThickness, crosshairSize), Texture2D.whiteTexture);
+        // GUI.color = Color.white;
 
-        var speedText = $"Speed: {(_state.Velocity - (Vector3.up * _state.Velocity.y)).magnitude:F1} u/s\nStance: {_state.Stance}\nGrounded: {_state.Grounded}";
-        var style = new GUIStyle(GUI.skin.label) { fontSize = 16, fontStyle = FontStyle.Bold, alignment = TextAnchor.UpperCenter };
-        var textSize = style.CalcSize(new GUIContent(speedText));
+        // var speedText = $"Speed: {(_state.Velocity - (Vector3.up * _state.Velocity.y)).magnitude:F1} u/s\nStance: {_state.Stance}\nGrounded: {_state.Grounded}";
+        // var style = new GUIStyle(GUI.skin.label) { fontSize = 16, fontStyle = FontStyle.Bold, alignment = TextAnchor.UpperCenter };
+        // var textSize = style.CalcSize(new GUIContent(speedText));
 
-        var rect = new Rect(centerX - textSize.x / 2f, centerY + crosshairSize / 2f + 15f, textSize.x + 20f, textSize.y + 10f);
-        GUI.color = new Color(0, 0, 0, 0.5f);
-        GUI.Box(rect, "");
+        // var rect = new Rect(centerX - textSize.x / 2f, centerY + crosshairSize / 2f + 15f, textSize.x + 20f, textSize.y + 10f);
+        // GUI.color = new Color(0, 0, 0, 0.5f);
+        // GUI.Box(rect, "");
 
-        style.normal.textColor = Color.black;
-        GUI.Label(new Rect(rect.x + 1, rect.y + 1, rect.width, rect.height), speedText, style);
-        GUI.color = Color.white;
-        style.normal.textColor = Color.white;
-        GUI.Label(rect, speedText, style);
+        // style.normal.textColor = Color.black;
+        // GUI.Label(new Rect(rect.x + 1, rect.y + 1, rect.width, rect.height), speedText, style);
+        // GUI.color = Color.white;
+        // style.normal.textColor = Color.white;
+        // GUI.Label(rect, speedText, style);
     }
     #endregion
 }
