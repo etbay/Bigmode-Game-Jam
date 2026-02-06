@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 9060339229742646310}
   - component: {fileID: 6929654540016064642}
   - component: {fileID: 1550998015017761073}
+  - component: {fileID: -8545725260197496752}
   m_Layer: 0
   m_Name: Roboy
   m_TagString: Untagged
@@ -129,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffbf5d0ad4c122941af9b85290fffab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  transform: {fileID: 6776378143358868797}
+  objectTransform: {fileID: 0}
   direction: {x: 1, y: 0, z: 0}
   amplitude: 0.5
 --- !u!54 &6929654540016064642
@@ -171,3 +172,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0af6cf9622cd1f4ea6ef40ec1d06efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Destructible
+--- !u!114 &-8545725260197496752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8317558886544349352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02b8915febd555043921f446d3447106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyTracker

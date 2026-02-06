@@ -7,6 +7,5 @@ public class LevelData : ScriptableObject
 {
     public Ranking.RankRequirements requirements;
     public float numEnemies;
-    public float topSpeed;
     public Scene nextLevel;
 }

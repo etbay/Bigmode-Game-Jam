@@ -20,16 +20,7 @@ public class TimerManager : MonoBehaviour
     {
         if (running)
         {
-            // Increase the time every frame by the time elapsed since the last frame
-            if (Timeslow.IsSlowed)
-            {
-                currentTime += Time.deltaTime / Timeslow.slowFactor;
-            }
-            else
-            {
-                currentTime += Time.deltaTime; 
-            }
-            // Update the UI display
+            currentTime += Time.deltaTime; // / Timeslow.slowFactor; if you want the timer to not slow just add / Timeslow.slowFactor; in an if check
             UpdateTimerUI(); 
         }
     }
