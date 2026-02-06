@@ -7,20 +7,23 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
+    public static bool GameRunning = true;
     [SerializeField] LevelData data;
     private int numEnemies;
     private int numKills;
     private float topSpeed;
     Ranking.Rank rank = Ranking.Rank.SRank;
+    float scaleBeforePause = 1f;
 
     private void Awake()
     {
-        Time.timeScale = 1f;
-        numEnemies = 0;
         if (instance == null)
         {
             instance = this;
         }
+        GameRunning = true;
+        Time.timeScale = 1f;
+        numEnemies = 0;
     }
     public void EndLevel()
     {
@@ -29,12 +32,12 @@ public class LevelManager : MonoBehaviour
         double playerTime = timerData.TotalSeconds;
         rank = Ranking.GenerateRank(data.requirements, playerTime);
         UIManager.instance.EndScript(timerData, numKills, numEnemies, topSpeed, rank);
-        StopPlayerInput();
+        GameRunning = false;
+        PauseGame();
     }
-    private void NextLevel()
+    public void NextLevel()
     {
         SceneManager.LoadScene(data.nextLevel);
-        
     }
     public void RegisterEnemy()
     {
@@ -55,8 +58,15 @@ public class LevelManager : MonoBehaviour
             topSpeed = speed;
         }
     }
-    private void StopPlayerInput()
+    public void PauseGame()
     {
-        
+        float scaleBeforePause = Time.timeScale;
+        Time.timeScale = 0f;
+        GameRunning = false;
+    }
+    public void ResumeGame()
+    {
+        Time.timeScale = scaleBeforePause;
+        GameRunning = true;
     }
 }
