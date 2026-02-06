@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
+        Time.timeScale = 1f;
         numEnemies = 0;
         if (instance == null)
         {
