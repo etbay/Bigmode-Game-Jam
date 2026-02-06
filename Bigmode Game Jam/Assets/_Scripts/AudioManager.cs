@@ -51,7 +51,10 @@ public class AudioManager : MonoBehaviour
     {
         sfxPlayerPool = gameObject.AddComponent<ObjectPool>();
         sfxPlayerPool.GeneratePool(100, sfxObject);
-        StartMusic();
+        if (!musicPlayer.isPlaying)
+        {
+            StartMusic();
+        }
     }
 
     // Plays at the player's position
