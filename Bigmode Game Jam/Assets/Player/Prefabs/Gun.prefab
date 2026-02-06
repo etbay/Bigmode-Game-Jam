@@ -1,5 +1,57 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1031875873049634037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6385441945081951145}
+  - component: {fileID: 7854813227300625583}
+  m_Layer: 0
+  m_Name: Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6385441945081951145
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031875873049634037}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.393, y: -0.235, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6816229979549174963}
+  - {fileID: 8296141156053797861}
+  - {fileID: 7296088929052502346}
+  m_Father: {fileID: 7380096638552147770}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!111 &7854813227300625583
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031875873049634037}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: 6143c426d81fc6c4fb6250be188bbe69, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 6143c426d81fc6c4fb6250be188bbe69, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &1446103343687345278
 GameObject:
   m_ObjectHideFlags: 0
@@ -24,12 +76,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1446103343687345278}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.477, y: 0, z: -0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.8700007, y: 0.235, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7380096638552147770}
+  m_Father: {fileID: 6385441945081951145}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3097888174053029588
 GameObject:
@@ -154,8 +206,6 @@ GameObject:
   - component: {fileID: 7380096638552147770}
   - component: {fileID: 7138350072216565134}
   - component: {fileID: 5399679669009971225}
-  - component: {fileID: 3921109235962215330}
-  - component: {fileID: 115953565051234635}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -176,9 +226,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6816229979549174963}
-  - {fileID: 8296141156053797861}
-  - {fileID: 7296088929052502346}
+  - {fileID: 6385441945081951145}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7138350072216565134
@@ -200,7 +248,7 @@ MonoBehaviour:
   muzzleFlashLight: {fileID: 6417283073715925234}
   tracerPrefab: {fileID: 1540676930395797113, guid: a7dbd02c8d617c74fb3fb610844668ff, type: 3}
   timeSlowTracerPrefab: {fileID: 1540676930395797113, guid: 005b871557da41c42bf3f247d96dfca6, type: 3}
-  gunEffects: {fileID: 115953565051234635}
+  recoil: {fileID: 7854813227300625583}
   tracerDecay: 0.4
   tracerWidth: 0.7
   shotDelay: 0.2
@@ -230,38 +278,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 33bfcc67eaf13204399ab59226ad598b, type: 3}
   - {fileID: 8300000, guid: 2087268178bfa304bada9619cb424c4c, type: 3}
   - {fileID: 8300000, guid: 36662966b0d47b847811655c6ebf7830, type: 3}
---- !u!114 &3921109235962215330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3286510217446998175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c308442ad4a6a948b8ae1c9b288d1bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  gunModel: {fileID: 0}
-  recoilDirection: {x: 0, y: 0, z: 0}
-  recoilMultiplier: 1
-  recoilTimer: 0.1
---- !u!114 &115953565051234635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3286510217446998175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c308442ad4a6a948b8ae1c9b288d1bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GunEffects
-  gunModel: {fileID: 6816229979549174963}
-  recoilDirection: {x: 1, y: 1, z: 1}
-  recoilMultiplier: 100
-  recoilTimer: 0.1
 --- !u!1 &6419946184600289934
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +291,7 @@ GameObject:
   - component: {fileID: 5102831033633667511}
   - component: {fileID: 2008832902593015163}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -289,13 +305,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6419946184600289934}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.2, z: 0.17}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.39299947, y: 0.235, z: 0}
+  m_LocalScale: {x: 1, y: 0.2, z: 0.16999999}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8689774450757200833}
-  m_Father: {fileID: 7380096638552147770}
+  m_Father: {fileID: 6385441945081951145}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8556041179039202229
 MeshFilter:
@@ -401,12 +417,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6480730966567661990}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.538, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.93099964, y: 0.235, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7380096638552147770}
+  m_Father: {fileID: 6385441945081951145}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &6417283073715925234
 Light:

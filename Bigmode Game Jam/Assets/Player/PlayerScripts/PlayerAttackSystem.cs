@@ -37,7 +37,7 @@ public class PlayerAttackSystem : MonoBehaviour
     [SerializeField] private Light muzzleFlashLight;
     [SerializeField] private BulletTracer tracerPrefab;
     [SerializeField] private BulletTracer timeSlowTracerPrefab;
-    [SerializeField] private GunEffects gunEffects;
+    [SerializeField] private Animation recoil;
 
     [SerializeField] private float tracerDecay = 0.6f;
     [SerializeField] private float tracerWidth = 0.7f;
@@ -70,6 +70,7 @@ public class PlayerAttackSystem : MonoBehaviour
 
         hitLights = gameObject.AddComponent<ObjectPool>();
         hitLights.GeneratePool(15, muzzleFlashLight.gameObject);
+        muzzleFlashLight.enabled = false;
     }
 
     public void updateInput(CharacterInput input)
@@ -96,7 +97,11 @@ public class PlayerAttackSystem : MonoBehaviour
     private void Shoot()
     {
         delayTimer = 0;
-        gunEffects.Recoil();
+        if (recoil.IsPlaying("recoil"))
+        {
+            recoil.Stop();
+        }
+        recoil.Play();
         if (Timeslow.IsSlowed)
         {
             targetsShotInSlow += 1;
