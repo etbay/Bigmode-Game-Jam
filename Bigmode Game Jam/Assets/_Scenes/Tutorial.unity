@@ -34247,8 +34247,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6434727263986713102, guid: 3da578bc7624a464da1b0683e6f48e39, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1337913447}
   m_SourcePrefab: {fileID: 100100000, guid: 3da578bc7624a464da1b0683e6f48e39, type: 3}
+--- !u!1 &1337913446 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6434727263986713102, guid: 3da578bc7624a464da1b0683e6f48e39, type: 3}
+  m_PrefabInstance: {fileID: 1337913445}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1337913447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337913446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c583530b51196843bd0ae9699ba3601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  rotationAxis: {x: 0, y: 0, z: 1}
+  speed: 50
 --- !u!1 &1340734487
 GameObject:
   m_ObjectHideFlags: 0
@@ -37824,6 +37846,7 @@ GameObject:
   - component: {fileID: 1509998209}
   - component: {fileID: 1509998206}
   - component: {fileID: 1509998210}
+  - component: {fileID: 1509998211}
   m_Layer: 0
   m_Name: EndZone
   m_TagString: Untagged
@@ -37879,6 +37902,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d19192d0a25a85d4c907987176afcc68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!54 &1509998211
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509998205}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &1512843202
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44581,7 +44631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b484aed060e885488456280459e7af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  data: {fileID: 11400000, guid: a01b705079972b041b71fb6c6add4e8c, type: 2}
+  data: {fileID: 11400000, guid: 14ea1e1bb9bc4ed46834de5e8021063d, type: 2}
 --- !u!4 &1869506786
 Transform:
   m_ObjectHideFlags: 0

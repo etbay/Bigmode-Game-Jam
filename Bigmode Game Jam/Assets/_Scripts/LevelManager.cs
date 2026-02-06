@@ -21,6 +21,7 @@ public class LevelManager : MonoBehaviour
         TimerManager.instance.StopTimer();
         double playerTime = timerData.TotalSeconds;
         rank = Ranking.GenerateRank(data.requirements, playerTime);
+        Debug.Log(rank);
     }
 
     public void NextLevel()

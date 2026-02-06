@@ -7,6 +7,8 @@ public class EndZone : MonoBehaviour
         if (other.tag == "Player")
         {
             LevelManager.instance.NextLevel();
+            Debug.Log("Ending level");
+            LevelManager.instance.EndLevel();
         }
     }
 }
