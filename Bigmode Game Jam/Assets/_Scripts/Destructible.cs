@@ -5,8 +5,21 @@ using Debug = UnityEngine.Debug;
 
 public class Destructible : MonoBehaviour
 {
+    [SerializeField] private float respawnTimer;
+    private Respawner respawner;
     private int order = 0;
     private bool dead = false;
+
+    private void Awake()
+    {
+        respawner = GetComponentInParent<Respawner>();
+    }
+
+    private void OnEnable()
+    {
+        respawner = GetComponentInParent<Respawner>();
+    }
+
     public void Kill(int num)
     {
         if (!dead)
@@ -38,6 +51,19 @@ public class Destructible : MonoBehaviour
         {
             LevelManager.instance.RegisterKill();
         }
-        Destroy(gameObject);
+
+        if (respawner != null)
+        {
+            respawner.StartCoroutine(respawner.Respawn(respawnTimer, this.gameObject, this.transform.position, this.transform.rotation));
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    private IEnumerator Respawn(float timeWait)
+    {
+        yield return new WaitForSeconds(timeWait);
     }
 }
