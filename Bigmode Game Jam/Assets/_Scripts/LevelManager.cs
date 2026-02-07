@@ -16,6 +16,7 @@ public class LevelManager : MonoBehaviour
     private float topSpeed;
     Ranking.Rank rank = Ranking.Rank.S;
     float scaleBeforePause = 1f;
+    [SerializeField] private AudioClip levelEndSound;
 
     private void Awake()
     {
@@ -46,6 +47,7 @@ public class LevelManager : MonoBehaviour
         gameRunning = false;
         gameEnded = true;
         PauseGame();
+        AudioManager.instance.PlayOmnicientSoundClip(levelEndSound, 1f, false, false);
     }
     public void NextLevel()
     {
