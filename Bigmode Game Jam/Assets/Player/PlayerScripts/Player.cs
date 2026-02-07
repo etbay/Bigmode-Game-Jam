@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerCharacter playerCharacter;
     [SerializeField] private PlayerCamera playerCamera;
     [SerializeField] private PlayerAttackSystem playerAttackSystem;
+    [SerializeField] private OilShootingSystem playerOilSystem;
     [Space]
     [SerializeField] private CameraSpring cameraSpring;
     [SerializeField] private CameraLean cameraLean;
@@ -86,23 +87,42 @@ public class Player : MonoBehaviour
         {
             slickValue = 1f;
         }
-        #endif
-
-        // gets camera input, update rotation
-        // Handle Escape key to enter "escaped" state
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        
+        if (!escaped && input.PauseMenuEditor.WasPressedThisFrame())
         {
+            LevelManager.instance.PauseGame();
             escaped = true;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
         // If escaped, allow refocus on left mouse click
-        if (escaped && Mouse.current.leftButton.wasPressedThisFrame)
+        else if (escaped && input.PauseMenuEditor.WasPressedThisFrame())
         {
+            LevelManager.instance.ResumeGame();
             escaped = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+        #endif
+
+        // gets camera input, update rotation
+        // Handle Escape key to enter "escaped" state
+        if (!escaped && input.PauseMenu.WasPressedThisFrame())
+        {
+            LevelManager.instance.PauseGame();
+            escaped = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        // If escaped, allow refocus on left mouse click
+        else if (escaped && !LevelManager.gameEnded && input.PauseMenu.WasPressedThisFrame())
+        {
+            LevelManager.instance.ResumeGame();
+            escaped = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
         // Only update camera rotation if game is focused and not escaped
         if (Application.isFocused && !escaped)
         {
@@ -122,15 +142,23 @@ public class Player : MonoBehaviour
             Crouch = useCrouchToggle
                 ? (input.Crouch.WasPressedThisFrame() ? CrouchInput.Toggle : CrouchInput.None)
                 : (input.Crouch.IsPressed() ? CrouchInput.Crouch : CrouchInput.UnCrouch),
-            
-            Attack = input.Attack.WasPressedThisFrame()
+
+            Attack = input.Attack.WasPressedThisFrame(),
+            SecondaryFire = input.SecondaryFire.IsPressed()
             //Attack = input.Attack.IsPressed()
         };
 
-        playerCharacter.UpdateInput(characterInput);
-        playerCharacter.UpdateBody(deltaTime);
-        playerAttackSystem.updateInput(characterInput);
 
+        
+
+        if (LevelManager.gameRunning)
+        {
+            playerCharacter.UpdateInput(characterInput);
+            playerCharacter.UpdateBody(deltaTime);
+            playerAttackSystem.updateInput(characterInput);
+            playerOilSystem.updateInput(characterInput);
+        }
+        
         #if UNITY_EDITOR
         if (Keyboard.current.tKey.wasPressedThisFrame)
         {

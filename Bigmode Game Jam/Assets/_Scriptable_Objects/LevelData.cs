@@ -6,6 +6,5 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     public Ranking.RankRequirements requirements;
-    public float numEnemies;
     public string nextLevel;
 }
