@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] private CameraSpring cameraSpring;
     [SerializeField] private CameraLean cameraLean;
     [SerializeField] private bool useCrouchToggle = true;
+    [SerializeField] private PlayerSFXBank sfxBank;
 
     [SerializeField] private float slickSpeedMultStrength = 1.2f;
     [SerializeField] private float maxSlick = 4f;
@@ -63,8 +64,13 @@ public class Player : MonoBehaviour
         //Debug.Log(slickValue);
         if (slickDrains)
         {
+            float prevVal = slickValue;
             slickValue -= Time.deltaTime * SlickometerData.CurrentSlickDrainRate;
             slickValue = Mathf.Clamp(slickValue, 1f, maxSlick);
+            if (slickValue <= 1f && prevVal > 1f)
+            {
+                AudioManager.instance.PlayOmnicientSoundClip(sfxBank.PowerDown(), 1f, false, false);
+            }
         }
         playerCharacter.isSpeedCapped = slickValue <= 1f;
         playerCharacter.speedBoostMultiplier = slickValue * slickSpeedMultStrength;
@@ -87,7 +93,10 @@ public class Player : MonoBehaviour
         {
             slickValue = 1f;
         }
-        
+        if (LevelManager.gameRunning && escaped)
+        {
+            escaped = false;
+        }
         if (!escaped && input.PauseMenuEditor.WasPressedThisFrame())
         {
             LevelManager.instance.PauseGame();
