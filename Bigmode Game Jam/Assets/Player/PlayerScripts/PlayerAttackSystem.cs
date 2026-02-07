@@ -228,4 +228,23 @@ public class PlayerAttackSystem : MonoBehaviour
         hitLight.range *= 3;
         StartCoroutine(MuzzleFlash(hitLight, lightTimer, lightIntensity / 2));
     }
+
+
+    private IEnumerator BulletDecay(LineRenderer line, Vector3 start, Vector3 end, float time)
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < time)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / time;
+
+            // Move the start position towards the end position, creating a trailing effect
+            line.SetPosition(0, Vector3.Lerp(start, end, t));
+            line.SetPosition(1, end);
+
+            yield return null;
+        }
+
+        line.gameObject.SetActive(false);
+    }
 }
