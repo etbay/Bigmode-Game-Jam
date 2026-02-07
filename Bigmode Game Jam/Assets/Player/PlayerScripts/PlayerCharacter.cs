@@ -141,6 +141,17 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         airAmbience.Play();
 
     }
+    public void PauseSounds()
+    {
+        slidingAudio.Pause();
+        airAmbience.Pause();
+    }
+
+    public void ResumeSounds()
+    {
+        slidingAudio.Play();
+        airAmbience.Play();
+    }
 
     public void UpdateInput(CharacterInput input)
     {
@@ -191,6 +202,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     {
         updateFOV(currentVelocity.magnitude);
         Vector3 horizontalVel = currentVelocity - (Vector3.up * currentVelocity.y);
+        UIManager.instance.UpdateSpeedDisplay(horizontalVel.magnitude);
         LevelManager.instance.TrackSpeed(horizontalVel.magnitude);
         _state.Acceleration = Vector3.zero;
         if (isSpeedCapped)
@@ -218,15 +230,16 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     }
     #endregion
 
-    // FOV effect
+    #region FOV Visuals
     private void updateFOV(float velMag)
     {
-        if (playerCamera.fieldOfView >100f && velMag < 40f)
+        if (playerCamera.fieldOfView >90f && velMag < 40f)
         {
             playerCamera.fieldOfView -= 1f;
         }
         else playerCamera.fieldOfView = 90f + Mathf.Clamp((velMag - 40f) / 3, 0f, 30f);
     }
+    #endregion
 
     #region Grounded Logic
     private void HandleGroundedMovement(ref Vector3 currentVelocity, float deltaTime)
