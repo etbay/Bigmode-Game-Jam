@@ -23,10 +23,19 @@ public class CameraLean : MonoBehaviour
     {
         _smoothStrength = walkStrength;
     }
+    public void ResetLean()
+    {
+        _dampedAcceleration = Vector3.zero;
+        _dampedAccelerationVel = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
+    }
+
     public void UpdateLean(float deltaTime,bool sliding,Vector3 acceleration, Vector3 up)
     {
-        //Debug.Log(acceleration);s
-        var  planarAcceleration = Vector3.ProjectOnPlane(acceleration, up);
+
+
+            Debug.Log(acceleration);
+            var planarAcceleration = Vector3.ProjectOnPlane(acceleration, up);
         var damping = planarAcceleration.magnitude > _dampedAcceleration.magnitude
             ? attackDamping
             : decayDamping;
