@@ -37,6 +37,7 @@ public class PlayerAttackSystem : MonoBehaviour
     [SerializeField] private Light muzzleFlashLight;
     [SerializeField] private BulletTracer tracerPrefab;
     [SerializeField] private BulletTracer timeSlowTracerPrefab;
+    [SerializeField] private Animation recoil;
 
     [SerializeField] private float tracerDecay = 0.6f;
     [SerializeField] private float tracerWidth = 0.7f;
@@ -69,7 +70,6 @@ public class PlayerAttackSystem : MonoBehaviour
 
         hitLights = gameObject.AddComponent<ObjectPool>();
         hitLights.GeneratePool(15, muzzleFlashLight.gameObject);
-
         muzzleFlashLight.enabled = false;
     }
 
@@ -97,13 +97,19 @@ public class PlayerAttackSystem : MonoBehaviour
     private void Shoot()
     {
         delayTimer = 0;
+        if (recoil.IsPlaying("recoil"))
+        {
+            recoil.Stop();
+        }
+        recoil.Play();
         if (Timeslow.IsSlowed)
         {
             targetsShotInSlow += 1;
         }
         StartCoroutine(MuzzleFlash(muzzleFlashLight, lightTimer, lightIntensity));
         RaycastHit hit;
-            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit))
+        // Adding playercamera.transform.forward fixes a bug where the player could hit their own collider if moving backwards and shooting
+            if (Physics.Raycast(playerCamera.transform.position + (playerCamera.transform.forward * 2), playerCamera.transform.forward, out hit))
             {
                 var target = hit.collider.gameObject;
                 if (target.GetComponent<Destructible>() != null)

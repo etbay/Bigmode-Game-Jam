@@ -34,6 +34,10 @@ public class Destructible : MonoBehaviour
         var explosion = PoolManager.instance.GetItemFromPool("Explosives");
         explosion.transform.position = gameObject.transform.position;
         explosion.GetComponent<Explosion>()?.Play();
+        if (gameObject.GetComponent<EnemyTracker>() != null)
+        {
+            LevelManager.instance.RegisterKill();
+        }
         Destroy(gameObject);
     }
 }

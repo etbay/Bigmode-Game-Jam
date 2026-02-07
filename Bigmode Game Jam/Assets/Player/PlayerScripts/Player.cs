@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
@@ -16,8 +17,12 @@ public class Player : MonoBehaviour
     [SerializeField] private CameraSpring cameraSpring;
     [SerializeField] private CameraLean cameraLean;
     [SerializeField] private bool useCrouchToggle = true;
+
+    [SerializeField] private float slickSpeedMultStrength = 1.2f;
+    [SerializeField] private float maxSlick = 4f;
     private static float slickValue = 4f;
     private bool escaped = false;
+    private bool slickDrains = true;
     private PlayerInputActions _inputActions;
 
     public static float SlickValue
@@ -35,7 +40,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        slickValue = 4f;
+        slickValue = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         _inputActions = new PlayerInputActions();
         _inputActions.Enable();
@@ -56,29 +61,68 @@ public class Player : MonoBehaviour
     void Update()
     {
         //Debug.Log(slickValue);
-        slickValue -= Time.deltaTime * SlickometerData.CurrentSlickDrainRate;
-        slickValue = Mathf.Clamp(slickValue, 1f, 4f);
+        if (slickDrains)
+        {
+            slickValue -= Time.deltaTime * SlickometerData.CurrentSlickDrainRate;
+            slickValue = Mathf.Clamp(slickValue, 1f, maxSlick);
+        }
         playerCharacter.isSpeedCapped = slickValue <= 1f;
-        playerCharacter.speedBoostMultiplier = slickValue;
+        playerCharacter.speedBoostMultiplier = slickValue * slickSpeedMultStrength;
 
         var input = _inputActions.Player;
         var deltaTime = Time.deltaTime;
 
-        // gets camera input, update rotation
-        // Handle Escape key to enter "escaped" state
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        #if UNITY_EDITOR
+        if (input.SlickometerToggle.WasPressedThisFrame())
         {
+            slickDrains = !slickDrains;
+        }
+
+        if (input.SlickometerFill.WasPressedThisFrame())
+        {
+            slickValue = maxSlick;
+        }
+
+        if (input.SlickometerEmpty.WasPressedThisFrame())
+        {
+            slickValue = 1f;
+        }
+        
+        if (!escaped && input.PauseMenuEditor.WasPressedThisFrame())
+        {
+            LevelManager.instance.PauseGame();
             escaped = true;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
         // If escaped, allow refocus on left mouse click
-        if (escaped && Mouse.current.leftButton.wasPressedThisFrame)
+        else if (escaped && input.PauseMenuEditor.WasPressedThisFrame())
         {
+            LevelManager.instance.ResumeGame();
             escaped = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+        #endif
+
+        // gets camera input, update rotation
+        // Handle Escape key to enter "escaped" state
+        if (!escaped && input.PauseMenu.WasPressedThisFrame())
+        {
+            LevelManager.instance.PauseGame();
+            escaped = true;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        // If escaped, allow refocus on left mouse click
+        else if (escaped && !LevelManager.gameEnded && input.PauseMenu.WasPressedThisFrame())
+        {
+            LevelManager.instance.ResumeGame();
+            escaped = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
         // Only update camera rotation if game is focused and not escaped
         if (Application.isFocused && !escaped)
         {
@@ -104,11 +148,17 @@ public class Player : MonoBehaviour
             //Attack = input.Attack.IsPressed()
         };
 
-        playerCharacter.UpdateInput(characterInput);
-        playerCharacter.UpdateBody(deltaTime);
-        playerAttackSystem.updateInput(characterInput);
-        playerOilSystem.updateInput(characterInput);
 
+        
+
+        if (LevelManager.gameRunning)
+        {
+            playerCharacter.UpdateInput(characterInput);
+            playerCharacter.UpdateBody(deltaTime);
+            playerAttackSystem.updateInput(characterInput);
+            playerOilSystem.updateInput(characterInput);
+        }
+        
         #if UNITY_EDITOR
         if (Keyboard.current.tKey.wasPressedThisFrame)
         {
@@ -119,6 +169,7 @@ public class Player : MonoBehaviour
                 playerCharacter.setPosition(hit.point);
             }
         }
+        #endif
 
         if (input.Restart.WasPressedThisFrame())
         {
@@ -126,7 +177,6 @@ public class Player : MonoBehaviour
             string currentSceneName = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(currentSceneName);
         }
-        #endif
     }
 
     private void LateUpdate()
