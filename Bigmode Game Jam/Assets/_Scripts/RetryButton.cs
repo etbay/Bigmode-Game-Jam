@@ -8,6 +8,7 @@ public class RetryButton : MonoBehaviour
     }
     public void NextLevel()
     {
+        Debug.Log("NextLevelClicked");
         LevelManager.instance?.NextLevel();
     }
 }

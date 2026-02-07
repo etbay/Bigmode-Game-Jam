@@ -9,10 +9,6 @@ public class ResultsScreen : MonoBehaviour
     [SerializeField] TextMeshProUGUI topSpeed;
     [SerializeField] TextMeshProUGUI rank;
 
-    void Start()
-    {
-        //gameObject.SetActive(false);
-    }
     public void DisplayResults(TimeSpan time, int kills, int totalEnemies, float speed, Ranking.Rank plRank)
     {
         gameObject.SetActive(true);

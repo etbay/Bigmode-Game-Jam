@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
@@ -25,6 +26,15 @@ public class LevelManager : MonoBehaviour
         gameRunning = true;
         Time.timeScale = 1f;
         numEnemies = 0;
+    }
+    private void Update()
+    {
+        #if UNITY_EDITOR
+        if (Keyboard.current.pKey.wasPressedThisFrame)
+        {
+            EndLevel();
+        }
+        #endif
     }
     public void EndLevel()
     {

@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     }
     public void EndScript(TimeSpan time, int kills, int totalEnemies, float speed, Ranking.Rank plRank)
     {
+        results.gameObject.SetActive(true);
         results.DisplayResults(time, kills, totalEnemies, speed, plRank);
         slickometer.gameObject.SetActive(false);
         crosshair.SetActive(false);
