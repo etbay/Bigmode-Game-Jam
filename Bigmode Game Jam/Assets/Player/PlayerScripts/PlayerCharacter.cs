@@ -383,7 +383,9 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
             // Only apply slope forces (gravity along the slope)
             Vector3 slopeForce = Vector3.ProjectOnPlane(-motor.CharacterUp, motor.GroundingStatus.GroundNormal) * slideGravity;
             currentVelocity -= slopeForce * deltaTime;
-            currentVelocity -= currentVelocity * slideFriction * deltaTime * 0.5f;
+            //currentVelocity -= currentVelocity * slideFriction * deltaTime * 0.5f;
+            //Vector3 slopeForce = Vector3.ProjectOnPlane(-motor.CharacterUp, motor.GroundingStatus.GroundNormal) * slideGravity;
+            //currentVelocity -= slopeForce * deltaTime;
         }
         else
         {
