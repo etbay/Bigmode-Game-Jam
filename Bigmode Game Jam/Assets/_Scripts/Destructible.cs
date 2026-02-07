@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
 public class Destructible : MonoBehaviour
 {
     [SerializeField] private float respawnTimer;
     private Respawner respawner;
+    private Slider slider;
     private int order = 0;
     private bool dead = false;
 
