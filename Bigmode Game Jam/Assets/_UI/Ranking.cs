@@ -14,33 +14,33 @@ public class Ranking : MonoBehaviour
     }
     public enum Rank
     {
-        DRank = 0,
-        CRank = 1,
-        BRank = 2,
-        ARank = 3,
-        SRank = 4
+        D = 0,
+        C = 1,
+        B = 2,
+        A = 3,
+        S = 4
     }
     public static Rank GenerateRank(RankRequirements level, double playerTime)
     {
         if (playerTime < level.sReq)
         {
-            return Rank.SRank;
+            return Rank.S;
         }
         else if (playerTime < level.aReq)
         {
-            return Rank.ARank;
+            return Rank.A;
         }
         else if (playerTime < level.bReq)
         {
-            return Rank.BRank;
+            return Rank.B;
         }
         else if (playerTime < level.cReq)
         {
-            return Rank.CRank;
+            return Rank.C;
         }
         else
         {
-            return Rank.DRank;
+            return Rank.D;
         }
     }
 }

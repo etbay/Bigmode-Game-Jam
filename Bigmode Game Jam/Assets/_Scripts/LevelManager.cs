@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour
     private int numEnemies;
     private int numKills;
     private float topSpeed;
-    Ranking.Rank rank = Ranking.Rank.SRank;
+    Ranking.Rank rank = Ranking.Rank.S;
     float scaleBeforePause = 1f;
 
     private void Awake()
