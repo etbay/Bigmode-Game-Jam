@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
@@ -15,8 +16,12 @@ public class Player : MonoBehaviour
     [SerializeField] private CameraSpring cameraSpring;
     [SerializeField] private CameraLean cameraLean;
     [SerializeField] private bool useCrouchToggle = true;
+
+    [SerializeField] private float slickSpeedMultStrength = 1.2f;
+    [SerializeField] private float maxSlick = 4f;
     private static float slickValue = 4f;
     private bool escaped = false;
+    private bool slickDrains = true;
     private PlayerInputActions _inputActions;
 
     public static float SlickValue
@@ -34,7 +39,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        slickValue = 4f;
+        slickValue = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         _inputActions = new PlayerInputActions();
         _inputActions.Enable();
@@ -55,13 +60,33 @@ public class Player : MonoBehaviour
     void Update()
     {
         //Debug.Log(slickValue);
-        slickValue -= Time.deltaTime * SlickometerData.CurrentSlickDrainRate;
-        slickValue = Mathf.Clamp(slickValue, 1f, 4f);
+        if (slickDrains)
+        {
+            slickValue -= Time.deltaTime * SlickometerData.CurrentSlickDrainRate;
+            slickValue = Mathf.Clamp(slickValue, 1f, maxSlick);
+        }
         playerCharacter.isSpeedCapped = slickValue <= 1f;
-        playerCharacter.speedBoostMultiplier = slickValue;
+        playerCharacter.speedBoostMultiplier = slickValue * slickSpeedMultStrength;
 
         var input = _inputActions.Player;
         var deltaTime = Time.deltaTime;
+
+        #if UNITY_EDITOR
+        if (input.SlickometerToggle.WasPressedThisFrame())
+        {
+            slickDrains = !slickDrains;
+        }
+
+        if (input.SlickometerFill.WasPressedThisFrame())
+        {
+            slickValue = maxSlick;
+        }
+
+        if (input.SlickometerEmpty.WasPressedThisFrame())
+        {
+            slickValue = 1f;
+        }
+        #endif
 
         // gets camera input, update rotation
         // Handle Escape key to enter "escaped" state
@@ -116,6 +141,7 @@ public class Player : MonoBehaviour
                 playerCharacter.setPosition(hit.point);
             }
         }
+        #endif
 
         if (input.Restart.WasPressedThisFrame())
         {
@@ -123,7 +149,6 @@ public class Player : MonoBehaviour
             string currentSceneName = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(currentSceneName);
         }
-        #endif
     }
 
     private void LateUpdate()

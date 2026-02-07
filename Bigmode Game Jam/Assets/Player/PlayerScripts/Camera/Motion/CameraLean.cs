@@ -39,6 +39,7 @@ public class CameraLean : MonoBehaviour
                 maxSpeed: float.PositiveInfinity,
                 deltaTime: deltaTime
             );
+        //Debug.Log($"Acceleration: {acceleration}, Magnitude: {acceleration.magnitude}");
 
         //get rotation axis based on the acceleration vector
         var leanAxis = Vector3.Cross(_dampedAcceleration.normalized, up).normalized;
@@ -52,7 +53,7 @@ public class CameraLean : MonoBehaviour
                 : walkStrength;
 
         _smoothStrength = Mathf.Lerp(_smoothStrength, targetStrength, 1f - Mathf.Exp(-strengthResponse * deltaTime));
-        transform.rotation = Quaternion.AngleAxis(_dampedAcceleration.magnitude * _smoothStrength, leanAxis) * transform.rotation;
+        transform.rotation = Quaternion.AngleAxis(_dampedAcceleration.magnitude * -_smoothStrength, leanAxis) * transform.rotation;
 
 
         //Debug.DrawRay(transform.position, acceleration, Color.red);

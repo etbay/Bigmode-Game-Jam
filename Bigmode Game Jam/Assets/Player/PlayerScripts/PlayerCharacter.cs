@@ -84,7 +84,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     [SerializeField] private float slideSteerAccelleration = 5f;
     [SerializeField] private float slideGravity = -90f;
     [Tooltip("How much downward (fall) speed is converted into planar slide speed on landing (0 = none, 1 = full).")]
-    [SerializeField] private float fallToSlideRatio = 1f;
+    [SerializeField] private float fallToSlideRatio = 2f;
     #endregion
 
     #region Serialized Fields - Height Settings
@@ -122,7 +122,6 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     private bool stopped = true;
     private AudioSource slidingAudio;
     private AudioSource airAmbience;
-    private Coroutine volumeFade;
     #endregion
 
     #region Initialization & Input
@@ -133,16 +132,18 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         _uncrouchOverLapResults = new Collider[8];
         motor.CharacterController = this;
         instance = this;
+    }
 
-        slidingAudio = AudioManager.instance.GetLoopableAudioSource(sfxBank.SlidingSound(), 0f, true, false);
-        airAmbience = AudioManager.instance.GetLoopableAudioSource(sfxBank.AirAmbience(), 0f, true, false);
+    private void Start()
+    {
+        slidingAudio = AudioManager.instance.GetLoopableAudioSource(sfxBank.SlidingSound(), root.position, 0f, true, false);
+        airAmbience = AudioManager.instance.GetLoopableAudioSource(sfxBank.AirAmbience(), root.position, 0f, true, false);
         airAmbience.Play();
+
     }
 
     public void UpdateInput(CharacterInput input)
     {
-
-
         _reqestedRotation = input.Rotation;
         _reqestedMovement = input.Rotation * Vector3.ClampMagnitude(new Vector3(input.Move.x, 0f, input.Move.y), 1f);
         _reqestedSlam = input.Crouch switch
@@ -188,6 +189,9 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region Velocity Dispatcher
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
     {
+        updateFOV(currentVelocity.magnitude);
+        Vector3 horizontalVel = currentVelocity - (Vector3.up * currentVelocity.y);
+        LevelManager.instance.TrackSpeed(horizontalVel.magnitude);
         _state.Acceleration = Vector3.zero;
         if (isSpeedCapped)
         {
@@ -214,6 +218,16 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     }
     #endregion
 
+    // FOV effect
+    private void updateFOV(float velMag)
+    {
+        if (playerCamera.fieldOfView >100f && velMag < 40f)
+        {
+            playerCamera.fieldOfView -= 1f;
+        }
+        else playerCamera.fieldOfView = 90f + Mathf.Clamp((velMag - 40f) / 3, 0f, 30f);
+    }
+
     #region Grounded Logic
     private void HandleGroundedMovement(ref Vector3 currentVelocity, float deltaTime)
     {
@@ -221,7 +235,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         {
             AudioManager.instance.PlayOmnicientSoundClip(sfxBank.LandSound(), 1f, true, true);
         }
-        airAmbience.volume = 0f;
+        airAmbience.volume = Mathf.Clamp01(currentVelocity.magnitude / 400);
         
         _ungroundedDueToJump = false;
         _timeSinceUngrounded = 0f;
@@ -285,6 +299,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
     private void UpdateStandardMovement(ref Vector3 currentVelocity, Vector3 groundedMovement, float deltaTime)
     {
+        Vector3 prevVelocity = currentVelocity;
         //bool isSprinting = _state.Stance is Stance.Stand && _reqestedSprint && groundedMovement.sqrMagnitude > 0f;
         if (slidingAudio.isPlaying)
         {
@@ -301,6 +316,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed * groundedMovement.magnitude, 1f - Mathf.Exp(-response * deltaTime));
         currentVelocity = desiredDir * currentSpeed;
+        _state.Acceleration = (currentVelocity - prevVelocity) / deltaTime;
 
         footstepInterval = Mathf.Clamp(5/currentSpeed , 0.15f, 1f); // the higher the speed, the faster the footsteps, clamped so its not unreasonable (5/x is the equation)
         if (currentSpeed > 0)
@@ -313,7 +329,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         if ((footstepTimer >= footstepInterval && !stopped))
         {
             footstepTimer = 0f;
-            AudioManager.instance.PlaySoundClipFromList(sfxBank.WalkSounds(), root.position, 1f, true, true);
+            AudioManager.instance.PlaySoundClipFromList(sfxBank.WalkSounds(), root.position, 0.8f, true, true);
         }
     }
 
@@ -324,11 +340,12 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
             // Only apply slope forces (gravity along the slope)
             Vector3 slopeForce = Vector3.ProjectOnPlane(-motor.CharacterUp, motor.GroundingStatus.GroundNormal) * slideGravity;
             currentVelocity -= slopeForce * deltaTime;
+            currentVelocity -= currentVelocity * slideFriction * deltaTime * 0.5f;
         }
         else
         {
             // Apply slide friction
-                float slopeDecelerationFactor = 0.6f;
+            float slopeDecelerationFactor = 0.6f;
             currentVelocity -= currentVelocity * (slopeDecelerationFactor* slideFriction * deltaTime);
         }
 
@@ -388,40 +405,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         }
         currentVelocity += motor.CharacterUp * effectiveGravity * deltaTime;
 
-        // Sound effect managing for the air sfx
-        if (currentVelocity.magnitude > 100f)
-        {
-            if (airAmbience.volume < 0.5 && volumeFade != null)
-            {
-                StopCoroutine(volumeFade);
-            }
-            volumeFade = StartCoroutine(AudioManager.instance.FadeToVolume(airAmbience, airAmbience.volume, 1f, 0.2f));
-        }
-        else if (currentVelocity.magnitude > 50f)
-        {
-            if (volumeFade != null)
-            {
-                StopCoroutine(volumeFade);
-            }
-            volumeFade = StartCoroutine(AudioManager.instance.FadeToVolume(airAmbience, airAmbience.volume, 0.8f, 0.2f));
-        }
-        else if (currentVelocity.magnitude > 20f)
-        {
-            if (volumeFade != null)
-            {
-                StopCoroutine(volumeFade);
-            }
-            volumeFade = StartCoroutine(AudioManager.instance.FadeToVolume(airAmbience, airAmbience.volume, 0.3f, 0.2f));
-        }
-        else if (currentVelocity.magnitude < 20f)
-        {
-            if (volumeFade != null)
-            {
-                StopCoroutine(volumeFade);
-            }
-            volumeFade = StartCoroutine(AudioManager.instance.FadeToVolume(airAmbience, airAmbience.volume, 0f, 0.1f));
-        }
-        
+        airAmbience.volume = Mathf.Clamp01(currentVelocity.magnitude / 200);        
     }
 
     private void ApplyAirControl(ref Vector3 currentVelocity, float deltaTime)
@@ -543,36 +527,37 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     public void OnDiscreteCollisionDetected(Collider hitCollider) { }
     public void OnGroundHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
     public void OnMovementHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport) { }
+    public Transform GetRoot() { return root; }
     #endregion
 
     #region Debug UI
     private void OnGUI()
     {
-        int crosshairSize = 20;
-        int crosshairThickness = 2;
-        Color crosshairColor = Color.white;
+        // int crosshairSize = 20;
+        // int crosshairThickness = 2;
+        // Color crosshairColor = Color.white;
 
-        var centerX = Screen.width / 2f;
-        var centerY = Screen.height / 2f;
+        // var centerX = Screen.width / 2f;
+        // var centerY = Screen.height / 2f;
 
-        GUI.color = crosshairColor;
-        GUI.DrawTexture(new Rect(centerX - crosshairSize / 2f, centerY - crosshairThickness / 2f, crosshairSize, crosshairThickness), Texture2D.whiteTexture);
-        GUI.DrawTexture(new Rect(centerX - crosshairThickness / 2f, centerY - crosshairSize / 2f, crosshairThickness, crosshairSize), Texture2D.whiteTexture);
-        GUI.color = Color.white;
+        // GUI.color = crosshairColor;
+        // GUI.DrawTexture(new Rect(centerX - crosshairSize / 2f, centerY - crosshairThickness / 2f, crosshairSize, crosshairThickness), Texture2D.whiteTexture);
+        // GUI.DrawTexture(new Rect(centerX - crosshairThickness / 2f, centerY - crosshairSize / 2f, crosshairThickness, crosshairSize), Texture2D.whiteTexture);
+        // GUI.color = Color.white;
 
-        var speedText = $"Speed: {_state.Velocity.magnitude:F1} u/s\nStance: {_state.Stance}\nGrounded: {_state.Grounded}";
-        var style = new GUIStyle(GUI.skin.label) { fontSize = 16, fontStyle = FontStyle.Bold, alignment = TextAnchor.UpperCenter };
-        var textSize = style.CalcSize(new GUIContent(speedText));
+        // var speedText = $"Speed: {(_state.Velocity - (Vector3.up * _state.Velocity.y)).magnitude:F1} u/s\nStance: {_state.Stance}\nGrounded: {_state.Grounded}";
+        // var style = new GUIStyle(GUI.skin.label) { fontSize = 16, fontStyle = FontStyle.Bold, alignment = TextAnchor.UpperCenter };
+        // var textSize = style.CalcSize(new GUIContent(speedText));
 
-        var rect = new Rect(centerX - textSize.x / 2f, centerY + crosshairSize / 2f + 15f, textSize.x + 20f, textSize.y + 10f);
-        GUI.color = new Color(0, 0, 0, 0.5f);
-        GUI.Box(rect, "");
+        // var rect = new Rect(centerX - textSize.x / 2f, centerY + crosshairSize / 2f + 15f, textSize.x + 20f, textSize.y + 10f);
+        // GUI.color = new Color(0, 0, 0, 0.5f);
+        // GUI.Box(rect, "");
 
-        style.normal.textColor = Color.black;
-        GUI.Label(new Rect(rect.x + 1, rect.y + 1, rect.width, rect.height), speedText, style);
-        GUI.color = Color.white;
-        style.normal.textColor = Color.white;
-        GUI.Label(rect, speedText, style);
+        // style.normal.textColor = Color.black;
+        // GUI.Label(new Rect(rect.x + 1, rect.y + 1, rect.width, rect.height), speedText, style);
+        // GUI.color = Color.white;
+        // style.normal.textColor = Color.white;
+        // GUI.Label(rect, speedText, style);
     }
     #endregion
 }

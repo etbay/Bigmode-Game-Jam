@@ -9,6 +9,27 @@ using Debug = UnityEngine.Debug;
 
 public class PlayerAttackSystem : MonoBehaviour
 {
+    struct TracerDetails
+    {
+        public BulletTracer tracer;
+        public Vector3 spawn;
+        public Vector3 end;
+        public float width;
+        public float decay;
+        public bool isHit;
+        public RaycastHit hit;
+        public TracerDetails(BulletTracer bulletTracer, Vector3 position, Vector3 point, float tracerWidth, float tracerDecay, bool v, RaycastHit hit) : this()
+        {
+            this.tracer = bulletTracer;
+            this.spawn = position;
+            this.end = point;
+            this.width = tracerWidth;
+            this.decay = tracerDecay;
+            this.isHit = v;
+            this.hit = hit;
+        }
+    }
+
     [SerializeField] private Camera playerCamera;
     [SerializeField] private WeaponSFXBank sfxBank;
     [SerializeField] private Transform bulletSpawn;
@@ -16,43 +37,39 @@ public class PlayerAttackSystem : MonoBehaviour
     [SerializeField] private Light muzzleFlashLight;
     [SerializeField] private BulletTracer tracerPrefab;
     [SerializeField] private BulletTracer timeSlowTracerPrefab;
+    [SerializeField] private Animation recoil;
+
     [SerializeField] private float tracerDecay = 0.6f;
     [SerializeField] private float tracerWidth = 0.7f;
     [SerializeField] private float shotDelay = 0.05f;
     [SerializeField] private float lightTimer = 0.08f;
+    [SerializeField] private float lightIntensity = 5f;
 
     private bool _reqestedAttack = false;
     // private PlayerInputActions _inputActions;
     private int targetsShotInSlow = 0;
     private float delayTimer;
-    private Queue<BulletTracer> tracerPool = new Queue<BulletTracer>();
-    private Queue<BulletTracer> timeSlowTracerPool = new Queue<BulletTracer>();
-    private Queue<Tuple<BulletTracer, Vector3, Vector3, float, float>> tracerTracker = new Queue<Tuple<BulletTracer, Vector3, Vector3, float, float>>();
-    private Queue<ParticleSystem> impactParticles = new Queue<ParticleSystem>();
+    private Queue<TracerDetails> tracerTracker = new Queue<TracerDetails>();
     
+    // Object Pools for reusing effects
+    ObjectPool tracerPool;
+    ObjectPool timeSlowTracerPool;
+    ObjectPool impactParticles;
+    ObjectPool hitLights;
+
     private void Start()
     {
-        for (int i = 0; i < 20; i++)
-        {
-            // Add tracers to the pool to prevent runtime instantiation
-            var tracer = Instantiate(tracerPrefab, bulletSpawn.position, Quaternion.identity);
-            tracer.gameObject.SetActive(false);
-            tracerPool.Enqueue(tracer);
-        }
-        for (int i = 0; i < 20; i++)
-        {
-            // Add tracers to the pool to prevent runtime instantiation
-            var tracer = Instantiate(timeSlowTracerPrefab, bulletSpawn.position, Quaternion.identity);
-            tracer.gameObject.SetActive(false);
-            timeSlowTracerPool.Enqueue(tracer);
-        }
-        for (int i = 0; i < 20; i++)
-        {
-            // Add particles to the pool to prevent runtime instantiation
-            var particle = Instantiate(impact, bulletSpawn.position, Quaternion.identity);
-            particle.gameObject.SetActive(false);
-            impactParticles.Enqueue(particle);
-        }
+        tracerPool = gameObject.AddComponent<ObjectPool>();
+        tracerPool.GeneratePool(15, tracerPrefab.gameObject);
+
+        timeSlowTracerPool = gameObject.AddComponent<ObjectPool>();
+        timeSlowTracerPool.GeneratePool(15, timeSlowTracerPrefab.gameObject);
+
+        impactParticles = gameObject.AddComponent<ObjectPool>();
+        impactParticles.GeneratePool(15, impact.gameObject);
+
+        hitLights = gameObject.AddComponent<ObjectPool>();
+        hitLights.GeneratePool(15, muzzleFlashLight.gameObject);
         muzzleFlashLight.enabled = false;
     }
 
@@ -80,21 +97,25 @@ public class PlayerAttackSystem : MonoBehaviour
     private void Shoot()
     {
         delayTimer = 0;
+        if (recoil.IsPlaying("recoil"))
+        {
+            recoil.Stop();
+        }
+        recoil.Play();
         if (Timeslow.IsSlowed)
         {
             targetsShotInSlow += 1;
         }
-        StartCoroutine(MuzzleFlash(lightTimer));
+        StartCoroutine(MuzzleFlash(muzzleFlashLight, lightTimer, lightIntensity));
         RaycastHit hit;
-            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit))
+        // Adding playercamera.transform.forward fixes a bug where the player could hit their own collider if moving backwards and shooting
+            if (Physics.Raycast(playerCamera.transform.position + (playerCamera.transform.forward * 2), playerCamera.transform.forward, out hit))
             {
                 var target = hit.collider.gameObject;
-
                 if (target.GetComponent<Destructible>() != null)
                 {
                     if (Timeslow.IsSlowed)
                     {
-                        Debug.Log(targetsShotInSlow);
                         target.GetComponent<Destructible>().Kill(targetsShotInSlow);
                     }
                     else
@@ -105,24 +126,19 @@ public class PlayerAttackSystem : MonoBehaviour
                 if (Timeslow.IsSlowed)
                 {
                     // Shoot out a timeslow indicator
-                    BulletTracer tracer = timeSlowTracerPool.Dequeue();
-                    tracer.gameObject.SetActive(true);
-                    tracer.FireTracer(bulletSpawn.position, hit.point, tracerWidth);
-                    timeSlowTracerPool.Enqueue(tracer);
+                    var tracer = timeSlowTracerPool.RequestAndReturnToPool();
+                    tracer.GetComponent<BulletTracer>().FireTracer(bulletSpawn.position, hit.point, tracerWidth);
 
                     // Wait to display most effects if time is slowed
                     // Add real tracers to the tracker pool
-                    tracer = tracerPool.Dequeue();
-                    tracer.gameObject.SetActive(true);
-                    tracerTracker.Enqueue(new Tuple<BulletTracer, Vector3, Vector3, float, float>(tracer, bulletSpawn.position, hit.point, tracerWidth, tracerDecay));
-                    tracerPool.Enqueue(tracer);
+                    tracer = tracerPool.RequestAndReturnToPool();
+                    tracerTracker.Enqueue(new TracerDetails(tracer.GetComponent<BulletTracer>(), bulletSpawn.position, hit.point, tracerWidth, tracerDecay, true, hit));
                 }
                 else
                 {
-                    BulletTracer tracer = tracerPool.Dequeue();
-                    tracer.gameObject.SetActive(true);
-                    tracer.FireTracer(bulletSpawn.position, hit.point, tracerWidth, tracerDecay);
-                    tracerPool.Enqueue(tracer);
+                    var tracer = tracerPool.RequestAndReturnToPool();
+                    tracer.GetComponent<BulletTracer>().FireTracer(bulletSpawn.position, hit.point, tracerWidth, tracerDecay);
+                    AudioManager.instance.PlaySoundClipFromList(sfxBank.HitSounds(), hit.point, 1f, true, true);
                     ActivateImpactParticles(hit);
                 }
 
@@ -133,23 +149,17 @@ public class PlayerAttackSystem : MonoBehaviour
                 if (Timeslow.IsSlowed)
                 {
                     // Shoot out a timeslow indicator
-                    BulletTracer tracer = timeSlowTracerPool.Dequeue();
-                    tracer.gameObject.SetActive(true);
-                    tracer.FireTracer(bulletSpawn.position, maxDistance, tracerWidth);
-                    timeSlowTracerPool.Enqueue(tracer);
+                    var tracer = timeSlowTracerPool.RequestAndReturnToPool();
+                    tracer.GetComponent<BulletTracer>().FireTracer(bulletSpawn.position, maxDistance, tracerWidth);
 
                     // Wait to display most effects if time is slowed
-                    tracer = tracerPool.Dequeue();
-                    tracer.gameObject.SetActive(true);
-                    tracerTracker.Enqueue(new Tuple<BulletTracer, Vector3, Vector3, float, float>(tracer, bulletSpawn.position, maxDistance, tracerWidth, tracerDecay));
-                    tracerPool.Enqueue(tracer);
+                    tracer = tracerPool.RequestAndReturnToPool();
+                    tracerTracker.Enqueue(new TracerDetails(tracer.GetComponent<BulletTracer>(), bulletSpawn.position, maxDistance, tracerWidth, tracerDecay, false, new RaycastHit()));
                 }
                 else
                 {
-                    BulletTracer tracer = tracerPool.Dequeue();
-                    tracer.gameObject.SetActive(true);
-                    tracer.FireTracer(bulletSpawn.position, maxDistance, tracerWidth, tracerDecay);
-                    tracerPool.Enqueue(tracer);
+                    var tracer = tracerPool.RequestAndReturnToPool();
+                    tracer.GetComponent<BulletTracer>().FireTracer(bulletSpawn.position, maxDistance, tracerWidth, tracerDecay);
                 }
             }
             AudioManager.instance.PlayOmnicientSoundClip(sfxBank.GunshotSound(), 1f, true, true);
@@ -166,9 +176,14 @@ public class PlayerAttackSystem : MonoBehaviour
             yield return new WaitForSeconds(1/15f);
             targetsShotInSlow = 0;
             var tracer = tracerTracker.Dequeue();
-            tracer.Item1.FireTracer(tracer.Item2, tracer.Item3, tracer.Item4, tracer.Item5);
+            tracer.tracer.FireTracer(tracer.spawn, tracer.end, tracer.width, tracer.decay);
             // tuple is: bullettracer, its recorded spawn, its recorded end point, its recordedwidth, and its recorded decayrate
-            AudioManager.instance.PlaySoundClipFromList(sfxBank.TracerSounds(), tracer.Item2, 1f, true, true);
+            AudioManager.instance.PlaySoundClipFromList(sfxBank.TracerSounds(), tracer.spawn, 1f, true, true);
+            AudioManager.instance.PlaySoundClipFromList(sfxBank.HitSounds(), tracer.end, 1f, true, true);
+            if (tracer.isHit)
+            {
+                ActivateImpactParticles(tracer.hit);
+            }
         }
     }
     
@@ -180,27 +195,28 @@ public class PlayerAttackSystem : MonoBehaviour
         }
         Shoot();
     }
-    private IEnumerator MuzzleFlash(float time)
+    private IEnumerator MuzzleFlash(Light light, float time, float intensity)
     {
-        muzzleFlashLight.enabled = true;
-        float initialIntensity = muzzleFlashLight.intensity;
+        light.enabled = true;
         float elapsedTime = 0f;
         while (elapsedTime < time)
         {
             elapsedTime += Time.deltaTime;
-            muzzleFlashLight.intensity = Mathf.Lerp(initialIntensity, 0f, elapsedTime);
+            light.intensity = Mathf.Lerp(intensity, 0f, elapsedTime);
             yield return null;
         }
-        muzzleFlashLight.enabled = false;
-        muzzleFlashLight.intensity = initialIntensity;
+        light.enabled = false;
     }
     private void ActivateImpactParticles(RaycastHit hit)
     {
-        ParticleSystem impactFX = impactParticles.Dequeue();
-        impactFX.gameObject.SetActive(true);
+        ParticleSystem impactFX = impactParticles.RequestAndReturnToPool().GetComponent<ParticleSystem>();
         impactFX.gameObject.transform.position = hit.point;
         impactFX.gameObject.transform.forward = hit.normal;
         impactFX.Play();
-        impactParticles.Enqueue(impactFX);
+        
+        Light hitLight = hitLights.RequestAndReturnToPool().GetComponent<Light>();
+        hitLight.transform.position = hit.point + hit.normal * 0.2f; // spawn a point light where it hits
+        hitLight.range *= 3;
+        StartCoroutine(MuzzleFlash(hitLight, lightTimer, lightIntensity / 2));
     }
 }
