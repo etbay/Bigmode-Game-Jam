@@ -371,6 +371,7 @@ MonoBehaviour:
   cameraSpring: {fileID: 7410904314794892351}
   cameraLean: {fileID: 3751641708404328717}
   useCrouchToggle: 0
+  sfxBank: {fileID: 8742350059407653686}
   slickSpeedMultStrength: 1.2
   maxSlick: 4
 --- !u!114 &3969533954021389893
@@ -402,7 +403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSFXBank
   jumpSound: {fileID: 8300000, guid: a659afbd62f5c0f4998d705949245217, type: 3}
   landSound: {fileID: 8300000, guid: 92100aa306a706641bc66b07cd786d8c, type: 3}
-  slidingSound: {fileID: 8300000, guid: f82362496d195bd468d0a3352a953b0c, type: 3}
+  slidingSound: {fileID: 8300000, guid: 75eba6170edd9b642876cd5ca442b524, type: 3}
   slideFailedSound: {fileID: 8300000, guid: 2d704bec2598e554aa13677b01feb26f, type: 3}
   walkSounds:
   - {fileID: 8300000, guid: 5f711cd82d1b85a4a8cbc4a95d741544, type: 3}
@@ -414,6 +415,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6bf29fe5f9257ae4ca5d5f47e06f0bdf, type: 3}
   - {fileID: 8300000, guid: f12dc21d228c5f6449f7ec4d451c0231, type: 3}
   airAmbience: {fileID: 8300000, guid: a2db6f4fa1fc9ac438e04581890f9735, type: 3}
+  powerDown: {fileID: 8300000, guid: c696eaa177cd3164382296f701c64b52, type: 3}
 --- !u!1 &5553833818521036052
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,14 +697,6 @@ PrefabInstance:
       value: Gun
       objectReference: {fileID: 0}
     - target: {fileID: 7138350072216565134, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
-      propertyPath: shotDelay
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7138350072216565134, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
-      propertyPath: tracerWidth
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7138350072216565134, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 7714564643024645890}
@@ -765,6 +759,11 @@ MonoBehaviour:
 --- !u!4 &5675754648483511736 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7380096638552147770, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
+  m_PrefabInstance: {fileID: 2931572888627919490}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6597450677218242919 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8296141156053797861, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
   m_PrefabInstance: {fileID: 2931572888627919490}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8900553684141331726

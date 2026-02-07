@@ -228,7 +228,7 @@ MonoBehaviour:
   timeSlowTracerPrefab: {fileID: 1540676930395797113, guid: 005b871557da41c42bf3f247d96dfca6, type: 3}
   recoil: {fileID: 7854813227300625583}
   tracerDecay: 0.4
-  tracerWidth: 0.7
+  tracerWidth: 0.6
   shotDelay: 0.2
   lightTimer: 0.08
   lightIntensity: 2
@@ -245,6 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   gunshotSound: {fileID: 8300000, guid: ffb1101f35dfd014f93de2354081ed5d, type: 3}
+  hitDing: {fileID: 8300000, guid: d643bdb667db0f14ab99288d1dad44fc, type: 3}
   tracerSounds:
   - {fileID: 8300000, guid: dc07976d482d03e4388d6c28b9c6a172, type: 3}
   - {fileID: 8300000, guid: e5975a92b51aee049be3c706dc78f0de, type: 3}

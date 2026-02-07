@@ -14,9 +14,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioMixer mixer;
     [SerializeField] private GameObject sfxObject;
     [SerializeField] private AudioClip music;
-    [SerializeField] private AudioLowPassFilter lowPass;
     [SerializeField] private float timeForAudioStretch = 0.5f;
 
+    private AudioLowPassFilter lowPass;
     private AudioMixerGroup sfxGroup;
     private AudioMixerGroup timeSlowedGroup;
     private AudioMixerGroup environmentGroup;
