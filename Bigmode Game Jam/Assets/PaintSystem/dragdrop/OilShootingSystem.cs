@@ -18,7 +18,8 @@ public class OilShootingSystem : MonoBehaviour
 
     void Start()
     {
-       
+        inkParticle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        _isPlaying = false;
     }
     public void updateInput(CharacterInput input)
     {
