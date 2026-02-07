@@ -97,4 +97,12 @@ public class LevelManager : MonoBehaviour
         AudioManager.instance.StopFilterMusic();
         UIManager.instance.ClosePauseScript();
     }
+    public void GoToMenu()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Time.timeScale = 1f;
+        AudioManager.instance.StopFilterMusic();
+        SceneManager.LoadScene("Main Menu");
+    }
 }

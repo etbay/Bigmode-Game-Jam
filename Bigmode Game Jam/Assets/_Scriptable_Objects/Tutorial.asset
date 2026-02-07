@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29afa81dbb3a2ac46a955c6f398ad454, type: 3}
-  m_Name: Level1
+  m_Name: Tutorial
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
+  sceneName: Tutorial
+  levelName: Tutorial
   requirements:
     dReq: 200
     cReq: 130
     bReq: 80
     aReq: 50
     sReq: 35
-  numEnemies: 0
-  nextLevel: 
+  nextLevel: Level1
