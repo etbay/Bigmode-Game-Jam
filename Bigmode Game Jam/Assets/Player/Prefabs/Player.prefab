@@ -181,7 +181,6 @@ GameObject:
   - component: {fileID: 1018712259975219665}
   - component: {fileID: 6424119976327141994}
   - component: {fileID: 7514226201734778419}
-  - component: {fileID: 5820502332165909296}
   m_Layer: 3
   m_Name: Character
   m_TagString: Player
@@ -317,21 +316,6 @@ MonoBehaviour:
   crouchHeightResponse: 15
   standCameraTargetHeight: 0.9
   crouchCameraTargetHeight: 0.7
---- !u!114 &5820502332165909296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2000790006604917870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfb06fe47b1efa9418445b7194ad6456, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OilShootingSystem
-  inkParticle: {fileID: 0}
-  parentController: {fileID: 0}
-  splatGunNozzle: {fileID: 0}
 --- !u!1 &3760759753895213583
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,7 +367,7 @@ MonoBehaviour:
   playerCharacter: {fileID: 7514226201734778419}
   playerCamera: {fileID: 235520489252397107}
   playerAttackSystem: {fileID: 5458232539511459596}
-  playerOilSystem: {fileID: 5820502332165909296}
+  playerOilSystem: {fileID: 0}
   cameraSpring: {fileID: 7410904314794892351}
   cameraLean: {fileID: 3751641708404328717}
   useCrouchToggle: 0
