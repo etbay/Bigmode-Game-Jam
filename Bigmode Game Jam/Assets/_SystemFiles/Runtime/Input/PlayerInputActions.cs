@@ -226,6 +226,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""42b3038f-e5a1-46c7-9b63-2a815d2cf2b5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseMenuEditor"",
+                    ""type"": ""Button"",
+                    ""id"": ""2f9e1cc7-13fa-4986-92ee-17f378ebfedc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -536,6 +554,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Slickometer Empty"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0b1e0f1-8003-403b-b4d3-fe66907aadee"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7acd8732-3958-4788-ac8b-b1ddbdb8fd05"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseMenuEditor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -620,6 +660,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_SlickometerToggle = m_Player.FindAction("Slickometer Toggle", throwIfNotFound: true);
         m_Player_SlickometerFill = m_Player.FindAction("Slickometer Fill", throwIfNotFound: true);
         m_Player_SlickometerEmpty = m_Player.FindAction("Slickometer Empty", throwIfNotFound: true);
+        m_Player_PauseMenu = m_Player.FindAction("PauseMenu", throwIfNotFound: true);
+        m_Player_PauseMenuEditor = m_Player.FindAction("PauseMenuEditor", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -715,6 +757,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SlickometerToggle;
     private readonly InputAction m_Player_SlickometerFill;
     private readonly InputAction m_Player_SlickometerEmpty;
+    private readonly InputAction m_Player_PauseMenu;
+    private readonly InputAction m_Player_PauseMenuEditor;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -787,6 +831,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @SlickometerEmpty => m_Wrapper.m_Player_SlickometerEmpty;
         /// <summary>
+        /// Provides access to the underlying input action "Player/PauseMenu".
+        /// </summary>
+        public InputAction @PauseMenu => m_Wrapper.m_Player_PauseMenu;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/PauseMenuEditor".
+        /// </summary>
+        public InputAction @PauseMenuEditor => m_Wrapper.m_Player_PauseMenuEditor;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -857,6 +909,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @SlickometerEmpty.started += instance.OnSlickometerEmpty;
             @SlickometerEmpty.performed += instance.OnSlickometerEmpty;
             @SlickometerEmpty.canceled += instance.OnSlickometerEmpty;
+            @PauseMenu.started += instance.OnPauseMenu;
+            @PauseMenu.performed += instance.OnPauseMenu;
+            @PauseMenu.canceled += instance.OnPauseMenu;
+            @PauseMenuEditor.started += instance.OnPauseMenuEditor;
+            @PauseMenuEditor.performed += instance.OnPauseMenuEditor;
+            @PauseMenuEditor.canceled += instance.OnPauseMenuEditor;
         }
 
         /// <summary>
@@ -913,6 +971,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @SlickometerEmpty.started -= instance.OnSlickometerEmpty;
             @SlickometerEmpty.performed -= instance.OnSlickometerEmpty;
             @SlickometerEmpty.canceled -= instance.OnSlickometerEmpty;
+            @PauseMenu.started -= instance.OnPauseMenu;
+            @PauseMenu.performed -= instance.OnPauseMenu;
+            @PauseMenu.canceled -= instance.OnPauseMenu;
+            @PauseMenuEditor.started -= instance.OnPauseMenuEditor;
+            @PauseMenuEditor.performed -= instance.OnPauseMenuEditor;
+            @PauseMenuEditor.canceled -= instance.OnPauseMenuEditor;
         }
 
         /// <summary>
@@ -1123,5 +1187,19 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSlickometerEmpty(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "PauseMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPauseMenu(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "PauseMenuEditor" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPauseMenuEditor(InputAction.CallbackContext context);
     }
 }
