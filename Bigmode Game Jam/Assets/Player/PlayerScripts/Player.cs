@@ -87,7 +87,10 @@ public class Player : MonoBehaviour
         {
             slickValue = 1f;
         }
-        
+        if (LevelManager.gameRunning && escaped)
+        {
+            escaped = false;
+        }
         if (!escaped && input.PauseMenuEditor.WasPressedThisFrame())
         {
             LevelManager.instance.PauseGame();

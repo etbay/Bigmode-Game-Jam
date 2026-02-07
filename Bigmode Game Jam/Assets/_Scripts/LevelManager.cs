@@ -89,6 +89,8 @@ public class LevelManager : MonoBehaviour
     }
     public void ResumeGame()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         PlayerCharacter.instance.ResumeSounds();
         Time.timeScale = scaleBeforePause;
         gameRunning = true;
