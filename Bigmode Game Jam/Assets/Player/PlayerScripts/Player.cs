@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float slickSpeedMultStrength = 1.2f;
     [SerializeField] private float maxSlick = 4f;
+    public static event System.Action SlickGained;
     private static float slickValue = 4f;
     private bool escaped = false;
     private bool slickDrains = true;
@@ -34,6 +35,8 @@ public class Player : MonoBehaviour
         }
         set
         {
+            if (value > slickValue)
+                SlickGained?.Invoke();
             slickValue = value;
         }
     }
@@ -61,6 +64,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!LevelManager.gameRunning) return;
         //Debug.Log(slickValue);
         if (slickDrains)
         {
@@ -190,6 +194,8 @@ public class Player : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (!LevelManager.gameRunning || escaped) return;
+
         var deltaTime = Time.deltaTime;
         var cameraTarget = playerCharacter.GetCameraTarget();
         var state = playerCharacter.GetState();
