@@ -35,9 +35,14 @@ public class Player : MonoBehaviour
         }
         set
         {
+            float prevVal = slickValue;
             if (value > slickValue)
                 SlickGained?.Invoke();
             slickValue = value;
+            if (prevVal <= 1 && slickValue > 1)
+            {
+                AudioManager.instance.PlayOmnicientSoundClip(PlayerCharacter.instance.powerUpSound, 1f, false, false);
+            }
         }
     }
 
