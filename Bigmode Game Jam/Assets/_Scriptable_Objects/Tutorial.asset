@@ -21,3 +21,6 @@ MonoBehaviour:
     aReq: 50
     sReq: 35
   nextLevel: Level1
+  playerRank: 0
+  completed: 0
+  unlocked: 1

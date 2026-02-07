@@ -18,19 +18,19 @@ public class ResultsScreen : MonoBehaviour
         rank.text = "Final Rank: ";
         switch (plRank)
         {
-            case Ranking.Rank.DRank:
+            case Ranking.Rank.D:
                 rank.text += "D";
                 break;
-            case Ranking.Rank.CRank:
+            case Ranking.Rank.C:
                 rank.text += "C";
                 break;
-            case Ranking.Rank.BRank:
+            case Ranking.Rank.B:
                 rank.text += "B";
                 break;
-            case Ranking.Rank.ARank:
+            case Ranking.Rank.A:
                 rank.text += "A";
                 break;
-            case Ranking.Rank.SRank:
+            case Ranking.Rank.S:
                 rank.text += "S";
                 break;
         }
