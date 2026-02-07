@@ -15,6 +15,7 @@ public class SettingsButton : MonoBehaviour
     }
     private void ToggleSettings()
     {
+        AudioManager.instance.PlayPersistentSoundClip(AudioManager.instance.click, 1f, false, false);
         settingsPopup.SetActive(!settingsPopup.activeInHierarchy);
     }
 }

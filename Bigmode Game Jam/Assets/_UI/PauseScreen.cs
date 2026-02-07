@@ -30,10 +30,12 @@ public class PauseScreen : MonoBehaviour
     }
     public void ResumeGame()
     {
+        AudioManager.instance.PlayPersistentSoundClip(AudioManager.instance.click, 1f, false, false);
         LevelManager.instance?.ResumeGame();
     }
     public void GoToMenu()
     {
+        AudioManager.instance.PlayPersistentSoundClip(AudioManager.instance.click, 1f, false, false);
         LevelManager.instance?.GoToMenu();
     }
 }

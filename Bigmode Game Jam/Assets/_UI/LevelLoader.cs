@@ -39,6 +39,7 @@ public class LevelLoader : MonoBehaviour
     }
     private void PlayLevel()
     {
+        AudioManager.instance.PlayPersistentSoundClip(AudioManager.instance.Play, 1f, false, false);
         SceneManager.LoadScene(levelData.sceneName);
     }
     private void SetAllInactive()

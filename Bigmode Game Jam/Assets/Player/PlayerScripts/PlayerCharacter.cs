@@ -123,6 +123,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     private float footstepInterval = 0.6f;
     private float footstepTimer = 0f;
     [SerializeField] private float fovChangeSpeed = 50f;
+    [SerializeField] public AudioClip powerUpSound;
     private bool stopped = true;
     private AudioSource slidingAudio;
     private AudioSource airAmbience;
