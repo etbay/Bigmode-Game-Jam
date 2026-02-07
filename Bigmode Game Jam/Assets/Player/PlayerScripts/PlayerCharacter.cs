@@ -122,6 +122,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     // Floats for timing walking sounds
     private float footstepInterval = 0.6f;
     private float footstepTimer = 0f;
+    [SerializeField] private float fovChangeSpeed = 50f;
     private bool stopped = true;
     private AudioSource slidingAudio;
     private AudioSource airAmbience;
@@ -203,8 +204,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region Velocity Dispatcher
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
     {
-        updateFOV(currentVelocity.magnitude);
         Vector3 horizontalVel = currentVelocity - (Vector3.up * currentVelocity.y);
+        updateFOV(horizontalVel.magnitude);
         slidingAudio.pitch = Mathf.Clamp(horizontalVel.magnitude / 80, 1, 1.3f);
         UIManager.instance.UpdateSpeedDisplay(horizontalVel.magnitude);
         LevelManager.instance.TrackSpeed(horizontalVel.magnitude);
@@ -237,11 +238,11 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region FOV Visuals
     private void updateFOV(float velMag)
     {
-        if (playerCamera.fieldOfView >90f && velMag < 40f)
-        {
-            playerCamera.fieldOfView -= 1f;
-        }
-        else playerCamera.fieldOfView = 90f + Mathf.Clamp((velMag - 40f) / 3, 0f, 30f);
+        // if (playerCamera.fieldOfView >90f && velMag < 40f)
+        // {
+        //     playerCamera.fieldOfView -= 1f * Time.deltaTime;
+        // }
+        playerCamera.fieldOfView = Mathf.MoveTowards(playerCamera.fieldOfView, 90f + (Mathf.Clamp((velMag - 40f) / 3, 0f, 30f)), fovChangeSpeed*Time.deltaTime);
     }
     #endregion
 
