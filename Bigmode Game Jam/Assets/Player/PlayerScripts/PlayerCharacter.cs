@@ -230,7 +230,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     }
     #endregion
 
-    // FOV effect
+    #region FOV Visuals
     private void updateFOV(float velMag)
     {
         if (playerCamera.fieldOfView >90f && velMag < 40f)
@@ -239,6 +239,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         }
         else playerCamera.fieldOfView = 90f + Mathf.Clamp((velMag - 40f) / 3, 0f, 30f);
     }
+    #endregion
 
     #region Grounded Logic
     private void HandleGroundedMovement(ref Vector3 currentVelocity, float deltaTime)
