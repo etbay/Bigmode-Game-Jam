@@ -9,6 +9,7 @@ public class CameraLean : MonoBehaviour
     [SerializeField] private float walkStrength = 0.075f;
     [SerializeField] private float slideStrength = 0.2f;
     [SerializeField] private float strengthResponse = 5f;
+    [SerializeField] private float maxLeanAngle = 10f; // degrees - clamp maximum tilt to avoid huge tilts on collisions
 
 
 
@@ -42,7 +43,20 @@ public class CameraLean : MonoBehaviour
         //Debug.Log($"Acceleration: {acceleration}, Magnitude: {acceleration.magnitude}");
 
         //get rotation axis based on the acceleration vector
+        // If damped acceleration is near zero, skip computing lean axis to avoid NaNs
+        if (_dampedAcceleration.sqrMagnitude < 1e-6f)
+        {
+            // reset rotation to that of parent
+            transform.localRotation = Quaternion.identity;
+            return;
+        }
+
         var leanAxis = Vector3.Cross(_dampedAcceleration.normalized, up).normalized;
+        if (leanAxis.sqrMagnitude < 1e-6f)
+        {
+            transform.localRotation = Quaternion.identity;
+            return;
+        }
 
         ////reset rotation to that of parent
         transform.localRotation = Quaternion.identity;
@@ -53,7 +67,12 @@ public class CameraLean : MonoBehaviour
                 : walkStrength;
 
         _smoothStrength = Mathf.Lerp(_smoothStrength, targetStrength, 1f - Mathf.Exp(-strengthResponse * deltaTime));
-        transform.rotation = Quaternion.AngleAxis(_dampedAcceleration.magnitude * -_smoothStrength, leanAxis) * transform.rotation;
+
+        // Limit maximum tilt to avoid extreme rotations on sudden large accelerations (e.g. hitting a wall)
+        float rawAngle = _dampedAcceleration.magnitude * _smoothStrength;
+        float clampedAngle = Mathf.Clamp(rawAngle, 0f, maxLeanAngle);
+
+        transform.rotation = Quaternion.AngleAxis(clampedAngle * -1f, leanAxis) * transform.rotation;
 
 
         //Debug.DrawRay(transform.position, acceleration, Color.red);
