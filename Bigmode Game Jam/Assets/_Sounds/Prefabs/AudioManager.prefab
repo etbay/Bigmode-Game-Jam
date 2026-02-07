@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   mixer: {fileID: 24100000, guid: 6f77abf40138fff4694d28dce1207b6a, type: 2}
   sfxObject: {fileID: 8890320875599689599, guid: 4255d9a2602452e4fae9465739314cb9, type: 3}
-  player: {fileID: 0}
   music: {fileID: 8300000, guid: d4c59b13633f77049b739f0d4c43b0b4, type: 3}
   timeForAudioStretch: 0.1
+  click: {fileID: 8300000, guid: d20fcf87d1f16954bb2efcdaf7f0938d, type: 3}
+  restart: {fileID: 8300000, guid: 3721c7401c8d8b045b64e25205e2c7fa, type: 3}
+  Play: {fileID: 8300000, guid: dc951f763a5aa4d93b1d18da891fed52, type: 3}

@@ -14,6 +14,7 @@ public class PlayButton : MonoBehaviour
     }
     private void PlayGame()
     {
+        AudioManager.instance.PlayPersistentSoundClip(AudioManager.instance.Play, 1f, false, false);
         SceneManager.LoadScene(level1.sceneName);
     }
 }
