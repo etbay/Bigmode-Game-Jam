@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-guid: fdaa7bbce484fe64e90f77e7d82a3b24
-AssetOrigin:
-  serializedVersion: 1
-  productId: 225921
-  packageName: 'Toon Pro: Ultimate Stylized Shading'
-  packageVersion: 3.1.2
-  assetPath: Assets/INab Studio/Demo Assets/INab Studio/Models/BendedScene 1.obj
-  uploadId: 769451
+guid: 76d9142aad075364d818d1133fbaeb26
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -79,7 +72,7 @@ ModelImporter:
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 1
+    normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
