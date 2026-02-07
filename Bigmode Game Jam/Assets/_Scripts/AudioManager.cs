@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UIElements;
@@ -15,6 +16,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private GameObject sfxObject;
     [SerializeField] private AudioClip music;
     [SerializeField] private float timeForAudioStretch = 0.5f;
+    [Space]
+    [SerializeField] public AudioClip click;
+    [SerializeField] public AudioClip restart;
+    [SerializeField] public AudioClip Play;
 
     private AudioLowPassFilter lowPass;
     private AudioMixerGroup sfxGroup;
@@ -95,6 +100,30 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(KillAudioSource(obj, clipLength));
         return source;
     }
+    public AudioSource PlayPersistentSoundClip(AudioClip audioClip, float vol, bool slowable, bool pitchRandomly)
+    {
+        var newplayer = Instantiate(sfxObject, gameObject.transform);
+        AudioSource source = newplayer.AddComponent<AudioSource>();
+        source.playOnAwake = false;
+        source.clip = audioClip;
+        source.volume = vol;
+        if (slowable) // Does the sound pitch down and slow during slowed time
+        {
+            source.outputAudioMixerGroup = timeSlowedGroup;
+        }
+        else
+        {
+            source.outputAudioMixerGroup = sfxGroup;
+        }
+        if (pitchRandomly)
+        {
+            source.pitch += Random.Range(-0.15f, 0.15f);
+        }
+        source.Play();
+        float clipLength = audioClip.length;
+        StartCoroutine(KillPersistentAudioSource(newplayer, clipLength));
+        return source;
+    }
 
     // Plays at a passed transform's position, typically an enemy or something similar
     public AudioSource PlaySoundClip(AudioClip audioClip, Vector3 spawnpos, float vol, bool slowable, bool pitchRandomly)
@@ -152,7 +181,11 @@ public class AudioManager : MonoBehaviour
             sfxPlayerPool.Enqueue(target); // Controls waiting until a sfx has finished to delete the gameobject audiosource
         }
     }
-
+    private IEnumerator KillPersistentAudioSource(GameObject target, float timeWait)
+    {
+        yield return new WaitForSeconds(timeWait);
+        Destroy(target);
+    }
     public void TimeAudioStretch(float finalValue)
     {
         float initialValue;

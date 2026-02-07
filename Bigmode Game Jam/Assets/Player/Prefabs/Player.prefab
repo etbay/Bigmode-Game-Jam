@@ -316,6 +316,8 @@ MonoBehaviour:
   crouchHeightResponse: 15
   standCameraTargetHeight: 0.9
   crouchCameraTargetHeight: 0.7
+  fovChangeSpeed: 50
+  powerUpSound: {fileID: 8300000, guid: 99225aa86b3a50041a9a765343affc06, type: 3}
 --- !u!1 &3760759753895213583
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,6 +654,7 @@ MonoBehaviour:
   walkStrength: 0.075
   slideStrength: 0.075
   strengthResponse: 5
+  maxLeanAngle: 10
 --- !u!1 &9073483325040870367
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,11 +762,6 @@ MonoBehaviour:
 --- !u!4 &5675754648483511736 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7380096638552147770, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
-  m_PrefabInstance: {fileID: 2931572888627919490}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &6597450677218242919 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8296141156053797861, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
   m_PrefabInstance: {fileID: 2931572888627919490}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8900553684141331726
