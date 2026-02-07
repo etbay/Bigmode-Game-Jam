@@ -49,7 +49,10 @@ public class LevelManager : MonoBehaviour
         gameEnded = true;
         PauseGame();
         AudioManager.instance.PlayOmnicientSoundClip(levelEndSound, 1f, false, false);
-        StartCoroutine(PlaySlick());
+        if (rank == Ranking.Rank.S)
+        {
+            StartCoroutine(PlaySlick());
+        }
 
         // set up save data
         LevelSaveData saveData = ScriptableObject.CreateInstance<LevelSaveData>();
@@ -64,7 +67,7 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator PlaySlick()
     {
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(2.7f);
         AudioManager.instance.PlayOmnicientSoundClip(slickSound, 1f, false, false);
     }
 

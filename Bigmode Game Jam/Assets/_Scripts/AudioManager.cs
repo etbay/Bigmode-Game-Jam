@@ -60,7 +60,7 @@ public class AudioManager : MonoBehaviour
     {
         musicPlayer = gameObject.AddComponent<AudioSource>();
         musicPlayer.clip = music;
-        musicPlayer.volume = 1f;
+        musicPlayer.volume = .8f;
         musicPlayer.outputAudioMixerGroup = musicGroup;
         musicPlayer.loop = true;
         lowPass = musicPlayer.AddComponent<AudioLowPassFilter>();
