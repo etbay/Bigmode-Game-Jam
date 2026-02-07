@@ -4,14 +4,14 @@ public class RoboyAI : MonoBehaviour
 {
     Vector3 initialPos;
     Vector3 yPos;
-    public Transform transform;
+    public Transform objectTransform;
     public Vector3 direction;
     public float amplitude = 1f;
     bool disrupted = false; // so you can push them and they wont teleport back to their initial location
 
     void Start()
     {
-        initialPos = transform.position;
+        initialPos = objectTransform.position;
     }
 
     void FixedUpdate()
@@ -22,7 +22,7 @@ public class RoboyAI : MonoBehaviour
 
     void Move()
     {
-        yPos = transform.position.y * Vector3.up;
-        transform.position = (Mathf.Sin(Time.fixedTime) * amplitude * direction) + (initialPos.x * Vector3.right) + (initialPos.z * Vector3.right) + yPos;
+        yPos = objectTransform.position.y * Vector3.up;
+        objectTransform.position = (Mathf.Sin(Time.fixedTime) * amplitude * direction) + (initialPos.x * Vector3.right) + (initialPos.z * Vector3.right) + yPos;
     }
 }

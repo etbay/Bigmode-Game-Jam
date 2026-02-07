@@ -113,6 +113,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Slickometer Toggle",
+                    "type": "Button",
+                    "id": "175fe3d3-58d0-422b-8bd2-f3cadf96ba1d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Slickometer Fill",
+                    "type": "Button",
+                    "id": "647a9f5f-a513-442f-b053-876387f9340b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Slickometer Empty",
+                    "type": "Button",
+                    "id": "b09a3102-48fb-4ef2-97c2-546ba56fd225",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -388,6 +415,39 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Ability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "097ad3ec-6b3f-46f0-8830-e936ab1de986",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Slickometer Toggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7f093714-c6d2-4834-9eea-82a27d5baf26",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Slickometer Fill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1a174bce-c307-499d-8a8d-577cd32e5d28",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Slickometer Empty",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

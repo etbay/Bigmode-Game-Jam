@@ -39,7 +39,7 @@ public class CameraLean : MonoBehaviour
                 maxSpeed: float.PositiveInfinity,
                 deltaTime: deltaTime
             );
-        Debug.Log($"Acceleration: {acceleration}, Magnitude: {acceleration.magnitude}");
+        //Debug.Log($"Acceleration: {acceleration}, Magnitude: {acceleration.magnitude}");
 
         //get rotation axis based on the acceleration vector
         var leanAxis = Vector3.Cross(_dampedAcceleration.normalized, up).normalized;

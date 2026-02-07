@@ -9,7 +9,6 @@ public class PoolManager : MonoBehaviour
 {
     public static PoolManager instance;
     [SerializeField] private GameObject explosionPrefab;
-    private bool explosivesPresent = false; 
     private Dictionary<string, ObjectPool> poolIdentifier;
     private void Awake()
     {
@@ -26,6 +25,17 @@ public class PoolManager : MonoBehaviour
     {
         poolIdentifier.Add(name, pool);
     }
+    public ObjectPool AddPool(string name, GameObject prefab, int count)
+    {
+        ObjectPool newPool = null;
+        if (!poolIdentifier.ContainsKey(name))
+        {
+            newPool = gameObject.AddComponent<ObjectPool>();
+            newPool.GeneratePool(count, prefab);
+            AddPool(name, newPool);
+        }
+        return newPool;
+    }
     public ObjectPool GetPool(string name)
     {
         return poolIdentifier[name];
@@ -38,9 +48,5 @@ public class PoolManager : MonoBehaviour
     {
         var pool = poolIdentifier[name];
         return pool.RequestAndReturnToPool();
-    }
-    public void RegisterExplosive()
-    {
-        explosivesPresent = true;
     }
 }
