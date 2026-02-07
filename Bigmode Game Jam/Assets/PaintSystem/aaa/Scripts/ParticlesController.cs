@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Tripolygon.UModelerX.Runtime;
+//using Tripolygon.UModelerX.Runtime;
 using UnityEngine;
 
 public class ParticlesController: MonoBehaviour{
