@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29afa81dbb3a2ac46a955c6f398ad454, type: 3}
   m_Name: LevelRedirect
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
+  sceneName: LevelRedirect
+  levelName: Redirect
   requirements:
     dReq: 60
     cReq: 50
     bReq: 40
     aReq: 30
     sReq: 18
-  nextLevel: 
+  nextLevel: LevelPipes
+  playerRank: 0
+  completed: 0
+  unlocked: 0

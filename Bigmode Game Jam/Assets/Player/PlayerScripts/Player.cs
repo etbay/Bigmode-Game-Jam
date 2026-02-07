@@ -35,9 +35,14 @@ public class Player : MonoBehaviour
         }
         set
         {
+            float prevVal = slickValue;
             if (value > slickValue)
                 SlickGained?.Invoke();
             slickValue = value;
+            if (prevVal <= 1 && slickValue > 1)
+            {
+                AudioManager.instance.PlayOmnicientSoundClip(PlayerCharacter.instance.powerUpSound, 1f, false, false);
+            }
         }
     }
 
@@ -194,6 +199,7 @@ public class Player : MonoBehaviour
 
         if (input.Restart.WasPressedThisFrame())
         {
+            AudioManager.instance.PlayPersistentSoundClip(AudioManager.instance.restart, 1f, false, false);
             string currentSceneName = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(currentSceneName);
         }

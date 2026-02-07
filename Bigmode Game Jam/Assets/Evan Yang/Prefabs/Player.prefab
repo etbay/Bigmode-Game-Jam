@@ -11009,6 +11009,7 @@ MonoBehaviour:
   standCameraTargetHeight: 0.9
   crouchCameraTargetHeight: 0.7
   fovChangeSpeed: 50
+  powerUpSound: {fileID: 8300000, guid: 99225aa86b3a50041a9a765343affc06, type: 3}
 --- !u!114 &4243188452676400784
 MonoBehaviour:
   m_ObjectHideFlags: 0

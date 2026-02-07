@@ -1272,7 +1272,7 @@ MonoBehaviour:
   rank: {fileID: 931012797}
   levelName: {fileID: 1499679364}
   time: {fileID: 70032229}
-  levelData: {fileID: 11400000, guid: 14ea1e1bb9bc4ed46834de5e8021063d, type: 2}
+  levelData: {fileID: 11400000, guid: 25e5c9bdcc9567c43a7225c7bb0465f5, type: 2}
 --- !u!1 &420393321
 GameObject:
   m_ObjectHideFlags: 0
@@ -2669,9 +2669,9 @@ RectTransform:
   - {fileID: 119517397}
   m_Father: {fileID: 1630983797}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 489.5, y: 230}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -13.5, y: 22}
   m_SizeDelta: {x: 979, y: 466}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &789159842
@@ -3252,7 +3252,7 @@ MonoBehaviour:
   rank: {fileID: 1581727287}
   levelName: {fileID: 664679456}
   time: {fileID: 841216552}
-  levelData: {fileID: 11400000, guid: 14ea1e1bb9bc4ed46834de5e8021063d, type: 2}
+  levelData: {fileID: 11400000, guid: 50b6fe15d3895df42981a3c914fe77df, type: 2}
 --- !u!1 &917504647
 GameObject:
   m_ObjectHideFlags: 0
@@ -6033,7 +6033,7 @@ MonoBehaviour:
   rank: {fileID: 2081959878}
   levelName: {fileID: 1274343318}
   time: {fileID: 809533467}
-  levelData: {fileID: 11400000, guid: 14ea1e1bb9bc4ed46834de5e8021063d, type: 2}
+  levelData: {fileID: 11400000, guid: d7ca83f7d2a2f7745ba7e93835bc7411, type: 2}
 --- !u!1 &1827286147
 GameObject:
   m_ObjectHideFlags: 0
@@ -6406,7 +6406,7 @@ MonoBehaviour:
   rank: {fileID: 508149083}
   levelName: {fileID: 599917677}
   time: {fileID: 1210143820}
-  levelData: {fileID: 11400000, guid: 14ea1e1bb9bc4ed46834de5e8021063d, type: 2}
+  levelData: {fileID: 11400000, guid: f794bea7c1f2d6b45bd67c53eae8b2e4, type: 2}
 --- !u!1 &2019745977
 GameObject:
   m_ObjectHideFlags: 0
