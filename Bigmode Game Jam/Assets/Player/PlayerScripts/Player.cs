@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerCharacter playerCharacter;
     [SerializeField] private PlayerCamera playerCamera;
     [SerializeField] private PlayerAttackSystem playerAttackSystem;
+    [SerializeField] private OilShootingSystem playerOilSystem;
     [Space]
     [SerializeField] private CameraSpring cameraSpring;
     [SerializeField] private CameraLean cameraLean;
@@ -97,14 +98,16 @@ public class Player : MonoBehaviour
             Crouch = useCrouchToggle
                 ? (input.Crouch.WasPressedThisFrame() ? CrouchInput.Toggle : CrouchInput.None)
                 : (input.Crouch.IsPressed() ? CrouchInput.Crouch : CrouchInput.UnCrouch),
-            
-            Attack = input.Attack.WasPressedThisFrame()
+
+            Attack = input.Attack.WasPressedThisFrame(),
+            SecondaryFire = input.SecondaryFire.IsPressed()
             //Attack = input.Attack.IsPressed()
         };
 
         playerCharacter.UpdateInput(characterInput);
         playerCharacter.UpdateBody(deltaTime);
         playerAttackSystem.updateInput(characterInput);
+        playerOilSystem.updateInput(characterInput);
 
         #if UNITY_EDITOR
         if (Keyboard.current.tKey.wasPressedThisFrame)
