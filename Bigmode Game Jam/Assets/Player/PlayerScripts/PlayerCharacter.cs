@@ -34,6 +34,7 @@ public struct CharacterInput
     public bool JumpSustain;
     public CrouchInput Crouch;
     public bool Attack;
+    public bool SecondaryFire;
 }
 #endregion
 
@@ -61,6 +62,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     [SerializeField] private float crouchResponse = 20f;
     [SerializeField] private float groundedStepHeight = 0.5f;
     [SerializeField] private float mantlStepHeight = 2f;
+    [SerializeField] private float checkRadius = 0.3f;
+    private bool isOnPaintedSurface = false;
 
     #endregion
 
@@ -244,6 +247,31 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region Grounded Logic
     private void HandleGroundedMovement(ref Vector3 currentVelocity, float deltaTime)
     {
+        if (_state.Grounded)
+        {
+            Collider groundCollider = motor.GroundingStatus.GroundCollider;
+            Vector3 groundPoint = motor.GroundingStatus.GroundPoint;
+
+            if (groundCollider != null && PaintTracker.Instance != null)
+            {
+
+                isOnPaintedSurface = PaintTracker.Instance.IsPainted(
+                    groundCollider,
+                    groundPoint,
+                    checkRadius
+                );
+            }
+            else
+            {
+                isOnPaintedSurface = false;
+            }
+        }
+        else
+        {
+            isOnPaintedSurface = false;
+        }
+        slick = isOnPaintedSurface ? true : false;
+        //Debug.Log(slick);
         if (!_state.Grounded && _timeSinceUngrounded > 0.3f)
         {
             AudioManager.instance.PlayOmnicientSoundClip(sfxBank.LandSound(), 1f, true, true);
@@ -558,6 +586,9 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         // GUI.DrawTexture(new Rect(centerX - crosshairThickness / 2f, centerY - crosshairSize / 2f, crosshairThickness, crosshairSize), Texture2D.whiteTexture);
         // GUI.color = Color.white;
 
+        // var speedText = $"Speed: {_state.Velocity.magnitude:F1} u/s\nStance: {_state.Stance}\nGrounded: {_state.Grounded} \nSlick:{slick}";
+        // var style = new GUIStyle(GUI.skin.label) { fontSize = 16, fontStyle = FontStyle.Bold, alignment = TextAnchor.UpperCenter };
+        // var textSize = style.CalcSize(new GUIContent(speedText));
         // var speedText = $"Speed: {(_state.Velocity - (Vector3.up * _state.Velocity.y)).magnitude:F1} u/s\nStance: {_state.Stance}\nGrounded: {_state.Grounded}";
         // var style = new GUIStyle(GUI.skin.label) { fontSize = 16, fontStyle = FontStyle.Bold, alignment = TextAnchor.UpperCenter };
         // var textSize = style.CalcSize(new GUIContent(speedText));
