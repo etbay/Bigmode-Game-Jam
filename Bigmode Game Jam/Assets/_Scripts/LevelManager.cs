@@ -48,6 +48,16 @@ public class LevelManager : MonoBehaviour
         gameEnded = true;
         PauseGame();
         AudioManager.instance.PlayOmnicientSoundClip(levelEndSound, 1f, false, false);
+
+        // set up save data
+        LevelSaveData saveData = ScriptableObject.CreateInstance<LevelSaveData>();
+        saveData.levelName = data.levelName;
+        saveData.completed = true;
+        saveData.playerTime = timerData;
+        saveData.playerRank = rank;
+        LevelDataSaveUtility.SmartSave(saveData);
+        
+        ScriptableObject.Destroy(saveData);
     }
     public void NextLevel()
     {
