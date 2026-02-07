@@ -11,6 +11,7 @@ public class MasterVolumeSlider : MonoBehaviour
     }
     private void SetVolume(float value)
     {
-        AudioManager.instance.mixer.SetFloat("MasterVolume", value);
+        float volumeInDb = Mathf.Log10(Mathf.Max(value, 0.0001f)) * 20f;
+        AudioManager.instance.mixer.SetFloat("MasterVolume", volumeInDb);
     }
 }

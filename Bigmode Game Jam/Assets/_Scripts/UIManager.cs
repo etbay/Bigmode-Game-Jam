@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject crosshair;
     [SerializeField] TimerManager timer;
     [SerializeField] SpeedTracker speedTracker;
+    [SerializeField] PauseScreen pauseScreen;
     private void Start()
     {
         if (instance == null)
@@ -38,5 +39,13 @@ public class UIManager : MonoBehaviour
         crosshair.SetActive(false);
         timer.gameObject.SetActive(false);
         speedTracker.gameObject.SetActive(false);
+    }
+    public void PauseScript()
+    {
+        pauseScreen.Enable();
+    }
+    public void ClosePauseScript()
+    {
+        pauseScreen.Disable();
     }
 }

@@ -3,6 +3,19 @@ using UnityEngine.UI;
 
 public class PauseScreen : MonoBehaviour
 {
+    [SerializeField] GameObject display;
+    private void Start()
+    {
+        display.SetActive(false);
+    }
+    public void Enable()
+    {
+        display.SetActive(true);
+    }
+    public void Disable()
+    {
+        display.SetActive(false);
+    }
     public void UpdateMusicVol(float newVal)
     {
         AudioManager.instance.mixer.SetFloat("MusicVolume", newVal);

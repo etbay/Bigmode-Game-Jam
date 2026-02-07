@@ -125,6 +125,7 @@ MonoBehaviour:
   crosshair: {fileID: 5766319097551241695}
   timer: {fileID: 1184389058815207936}
   speedTracker: {fileID: 1695524280510717199}
+  pauseScreen: {fileID: 8629064771583447877}
 --- !u!1 &4865592866071013576
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,18 +711,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 876188850166305649, guid: c69297ec0bcde8d48b16e64ff62fc06c, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 876188850166305649, guid: c69297ec0bcde8d48b16e64ff62fc06c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 876188850166305649, guid: c69297ec0bcde8d48b16e64ff62fc06c, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2201804777390522964, guid: c69297ec0bcde8d48b16e64ff62fc06c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -846,22 +835,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7990552992888619236, guid: c69297ec0bcde8d48b16e64ff62fc06c, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7990552992888619236, guid: c69297ec0bcde8d48b16e64ff62fc06c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8039568656619989349, guid: c69297ec0bcde8d48b16e64ff62fc06c, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8039568656619989349, guid: c69297ec0bcde8d48b16e64ff62fc06c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9025983955186762572, guid: c69297ec0bcde8d48b16e64ff62fc06c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -884,3 +857,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2201804777390522964, guid: c69297ec0bcde8d48b16e64ff62fc06c, type: 3}
   m_PrefabInstance: {fileID: 4157506124911236997}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8629064771583447877 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5652850394838713536, guid: c69297ec0bcde8d48b16e64ff62fc06c, type: 3}
+  m_PrefabInstance: {fileID: 4157506124911236997}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8abc4897f873fdb498cfee5c0b175800, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
