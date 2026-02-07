@@ -12,6 +12,10 @@ public class PlayButton : MonoBehaviour
         button = GetComponent<Button>();
         button.onClick.AddListener(PlayGame);
     }
+    void OnDestroy()
+    {
+        button.onClick.RemoveAllListeners();
+    }
     private void PlayGame()
     {
         AudioManager.instance.PlayPersistentSoundClip(AudioManager.instance.Play, 1f, false, false);
