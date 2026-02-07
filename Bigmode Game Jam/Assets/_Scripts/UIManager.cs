@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
         crosshair.SetActive(true);
         timer.gameObject.SetActive(true);
         speedTracker.gameObject.SetActive(true);
+        pauseScreen.Disable();
     }
     public void UpdateSpeedDisplay(float speed)
     {
