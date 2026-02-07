@@ -72,15 +72,19 @@ public class LevelManager : MonoBehaviour
     }
     public void PauseGame()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         float scaleBeforePause = Time.timeScale;
         PlayerCharacter.instance.PauseSounds();
         Time.timeScale = 0f;
         gameRunning = false;
+        AudioManager.instance.FilterMusic();
     }
     public void ResumeGame()
     {
         PlayerCharacter.instance.ResumeSounds();
         Time.timeScale = scaleBeforePause;
         gameRunning = true;
+        AudioManager.instance.StopFilterMusic();
     }
 }

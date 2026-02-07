@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioMixer mixer;
     [SerializeField] private GameObject sfxObject;
     [SerializeField] private AudioClip music;
+    [SerializeField] private AudioLowPassFilter lowPass;
     [SerializeField] private float timeForAudioStretch = 0.5f;
 
     private AudioMixerGroup sfxGroup;
@@ -57,6 +58,9 @@ public class AudioManager : MonoBehaviour
         musicPlayer.volume = 1f;
         musicPlayer.outputAudioMixerGroup = musicGroup;
         musicPlayer.loop = true;
+        lowPass = musicPlayer.AddComponent<AudioLowPassFilter>();
+        lowPass.cutoffFrequency = 1500;
+        lowPass.enabled = false;
     }
 
     private void Update()
@@ -222,5 +226,13 @@ public class AudioManager : MonoBehaviour
         music = newTrack;
         StopMusic();
         musicPlayer.clip = newTrack;
+    }
+    public void FilterMusic()
+    {
+        lowPass.enabled = true;
+    }
+    public void StopFilterMusic()
+    {
+        lowPass.enabled = false;
     }
 }
