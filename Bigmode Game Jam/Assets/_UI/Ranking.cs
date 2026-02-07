@@ -1,7 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.iOS;
-
 public class Ranking : MonoBehaviour
 {
     [System.Serializable]
