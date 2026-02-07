@@ -194,6 +194,7 @@ public class Player : MonoBehaviour
 
         if (input.Restart.WasPressedThisFrame())
         {
+            AudioManager.instance.PlayPersistentSoundClip(AudioManager.instance.restart, 1f, false, false);
             string currentSceneName = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(currentSceneName);
         }

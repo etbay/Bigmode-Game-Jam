@@ -11,6 +11,7 @@ public class QuitButton : MonoBehaviour
     }
     private void QuitGame()
     {
+        AudioManager.instance.PlayPersistentSoundClip(AudioManager.instance.click, 1f, false, false);
         Application.Quit();
     }
 }
