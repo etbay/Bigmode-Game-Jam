@@ -15,12 +15,12 @@ MonoBehaviour:
   sceneName: Tutorial
   levelName: Tutorial
   requirements:
-    dReq: 200
-    cReq: 130
-    bReq: 80
-    aReq: 50
-    sReq: 35
-  nextLevel: Level1
+    dReq: 120
+    cReq: 80
+    bReq: 60
+    aReq: 40
+    sReq: 30
+  nextLevel: LevelRedirect
   playerRank: 0
   completed: 0
   unlocked: 1
