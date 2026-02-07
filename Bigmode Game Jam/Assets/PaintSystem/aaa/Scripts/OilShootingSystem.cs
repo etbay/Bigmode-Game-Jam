@@ -12,11 +12,13 @@ public class OilShootingSystem : MonoBehaviour
     [SerializeField] Transform parentController;
     [SerializeField] Transform splatGunNozzle;
 
+    
 
     private bool _requestedSecondaryFire = false;
 
     void Start()
     {
+       
     }
     public void updateInput(CharacterInput input)
     {
