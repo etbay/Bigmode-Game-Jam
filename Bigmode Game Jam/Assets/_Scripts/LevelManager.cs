@@ -63,6 +63,7 @@ public class LevelManager : MonoBehaviour
     public void RestartLevel()
     {
         AudioManager.instance.StopFilterMusic();
+        gameEnded = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void TrackSpeed(float speed)
