@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Level1
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   requirements:
-    dReq: 210
-    cReq: 140
-    bReq: 90
-    aReq: 60
-    sReq: 45
+    dReq: 200
+    cReq: 130
+    bReq: 80
+    aReq: 50
+    sReq: 35
   numEnemies: 0
-  topSpeed: 0
+  nextLevel: 
