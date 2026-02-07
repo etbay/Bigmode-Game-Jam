@@ -13,6 +13,10 @@ public class SettingsButton : MonoBehaviour
         button.onClick.AddListener(ToggleSettings);
         settingsPopup.SetActive(false);
     }
+    void OnDestroy()
+    {
+        button.onClick.RemoveAllListeners();
+    }
     private void ToggleSettings()
     {
         AudioManager.instance.PlayPersistentSoundClip(AudioManager.instance.click, 1f, false, false);

@@ -9,6 +9,10 @@ public class QuitButton : MonoBehaviour
         button = GetComponent<Button>();
         button.onClick.AddListener(QuitGame);
     }
+    void OnDestroy()
+    {
+        button.onClick.RemoveAllListeners();
+    }
     private void QuitGame()
     {
         AudioManager.instance.PlayPersistentSoundClip(AudioManager.instance.click, 1f, false, false);

@@ -14,16 +14,22 @@ public class LevelLoader : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (levelData.unlocked) {
+        LevelSaveData saveData = ScriptableObject.CreateInstance<LevelSaveData>();
+        saveData.levelName = levelData.levelName;
+
+        LevelDataSaveUtility.Load(saveData);
+
+        if (saveData.unlocked) 
+        {
             SetAllActive();
             levelName.text = levelData.levelName;
-            if (levelData.completed)
+            if (saveData.completed)
             {
-                rank.text = levelData.playerRank.ToString();
+                rank.text = saveData.playerRank.ToString();
                 time.text = string.Format("{0:00}:{1:00}.{2:000}",
-                    levelData.playerTime.Minutes,
-                    levelData.playerTime.Seconds,
-                    levelData.playerTime.Milliseconds);
+                    saveData.playerTime.Minutes,
+                    saveData.playerTime.Seconds,
+                    saveData.playerTime.Milliseconds);
             }
             else
             {
@@ -36,6 +42,12 @@ public class LevelLoader : MonoBehaviour
             SetAllInactive();
         }
         button.onClick.AddListener(PlayLevel);
+
+        ScriptableObject.Destroy(saveData);
+    }
+    void OnDestroy()
+    {
+        button.onClick.RemoveAllListeners();
     }
     private void PlayLevel()
     {
