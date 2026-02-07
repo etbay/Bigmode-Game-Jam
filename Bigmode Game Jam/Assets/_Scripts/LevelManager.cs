@@ -49,6 +49,7 @@ public class LevelManager : MonoBehaviour
     }
     public void NextLevel()
     {
+        AudioManager.instance.StopFilterMusic();
         SceneManager.LoadScene(data.nextLevel);
     }
     public void RegisterEnemy()
@@ -61,6 +62,7 @@ public class LevelManager : MonoBehaviour
     }
     public void RestartLevel()
     {
+        AudioManager.instance.StopFilterMusic();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void TrackSpeed(float speed)
