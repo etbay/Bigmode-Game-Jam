@@ -19031,10 +19031,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8742350059407653686, guid: 7c84707092aa1a948a33a4ce88d5200d, type: 3}
-      propertyPath: slidingSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 75eba6170edd9b642876cd5ca442b524, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
