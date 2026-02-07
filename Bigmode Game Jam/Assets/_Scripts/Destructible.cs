@@ -11,6 +11,7 @@ public class Destructible : MonoBehaviour
     private Slider slider;
     private int order = 0;
     private bool dead = false;
+    private bool deathStarted = false;
 
     private void Awake()
     {
@@ -36,8 +37,9 @@ public class Destructible : MonoBehaviour
 
     void Update()
     {
-        if (dead && !Timeslow.IsSlowed)
+        if (dead && !Timeslow.IsSlowed && !deathStarted)
         {
+            deathStarted = true;
             StartCoroutine(DeathScript(order));
         }
     }

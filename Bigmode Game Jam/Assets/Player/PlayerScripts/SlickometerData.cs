@@ -8,7 +8,7 @@ using UnityEngine.Windows;
 
 public static class SlickometerData
 {
-    public static float TimeslowSlickDrainRate { get; } = 5f;
+    public static float TimeslowSlickDrainRate { get; } = 3f;
     public static float BaseSlickDrainRate { get; } = 0.2f;
     public static float CurrentSlickDrainRate { get; set; } = BaseSlickDrainRate;
     public static float DestructibleSlickGain { get; } = 1f;

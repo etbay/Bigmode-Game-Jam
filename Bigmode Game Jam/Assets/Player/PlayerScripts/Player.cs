@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float slickSpeedMultStrength = 1.2f;
     [SerializeField] private float maxSlick = 4f;
+    public static event System.Action SlickGained;
     private static float slickValue = 4f;
     private bool escaped = false;
     private bool slickDrains = true;
@@ -34,6 +35,8 @@ public class Player : MonoBehaviour
         }
         set
         {
+            if (value > slickValue)
+                SlickGained?.Invoke();
             slickValue = value;
         }
     }
@@ -53,14 +56,23 @@ public class Player : MonoBehaviour
         cameraLean.Initialize();
     }
 
-    private void OnDestroy()
+    private void CleanupInput()
     {
+        if (_inputActions == null) return;
+
+        _inputActions.Player.Disable();
+        _inputActions.Disable();
         _inputActions.Dispose();
+        _inputActions = null;
     }
+
+    private void OnDisable() => CleanupInput();
+    private void OnDestroy() => CleanupInput();
 
     // Update is called once per frame
     void Update()
     {
+        if (!LevelManager.gameRunning) return;
         //Debug.Log(slickValue);
         if (slickDrains)
         {
@@ -182,7 +194,6 @@ public class Player : MonoBehaviour
 
         if (input.Restart.WasPressedThisFrame())
         {
-            _inputActions.Disable();
             string currentSceneName = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(currentSceneName);
         }

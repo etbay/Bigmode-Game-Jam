@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using EZCameraShake;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
@@ -34,16 +35,22 @@ public class PlayerAttackSystem : MonoBehaviour
     [SerializeField] private WeaponSFXBank sfxBank;
     [SerializeField] private Transform bulletSpawn;
     [SerializeField] private ParticleSystem impact;
+    [SerializeField] private ParticleSystem muzzleFlash;
     [SerializeField] private Light muzzleFlashLight;
     [SerializeField] private BulletTracer tracerPrefab;
     [SerializeField] private BulletTracer timeSlowTracerPrefab;
-    [SerializeField] private Animation recoil;
+    [SerializeField] private Animator animator;
 
     [SerializeField] private float tracerDecay = 0.6f;
     [SerializeField] private float tracerWidth = 0.7f;
     [SerializeField] private float shotDelay = 0.05f;
     [SerializeField] private float lightTimer = 0.08f;
     [SerializeField] private float lightIntensity = 5f;
+
+    [Header("Camera Shake")]
+    [SerializeField] private float shakeMagnitude;
+    [SerializeField] private float shakeRoughness;
+    [SerializeField] private float shakeDuration;
 
     private bool _reqestedAttack = false;
     // private PlayerInputActions _inputActions;
@@ -97,11 +104,12 @@ public class PlayerAttackSystem : MonoBehaviour
     private void Shoot()
     {
         delayTimer = 0;
-        if (recoil.IsPlaying("recoil"))
-        {
-            recoil.Stop();
-        }
-        recoil.Play();
+
+        animator.Play("firing", -1, 0f);
+        muzzleFlash.Play();
+
+        CameraShaker.Instance.ShakeOnce(shakeMagnitude, shakeRoughness, 0.1f, shakeDuration);
+
         if (Timeslow.IsSlowed)
         {
             targetsShotInSlow += 1;
