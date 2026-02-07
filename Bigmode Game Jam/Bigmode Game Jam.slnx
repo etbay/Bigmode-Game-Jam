@@ -10,6 +10,7 @@
   <Project Path="Unity.PerformanceTesting.Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Unity.Burst.csproj" />
+  <Project Path="Unity.RenderPipelines.Universal.Runtime.csproj" />
   <Project Path="Unity.VisualScripting.Flow.Editor.csproj" />
   <Project Path="Unity.ProBuilder.Csg.csproj" />
   <Project Path="Unity.VisualStudio.Editor.csproj" />
@@ -27,6 +28,24 @@
   <Project Path="Unity.VisualScripting.State.csproj" />
   <Project Path="Unity.AI.Navigation.Updater.csproj" />
   <Project Path="Tripolygon.UModelerX.PureCode.Hub.Editor.csproj" />
+  <Project Path="Unity.AI.Navigation.Editor.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="Unity.ProBuilder.KdTree.csproj" />
+  <Project Path="Unity.ProBuilder.AddOns.Editor.csproj" />
+  <Project Path="Unity.InputSystem.ForUI.csproj" />
+  <Project Path="Unity.AI.Navigation.csproj" />
+  <Project Path="Unity.Collections.CodeGen.csproj" />
+  <Project Path="Unity.Mathematics.Editor.csproj" />
+  <Project Path="Unity.VisualScripting.SettingsProvider.Editor.csproj" />
   <Project Path="Wingman.csproj" />
+  <Project Path="Unity.ProBuilder.AssetIdRemapUtility.csproj" />
+  <Project Path="Unity.Settings.Editor.csproj" />
+  <Project Path="Unity.InputSystem.TestFramework.csproj" />
+  <Project Path="Unity.VisualScripting.Shared.Editor.csproj" />
+  <Project Path="Unity.CollabProxy.Editor.csproj" />
+  <Project Path="Unity.InputSystem.DocCodeSamples.csproj" />
+  <Project Path="Unity.ProBuilder.Stl.csproj" />
+  <Project Path="Unity.VisualScripting.DocCodeExamples.csproj" />
+  <Project Path="Unity.PlasticSCM.Editor.Entities.csproj" />
+  <Project Path="Unity.Collections.Editor.csproj" />
 </Solution>
