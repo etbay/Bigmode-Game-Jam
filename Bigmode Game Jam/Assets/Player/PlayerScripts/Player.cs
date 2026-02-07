@@ -56,10 +56,18 @@ public class Player : MonoBehaviour
         cameraLean.Initialize();
     }
 
-    private void OnDestroy()
+    private void CleanupInput()
     {
+        if (_inputActions == null) return;
+
+        _inputActions.Player.Disable();
+        _inputActions.Disable();
         _inputActions.Dispose();
+        _inputActions = null;
     }
+
+    private void OnDisable() => CleanupInput();
+    private void OnDestroy() => CleanupInput();
 
     // Update is called once per frame
     void Update()
@@ -186,7 +194,6 @@ public class Player : MonoBehaviour
 
         if (input.Restart.WasPressedThisFrame())
         {
-            _inputActions.Disable();
             string currentSceneName = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(currentSceneName);
         }
@@ -194,8 +201,6 @@ public class Player : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!LevelManager.gameRunning || escaped) return;
-
         var deltaTime = Time.deltaTime;
         var cameraTarget = playerCharacter.GetCameraTarget();
         var state = playerCharacter.GetState();

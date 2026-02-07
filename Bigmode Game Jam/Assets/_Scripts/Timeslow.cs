@@ -19,7 +19,7 @@ public class Timeslow : MonoBehaviour
 
     void Awake()
     {
-        if (instance = null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -32,9 +32,23 @@ public class Timeslow : MonoBehaviour
         IsSlowed = false;
     }
 
+    private void CleanupInput()
+    {
+        if (_inputActions == null) return;
+
+        _inputActions.Player.Disable();
+        _inputActions.Disable();
+        _inputActions.Dispose();
+        _inputActions = null;
+    }
+
+    private void OnDisable() => CleanupInput();
+    private void OnDestroy() => CleanupInput();
+
     // Update is called once per frame
     void Update()
     {
+        if (_inputActions == null) return;
         if (_inputActions.Player.Ability.WasPressedThisFrame() && !IsSlowed && Player.SlickValue > 1.0f)
         {
             if (audioSource != null)
