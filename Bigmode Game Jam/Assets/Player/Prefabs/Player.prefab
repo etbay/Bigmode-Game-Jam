@@ -711,14 +711,6 @@ PrefabInstance:
       value: Gun
       objectReference: {fileID: 0}
     - target: {fileID: 7138350072216565134, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
-      propertyPath: shotDelay
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7138350072216565134, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
-      propertyPath: tracerWidth
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7138350072216565134, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 7714564643024645890}

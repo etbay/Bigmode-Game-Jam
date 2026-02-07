@@ -114,6 +114,7 @@ public class PlayerAttackSystem : MonoBehaviour
                 var target = hit.collider.gameObject;
                 if (target.GetComponent<Destructible>() != null)
                 {
+                    AudioManager.instance.PlayOmnicientSoundClip(sfxBank.HitDing(), 1f, false, true);
                     if (Timeslow.IsSlowed)
                     {
                         target.GetComponent<Destructible>().Kill(targetsShotInSlow);
