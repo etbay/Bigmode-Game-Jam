@@ -205,6 +205,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     {
         updateFOV(currentVelocity.magnitude);
         Vector3 horizontalVel = currentVelocity - (Vector3.up * currentVelocity.y);
+        slidingAudio.pitch = Mathf.Clamp(horizontalVel.magnitude / 80, 1, 1.3f);
         UIManager.instance.UpdateSpeedDisplay(horizontalVel.magnitude);
         LevelManager.instance.TrackSpeed(horizontalVel.magnitude);
         _state.Acceleration = Vector3.zero;
