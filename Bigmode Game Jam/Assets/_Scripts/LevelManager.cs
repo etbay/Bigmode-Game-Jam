@@ -63,6 +63,7 @@ public class LevelManager : MonoBehaviour
     public void RestartLevel()
     {
         AudioManager.instance.StopFilterMusic();
+        gameEnded = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void TrackSpeed(float speed)
@@ -81,6 +82,10 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = 0f;
         gameRunning = false;
         AudioManager.instance.FilterMusic();
+        if (!gameEnded)
+        {
+            UIManager.instance.PauseScript();
+        }
     }
     public void ResumeGame()
     {
@@ -88,5 +93,6 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = scaleBeforePause;
         gameRunning = true;
         AudioManager.instance.StopFilterMusic();
+        UIManager.instance.ClosePauseScript();
     }
 }
