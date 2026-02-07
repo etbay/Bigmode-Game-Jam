@@ -34,6 +34,6 @@ public class PauseScreen : MonoBehaviour
     }
     public void GoToMenu()
     {
-        //LevelManager.instance?.();
+        LevelManager.instance?.GoToMenu();
     }
 }
