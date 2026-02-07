@@ -123,6 +123,7 @@ MonoBehaviour:
   slickometer: {fileID: 0}
   crosshair: {fileID: 5766319097551241695}
   timer: {fileID: 1184389058815207936}
+  speedTracker: {fileID: 1695524280510717199}
 --- !u!1 &4865592866071013576
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,6 +440,7 @@ GameObject:
   - component: {fileID: 4261603191042908473}
   - component: {fileID: 3297063746767122098}
   - component: {fileID: 5363265049104061496}
+  - component: {fileID: 1695524280510717199}
   m_Layer: 5
   m_Name: SpeedTracker
   m_TagString: Untagged
@@ -565,6 +567,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1695524280510717199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7711898316103529749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7488e2cbd8b824d4eb5985a7399f3781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeedTracker
+  text: {fileID: 5363265049104061496}
 --- !u!1001 &2424089396569750051
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -576,10 +591,6 @@ PrefabInstance:
     - target: {fileID: 3868835874017630724, guid: c36988020188f20409357986449fe57e, type: 3}
       propertyPath: m_Name
       value: ResultsScreen
-      objectReference: {fileID: 0}
-    - target: {fileID: 3868835874017630724, guid: c36988020188f20409357986449fe57e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8843681443385044923, guid: c36988020188f20409357986449fe57e, type: 3}
       propertyPath: m_Pivot.x

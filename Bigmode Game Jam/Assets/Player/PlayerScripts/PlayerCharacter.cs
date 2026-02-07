@@ -202,6 +202,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     {
         updateFOV(currentVelocity.magnitude);
         Vector3 horizontalVel = currentVelocity - (Vector3.up * currentVelocity.y);
+        UIManager.instance.UpdateSpeedDisplay(horizontalVel.magnitude);
         LevelManager.instance.TrackSpeed(horizontalVel.magnitude);
         _state.Acceleration = Vector3.zero;
         if (isSpeedCapped)
@@ -232,7 +233,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     // FOV effect
     private void updateFOV(float velMag)
     {
-        if (playerCamera.fieldOfView >100f && velMag < 40f)
+        if (playerCamera.fieldOfView >90f && velMag < 40f)
         {
             playerCamera.fieldOfView -= 1f;
         }
