@@ -324,14 +324,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2000790006604917870}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfb06fe47b1efa9418445b7194ad6456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OilShootingSystem
   inkParticle: {fileID: 0}
   parentController: {fileID: 0}
-  splatGunNozzle: {fileID: 0}
+  splatGunNozzle: {fileID: 6597450677218242919}
 --- !u!1 &3760759753895213583
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,6 +781,11 @@ MonoBehaviour:
 --- !u!4 &5675754648483511736 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7380096638552147770, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
+  m_PrefabInstance: {fileID: 2931572888627919490}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6597450677218242919 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8296141156053797861, guid: b535f67053c359a41ac5ce2e6fa20cbc, type: 3}
   m_PrefabInstance: {fileID: 2931572888627919490}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8900553684141331726
