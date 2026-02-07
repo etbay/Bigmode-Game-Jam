@@ -37,6 +37,10 @@ public class LevelLoader : MonoBehaviour
         }
         button.onClick.AddListener(PlayLevel);
     }
+    void OnDestroy()
+    {
+        button.onClick.RemoveAllListeners();
+    }
     private void PlayLevel()
     {
         AudioManager.instance.PlayPersistentSoundClip(AudioManager.instance.Play, 1f, false, false);
