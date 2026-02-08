@@ -58,6 +58,7 @@ public class LevelManager : MonoBehaviour
         // set up save data
         LevelSaveData saveData = ScriptableObject.CreateInstance<LevelSaveData>();
         saveData.sceneName = data.sceneName;
+        saveData.unlocked = true;
         saveData.completed = true;
         saveData.playerTime = timerData;
         saveData.playerRank = rank;
