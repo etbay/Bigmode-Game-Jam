@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
+//using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UIElements;
@@ -60,7 +60,7 @@ public class AudioManager : MonoBehaviour
     {
         musicPlayer = gameObject.AddComponent<AudioSource>();
         musicPlayer.clip = music;
-        musicPlayer.volume = 1f;
+        musicPlayer.volume = .8f;
         musicPlayer.outputAudioMixerGroup = musicGroup;
         musicPlayer.loop = true;
         lowPass = musicPlayer.AddComponent<AudioLowPassFilter>();

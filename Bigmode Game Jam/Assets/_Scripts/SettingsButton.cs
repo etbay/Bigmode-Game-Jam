@@ -1,4 +1,4 @@
-using UnityEditor.SettingsManagement;
+//using UnityEditor.SettingsManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +12,10 @@ public class SettingsButton : MonoBehaviour
         button = GetComponent<Button>();
         button.onClick.AddListener(ToggleSettings);
         settingsPopup.SetActive(false);
+    }
+    void OnDestroy()
+    {
+        button.onClick.RemoveAllListeners();
     }
     private void ToggleSettings()
     {

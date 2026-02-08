@@ -11085,7 +11085,7 @@ MonoBehaviour:
   shotDelay: 0.2
   lightTimer: 0.08
   lightIntensity: 2
-  shakeMagnitude: 5
+  shakeMagnitude: 2
   shakeRoughness: 1
   shakeDuration: 0.5
 --- !u!114 &5597438791262190966
