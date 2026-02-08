@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics;
+using Unity.VectorGraphics;
 using Unity.VisualScripting;
 //using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Debug = UnityEngine.Debug;
 
@@ -55,6 +58,41 @@ public class AudioManager : MonoBehaviour
             StartMusic();
         }
         
+    }
+    private void Start()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        if (SceneManager.GetActiveScene().name == "Main Menu")
+        {
+            musicPlayer.clip = titleMusic;
+        }
+        else if (musicPlayer.clip != music)
+        {
+            musicPlayer.clip = music;
+        }
+        if (!musicPlayer.isPlaying)
+        {
+            musicPlayer.Play();
+        }
+    }
+    private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Main Menu")
+        {
+            musicPlayer.clip = titleMusic;
+        }
+        else if (musicPlayer.clip != music)
+        {
+            musicPlayer.clip = music;
+        }
+        if (!musicPlayer.isPlaying)
+        {
+            musicPlayer.Play();
+        }
+    }
+    private void ODestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void SetupMusic()
