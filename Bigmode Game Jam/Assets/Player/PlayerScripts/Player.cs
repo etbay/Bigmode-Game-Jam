@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerCharacter playerCharacter;
     [SerializeField] private PlayerCamera playerCamera;
     [SerializeField] private PlayerAttackSystem playerAttackSystem;
-    [SerializeField] private OilShootingSystem playerOilSystem;
+    //[SerializeField] private OilShootingSystem playerOilSystem;
     [Space]
     [SerializeField] private CameraSpring cameraSpring;
     [SerializeField] private CameraLean cameraLean;
@@ -182,7 +182,7 @@ public class Player : MonoBehaviour
             playerCharacter.UpdateInput(characterInput);
             playerCharacter.UpdateBody(deltaTime);
             playerAttackSystem.updateInput(characterInput);
-            playerOilSystem.updateInput(characterInput);
+            //playerOilSystem.updateInput(characterInput);
         }
         
         #if UNITY_EDITOR
