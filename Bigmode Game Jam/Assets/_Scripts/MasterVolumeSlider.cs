@@ -21,4 +21,9 @@ public class MasterVolumeSlider : MonoBehaviour
         PlayerPrefs.SetFloat("MasterVolume", slider.value);
         PlayerPrefs.Save();
     }
+
+    void OnDestroy()
+    {
+        slider.onValueChanged.RemoveAllListeners();
+    }
 }

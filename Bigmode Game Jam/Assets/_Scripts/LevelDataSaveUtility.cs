@@ -81,8 +81,8 @@ public static class LevelDataSaveUtility
 
         PlayerPrefs.Save();
         Debug.Log("Saved");
-        Debug.Log($"Completion: {level.completed}");
-        Debug.Log($"Ticks: {level.playerTime.Ticks}");
+        // Debug.Log($"Completion: {level.completed}");
+        // Debug.Log($"Ticks: {level.playerTime.Ticks}");
     }
 
     // ---------- LOAD ----------
@@ -111,8 +111,8 @@ public static class LevelDataSaveUtility
         }
 
         Debug.Log("Loaded");
-        Debug.Log($"Completion: {level.completed}");
-        Debug.Log($"Ticks: {level.playerTime.Ticks}");
+        // Debug.Log($"Completion: {level.completed}");
+        // Debug.Log($"Ticks: {level.playerTime.Ticks}");
     }
 
     // ---------- RESET (optional) ----------

@@ -22,4 +22,9 @@ public class MusicVolumeSlider : MonoBehaviour
         PlayerPrefs.SetFloat("MusicVolume", slider.value);
         PlayerPrefs.Save();
     }
+
+    void OnDestroy()
+    {
+        slider.onValueChanged.RemoveAllListeners();
+    }
 }

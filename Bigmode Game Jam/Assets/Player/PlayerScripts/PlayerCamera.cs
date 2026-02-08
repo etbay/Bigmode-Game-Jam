@@ -25,6 +25,8 @@ public class PlayerCamera : MonoBehaviour
 
     public void UpdateRotation(CameraInput input)
     {
+        sensitivity = SensitivitySlider.mouseSensitivity;
+
         _eulerAngles += new Vector3(-input.Look.y, input.Look.x) * sensitivity;
 
         _eulerAngles.x = Mathf.Clamp(_eulerAngles.x, -89f, 89f);
