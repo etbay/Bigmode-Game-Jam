@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class SensitivitySlider : MonoBehaviour
 {
-    public static float mouseSensitivity = 0.1f;
+    public static float mouseSensitivity = 0.05f;
     [SerializeField] private Slider slider;
 
     private void Awake()
@@ -12,13 +12,13 @@ public class SensitivitySlider : MonoBehaviour
     }
     private void Start()
     {
-        float val = PlayerPrefs.GetFloat("MouseSensitivity", 0.1f);
+        float val = PlayerPrefs.GetFloat("MouseSensitivity", 0.05f);
         SetSens(val);
         slider.value = val;
     }
     private void SetSens(float value)
     {
-        mouseSensitivity = value / 2;
+        mouseSensitivity = value;
         PlayerPrefs.SetFloat("MouseSensitivity", slider.value);
         PlayerPrefs.Save();
     }
