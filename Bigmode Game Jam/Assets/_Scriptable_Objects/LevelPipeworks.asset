@@ -20,7 +20,4 @@ MonoBehaviour:
     bReq: 0
     aReq: 0
     sReq: 0
-  nextLevel: 
-  playerRank: 0
-  completed: 0
-  unlocked: 0
+  nextLevel: LevelTrailmaker

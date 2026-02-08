@@ -56,12 +56,15 @@ public class LevelManager : MonoBehaviour
 
         // set up save data
         LevelSaveData saveData = ScriptableObject.CreateInstance<LevelSaveData>();
-        saveData.levelName = data.levelName;
+        saveData.sceneName = data.sceneName;
         saveData.completed = true;
         saveData.playerTime = timerData;
         saveData.playerRank = rank;
         LevelDataSaveUtility.SmartSave(saveData);
         
+        // set the next level to unlocked
+        PlayerPrefs.SetInt(LevelDataSaveUtility.Key(data.nextLevel, "Unlocked"), 1);
+
         ScriptableObject.Destroy(saveData);
     }
 
