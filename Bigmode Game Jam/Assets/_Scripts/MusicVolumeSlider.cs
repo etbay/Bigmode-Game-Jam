@@ -11,23 +11,15 @@ public class MusicVolumeSlider : MonoBehaviour
     }
     private void Start()
     {
-        float volumeDB = 0;
-        float vol = 0;
-        AudioManager.instance.mixer.GetFloat("MusicVolume", out volumeDB);
-        if (volumeDB <= -80f) 
-        {
-            vol = volumeDB;
-        }
-        else
-        {
-            float linear = Mathf.Pow(10.0f, volumeDB / 20.0f);
-            vol = Mathf.Clamp(linear, 0f, 1f);
-        }
-        slider.value = vol;
+        float val = PlayerPrefs.GetFloat("MusicVolume", 1);
+        SetVolume(val);
+        slider.value = val;
     }
     private void SetVolume(float value)
     {
         float volumeInDb = Mathf.Log10(Mathf.Max(value, 0.0001f)) * 20f;
         AudioManager.instance.mixer.SetFloat("MusicVolume", volumeInDb);
+        PlayerPrefs.SetFloat("MusicVolume", slider.value);
+        PlayerPrefs.Save();
     }
 }
