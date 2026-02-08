@@ -134,6 +134,7 @@ public class LevelManager : MonoBehaviour
     }
     public void GoToMenu()
     {
+        gameRunning = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Time.timeScale = 1f;
