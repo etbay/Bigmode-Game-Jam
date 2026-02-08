@@ -379,29 +379,50 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
     private void UpdateSlideMovement(ref Vector3 currentVelocity, Vector3 groundedMovement, float deltaTime)
     {
+        // Extract planar velocity (parallel to surface)
+        Vector3 planarVel = Vector3.ProjectOnPlane(currentVelocity, motor.CharacterUp);
+
         if (slick)
         {
-            // Only apply slope forces (gravity along the slope)
-            Vector3 slopeForce = Vector3.ProjectOnPlane(-motor.CharacterUp, motor.GroundingStatus.GroundNormal) * slideGravity;
-            currentVelocity -= slopeForce * deltaTime;
-            //currentVelocity -= currentVelocity * slideFriction * deltaTime * 0.5f;
-            //Vector3 slopeForce = Vector3.ProjectOnPlane(-motor.CharacterUp, motor.GroundingStatus.GroundNormal) * slideGravity;
-            //currentVelocity -= slopeForce * deltaTime;
+            // On slick surfaces: no friction, no continuous gravity acceleration
+            // The slam boost from StartSlide() is preserved as initial velocity
+            // Just maintain current velocity (frictionless slide)
         }
         else
         {
-            // Apply slide friction
-            float slopeDecelerationFactor = 0.6f;
-            currentVelocity -= currentVelocity * (slopeDecelerationFactor* slideFriction * deltaTime);
+            // Calculate downhill direction to check if we're going downhill
+            Vector3 downhill = Vector3.ProjectOnPlane(-motor.CharacterUp, motor.GroundingStatus.GroundNormal);
+            bool isGoingDownhill = false;
+
+            if (downhill.sqrMagnitude > 1e-6f)
+            {
+                downhill.Normalize();
+                // Check if current velocity has a component in the downhill direction
+                float downhillDot = Vector3.Dot(planarVel.normalized, downhill);
+                isGoingDownhill = downhillDot > 0.1f; // Small threshold to account for slight angles
+            }
+
+            if (isGoingDownhill)
+            {
+                // Maintain constant speed when going downhill - no gravity or friction
+                // Simply preserve the current velocity magnitude
+            }
+            else
+            {
+                // Stronger friction when surface is not slick and not going downhill
+                float slopeDecelerationFactor = 1f;
+                planarVel -= planarVel * (slideFriction * slopeDecelerationFactor * deltaTime);
+            }
         }
 
-        // Preserve the velocity after friction/slope so steering doesn't further reduce speed
-        Vector3 prevVelocity = currentVelocity;
+        // Reassemble velocity with the modified planar component
+        currentVelocity = planarVel + Vector3.Project(currentVelocity, motor.CharacterUp);
 
+        // Handle steering
         if (groundedMovement.sqrMagnitude > 0f)
         {
-            float speed = prevVelocity.magnitude;
-            Vector3 currentDir = prevVelocity.sqrMagnitude > 0.0001f ? prevVelocity.normalized : groundedMovement.normalized;
+            float speed = currentVelocity.magnitude;
+            Vector3 currentDir = currentVelocity.sqrMagnitude > 0.0001f ? currentVelocity.normalized : groundedMovement.normalized;
             Vector3 desiredDir = groundedMovement.normalized;
 
             // Smoothly blend direction based on slideSteerAccelleration
@@ -412,7 +433,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
             Vector3 steerVelocity = newDir * speed;
 
-            _state.Acceleration = (steerVelocity - prevVelocity) / deltaTime;
+            _state.Acceleration = (steerVelocity - currentVelocity) / deltaTime;
             currentVelocity = steerVelocity;
         }
 
