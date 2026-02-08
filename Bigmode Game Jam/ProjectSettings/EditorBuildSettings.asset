@@ -6,6 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_Scenes/Main Menu.unity
+    guid: e5e93701dcc5ef04288b5514d39bd786
+  - enabled: 1
+    path: Assets/_Scenes/Levels/levelRedirect.unity
+    guid: ace685d2ed498944987248b68be0becc
+  - enabled: 1
+    path: Assets/_Scenes/Levels/levelSpeed.unity
+    guid: b2611b89feda5c14d9c42293f9f4dfb1
+  - enabled: 1
+    path: Assets/_Scenes/Levels/levelTrailmaker.unity
+    guid: 1745ce93da9e2dd43aec36b74a07b19c
+  - enabled: 1
+    path: Assets/_Scenes/Levels/levelPipes.unity
+    guid: e57a761518e027d4cacf429a30ebfa2d
+  - enabled: 1
     path: Assets/_Scenes/Tutorial.unity
     guid: eb83d1923ed9ce942b1b37726cfe088e
   m_configObjects:
