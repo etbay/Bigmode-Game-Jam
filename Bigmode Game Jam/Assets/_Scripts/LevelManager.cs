@@ -16,6 +16,8 @@ public class LevelManager : MonoBehaviour
     private float topSpeed;
     Ranking.Rank rank = Ranking.Rank.S;
     float scaleBeforePause = 1f;
+    [SerializeField] private AudioClip levelEndSound;
+    [SerializeField] private AudioClip slickSound;
 
     private void Awake()
     {
@@ -46,6 +48,11 @@ public class LevelManager : MonoBehaviour
         gameRunning = false;
         gameEnded = true;
         PauseGame();
+        AudioManager.instance.PlayOmnicientSoundClip(levelEndSound, 1f, false, false);
+        if (rank == Ranking.Rank.S)
+        {
+            StartCoroutine(PlaySlick());
+        }
 
         // set up save data
         LevelSaveData saveData = ScriptableObject.CreateInstance<LevelSaveData>();
@@ -57,6 +64,13 @@ public class LevelManager : MonoBehaviour
         
         ScriptableObject.Destroy(saveData);
     }
+
+    private IEnumerator PlaySlick()
+    {
+        yield return new WaitForSecondsRealtime(2.7f);
+        AudioManager.instance.PlayOmnicientSoundClip(slickSound, 1f, false, false);
+    }
+
     public void NextLevel()
     {
         AudioManager.instance.StopFilterMusic();

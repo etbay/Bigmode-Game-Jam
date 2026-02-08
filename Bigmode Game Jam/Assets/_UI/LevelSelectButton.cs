@@ -12,6 +12,10 @@ public class LevelSelectButton : MonoBehaviour
         button.onClick.AddListener(TogglePopup);
         popup.SetActive(false);
     }
+    void OnDestroy()
+    {
+        button.onClick.RemoveAllListeners();
+    }
     private void TogglePopup()
     {
         AudioManager.instance.PlayPersistentSoundClip(AudioManager.instance.click, 1f, false, false);
