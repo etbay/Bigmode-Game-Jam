@@ -20,4 +20,4 @@ MonoBehaviour:
     bReq: 50
     aReq: 35
     sReq: 25
-  nextLevel: LevelPipes
+  nextLevel: Main Menu
