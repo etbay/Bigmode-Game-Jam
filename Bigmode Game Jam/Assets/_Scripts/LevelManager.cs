@@ -101,7 +101,7 @@ public class LevelManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        float scaleBeforePause = Time.timeScale;
+        scaleBeforePause = Time.timeScale;
         PlayerCharacter.instance.PauseSounds();
         Time.timeScale = 0f;
         gameRunning = false;
