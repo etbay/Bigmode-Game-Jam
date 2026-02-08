@@ -20,4 +20,4 @@ MonoBehaviour:
     bReq: 50
     aReq: 40
     sReq: 30
-  nextLevel: LevelTrailmaker
+  nextLevel: Main Menu

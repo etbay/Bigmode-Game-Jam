@@ -20,4 +20,4 @@ MonoBehaviour:
     bReq: 35
     aReq: 25
     sReq: 18
-  nextLevel: LevelPipes
+  nextLevel: LevelTrailmaker
