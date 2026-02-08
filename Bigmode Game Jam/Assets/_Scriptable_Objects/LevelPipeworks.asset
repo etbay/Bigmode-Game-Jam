@@ -15,9 +15,9 @@ MonoBehaviour:
   sceneName: LevelPipes
   levelName: Pipeworks
   requirements:
-    dReq: 0
-    cReq: 0
-    bReq: 0
-    aReq: 0
-    sReq: 0
+    dReq: 70
+    cReq: 60
+    bReq: 50
+    aReq: 40
+    sReq: 30
   nextLevel: LevelTrailmaker

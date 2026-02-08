@@ -15,9 +15,9 @@ MonoBehaviour:
   sceneName: LevelSpeed
   levelName: Overflow
   requirements:
-    dReq: 0
-    cReq: 0
-    bReq: 0
-    aReq: 0
+    dReq: 70
+    cReq: 60
+    bReq: 50
+    aReq: 35
     sReq: 25
   nextLevel: Main Menu
