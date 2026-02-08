@@ -1,7 +1,6 @@
+using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-
-using Debug = UnityEngine.Debug;
 
 public class Timeslow : MonoBehaviour
 {
@@ -14,6 +13,7 @@ public class Timeslow : MonoBehaviour
     //[SerializeField] private AudioClip slowedTimeAmbience;
 
     public static Timeslow instance;
+    public static event Action OnTimeslowToggled;
     public static bool IsSlowed = false;
     private PlayerInputActions _inputActions;
 
@@ -48,7 +48,7 @@ public class Timeslow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_inputActions == null) return;
+        if (_inputActions == null || !LevelManager.gameRunning) return;
         if (_inputActions.Player.Ability.WasPressedThisFrame() && !IsSlowed && Player.SlickValue > 1.0f)
         {
             if (audioSource != null)
@@ -73,6 +73,7 @@ public class Timeslow : MonoBehaviour
 
     private void ActivateSlowMode()
     {
+        OnTimeslowToggled?.Invoke();
         Time.timeScale = slowFactor;
         audioSource = AudioManager.instance?.PlayOmnicientSoundClip(timeSlow, 1f, false, false);
         AudioManager.instance.TimeAudioStretch(0.6f);
@@ -80,6 +81,7 @@ public class Timeslow : MonoBehaviour
 
     private void DeactivateSlowMode()
     {
+        OnTimeslowToggled?.Invoke();
         StartCoroutine(gun.FireTrackedTracers());
         Time.timeScale = 1f;
         audioSource = AudioManager.instance?.PlayOmnicientSoundClip(timeResume, 1f, false, false);
