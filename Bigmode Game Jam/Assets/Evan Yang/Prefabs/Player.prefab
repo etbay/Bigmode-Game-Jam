@@ -5724,7 +5724,6 @@ MonoBehaviour:
   playerCharacter: {fileID: 8715798052527790902}
   playerCamera: {fileID: 7091579741908070206}
   playerAttackSystem: {fileID: 3518586556267059519}
-  playerOilSystem: {fileID: 0}
   cameraSpring: {fileID: 2843724499007472093}
   cameraLean: {fileID: 3462486263153197428}
   useCrouchToggle: 0
@@ -5904,7 +5903,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensitivity: 0.1
-  verticalSmoothTime: 0.1
+  verticalSmoothTime: 0.01
 --- !u!1 &6120932062312734788
 GameObject:
   m_ObjectHideFlags: 0
