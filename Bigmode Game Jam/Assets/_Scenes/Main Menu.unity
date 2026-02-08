@@ -4485,9 +4485,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   angle: 6
-  wiggleSpeed: 25
+  wiggleSpeed: 60
   wiggleDuration: 0.25
-  pauseDuration: 0.5
+  pauseDuration: 0.75
 --- !u!1 &1154068797
 GameObject:
   m_ObjectHideFlags: 0
