@@ -5724,7 +5724,7 @@ MonoBehaviour:
   playerCharacter: {fileID: 8715798052527790902}
   playerCamera: {fileID: 7091579741908070206}
   playerAttackSystem: {fileID: 3518586556267059519}
-  playerOilSystem: {fileID: 4243188452676400784}
+  playerOilSystem: {fileID: 0}
   cameraSpring: {fileID: 2843724499007472093}
   cameraLean: {fileID: 3462486263153197428}
   useCrouchToggle: 0
@@ -10932,7 +10932,6 @@ GameObject:
   - component: {fileID: 2815437796238905097}
   - component: {fileID: 3225154814314563614}
   - component: {fileID: 8715798052527790902}
-  - component: {fileID: 4243188452676400784}
   m_Layer: 3
   m_Name: Character
   m_TagString: Player
@@ -11069,21 +11068,6 @@ MonoBehaviour:
   crouchCameraTargetHeight: 0.7
   fovChangeSpeed: 50
   powerUpSound: {fileID: 8300000, guid: 99225aa86b3a50041a9a765343affc06, type: 3}
---- !u!114 &4243188452676400784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7569315435138868325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfb06fe47b1efa9418445b7194ad6456, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OilShootingSystem
-  inkParticle: {fileID: 0}
-  parentController: {fileID: 3628760636648167305}
-  splatGunNozzle: {fileID: 7928500037017860149}
 --- !u!1 &8641220038647550523
 GameObject:
   m_ObjectHideFlags: 0

@@ -32,6 +32,8 @@ public class CameraLean : MonoBehaviour
 
     public void UpdateLean(float deltaTime,bool sliding,Vector3 acceleration, Vector3 up)
     {
+        if (!LevelManager.gameRunning)
+            return;
 
 
             var planarAcceleration = Vector3.ProjectOnPlane(acceleration, up);
