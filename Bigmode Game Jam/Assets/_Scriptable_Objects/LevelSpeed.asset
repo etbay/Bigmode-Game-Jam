@@ -19,8 +19,5 @@ MonoBehaviour:
     cReq: 0
     bReq: 0
     aReq: 0
-    sReq: 0
+    sReq: 25
   nextLevel: Main Menu
-  playerRank: 0
-  completed: 0
-  unlocked: 0

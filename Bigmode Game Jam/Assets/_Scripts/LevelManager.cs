@@ -28,6 +28,7 @@ public class LevelManager : MonoBehaviour
         gameRunning = true;
         Time.timeScale = 1f;
         numEnemies = 0;
+        gameEnded = false;
     }
     private void Update()
     {
@@ -78,6 +79,7 @@ public class LevelManager : MonoBehaviour
     {
         AudioManager.instance.StopFilterMusic();
         SceneManager.LoadScene(data.nextLevel);
+        Debug.Log("Loading scene");
     }
     public void RegisterEnemy()
     {
@@ -111,7 +113,12 @@ public class LevelManager : MonoBehaviour
         AudioManager.instance.FilterMusic();
         if (!gameEnded)
         {
+            Debug.Log("Pausing game while game has not ended");
             UIManager.instance.PauseScript();
+        }
+        else
+        {
+            Debug.Log("Pausing game because game has ended");
         }
     }
     public void ResumeGame()

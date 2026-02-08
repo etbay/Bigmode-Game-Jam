@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29afa81dbb3a2ac46a955c6f398ad454, type: 3}
-  m_Name: LevelMaze
+  m_Name: LevelTrailmaker
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   sceneName: LevelTrailmaker
   levelName: Corridors
@@ -20,7 +20,4 @@ MonoBehaviour:
     bReq: 0
     aReq: 0
     sReq: 0
-  nextLevel: Level
-  playerRank: 0
-  completed: 0
-  unlocked: 0
+  nextLevel: LevelSpeed

@@ -10,6 +10,7 @@ public class PauseScreen : MonoBehaviour
     }
     public void Enable()
     {
+        Debug.Log("Enabling pause screen");
         display.SetActive(true);
     }
     public void Disable()

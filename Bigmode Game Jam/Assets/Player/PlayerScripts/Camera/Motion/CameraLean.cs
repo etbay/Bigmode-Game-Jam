@@ -34,7 +34,6 @@ public class CameraLean : MonoBehaviour
     {
 
 
-            Debug.Log(acceleration);
             var planarAcceleration = Vector3.ProjectOnPlane(acceleration, up);
         var damping = planarAcceleration.magnitude > _dampedAcceleration.magnitude
             ? attackDamping
