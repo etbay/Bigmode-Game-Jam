@@ -15,6 +15,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioMixer mixer;
     [SerializeField] private GameObject sfxObject;
     [SerializeField] private AudioClip music;
+    [SerializeField] private AudioClip titleMusic;
     [SerializeField] private float timeForAudioStretch = 0.5f;
     [Space]
     [SerializeField] public AudioClip click;
