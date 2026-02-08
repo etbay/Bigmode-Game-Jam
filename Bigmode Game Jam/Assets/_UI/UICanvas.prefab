@@ -123,7 +123,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   results: {fileID: 5344919789131941287}
-  slickometer: {fileID: 0}
   crosshair: {fileID: 5766319097551241695}
   timer: {fileID: 1184389058815207936}
   speedTracker: {fileID: 1695524280510717199}
@@ -844,7 +843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 607137383020323041, guid: c36988020188f20409357986449fe57e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 607137383020323041, guid: c36988020188f20409357986449fe57e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -861,6 +860,30 @@ PrefabInstance:
     - target: {fileID: 3868835874017630724, guid: c36988020188f20409357986449fe57e, type: 3}
       propertyPath: m_Name
       value: ResultsScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 8120315537750414531, guid: c36988020188f20409357986449fe57e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8120315537750414531, guid: c36988020188f20409357986449fe57e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8303150136216051912, guid: 6044f49e7fead9449b037c88257a1803, type: 3}
+    - target: {fileID: 8120315537750414531, guid: c36988020188f20409357986449fe57e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8120315537750414531, guid: c36988020188f20409357986449fe57e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GoToMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 8120315537750414531, guid: c36988020188f20409357986449fe57e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LevelManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8120315537750414531, guid: c36988020188f20409357986449fe57e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8843681443385044923, guid: c36988020188f20409357986449fe57e, type: 3}
       propertyPath: m_Pivot.x
