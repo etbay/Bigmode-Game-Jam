@@ -15,7 +15,7 @@ public class LevelLoader : MonoBehaviour
     void Start()
     {
         LevelSaveData saveData = ScriptableObject.CreateInstance<LevelSaveData>();
-        saveData.levelName = levelData.levelName;
+        saveData.sceneName = levelData.sceneName;
 
         LevelDataSaveUtility.Load(saveData);
 
