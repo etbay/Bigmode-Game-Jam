@@ -15,9 +15,9 @@ MonoBehaviour:
   sceneName: LevelTrailmaker
   levelName: Corridors
   requirements:
-    dReq: 0
-    cReq: 0
-    bReq: 0
-    aReq: 0
-    sReq: 0
+    dReq: 60
+    cReq: 50
+    bReq: 30
+    aReq: 25
+    sReq: 20
   nextLevel: LevelSpeed

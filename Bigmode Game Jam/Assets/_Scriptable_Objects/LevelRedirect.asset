@@ -15,12 +15,9 @@ MonoBehaviour:
   sceneName: LevelRedirect
   levelName: Redirect
   requirements:
-    dReq: 60
+    dReq: 80
     cReq: 50
-    bReq: 40
-    aReq: 30
+    bReq: 35
+    aReq: 25
     sReq: 18
   nextLevel: LevelPipes
-  playerRank: 0
-  completed: 0
-  unlocked: 0
