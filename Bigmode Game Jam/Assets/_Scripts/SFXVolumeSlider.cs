@@ -13,12 +13,17 @@ public class SFXVolumeSlider : MonoBehaviour
         float val = PlayerPrefs.GetFloat("SFXVolume", 1);
         SetVolume(val);
         slider.value = val;
-    } 
+    }
     private void SetVolume(float value)
     {
         float volumeInDb = Mathf.Log10(Mathf.Max(value, 0.0001f)) * 20f;
         AudioManager.instance.mixer.SetFloat("SFXVolume", volumeInDb);
         PlayerPrefs.SetFloat("SFXVolume", slider.value);
         PlayerPrefs.Save();
+    }
+    
+    void OnDestroy()
+    {
+        slider.onValueChanged.RemoveAllListeners();
     }
 }
