@@ -156,3 +156,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletTracer
   line: {fileID: 952095571841554193}
+  trailLength: 0.5

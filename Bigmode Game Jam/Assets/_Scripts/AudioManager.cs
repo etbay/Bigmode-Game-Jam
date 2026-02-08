@@ -90,7 +90,7 @@ public class AudioManager : MonoBehaviour
             musicPlayer.Play();
         }
     }
-    private void ODestroy()
+    private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
