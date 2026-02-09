@@ -83,7 +83,23 @@ public class Player : MonoBehaviour
         {
             float prevVal = slickValue;
             slickValue -= Time.deltaTime * SlickometerData.CurrentSlickDrainRate;
-            slickValue = Mathf.Clamp(slickValue, 1f, maxSlick);
+            // slickValue = Mathf.Clamp(slickValue, 1f, maxSlick);
+
+            // overslick prototype test
+            if (slickValue < 1f)
+                slickValue = 1f;
+            if (slickValue > maxSlick && SlickometerData.CurrentSlickDrainRate != SlickometerData.TimeslowSlickDrainRate)
+            {
+                SlickometerData.CurrentSlickDrainRate = SlickometerData.OverSlickDrainRate;
+                Debug.Log("Overslicking!");
+                Debug.Log($"Value:{slickValue}");
+            }
+            else if(SlickometerData.CurrentSlickDrainRate == SlickometerData.OverSlickDrainRate)
+            {
+                SlickometerData.CurrentSlickDrainRate = SlickometerData.BaseSlickDrainRate;
+            }
+            // overslick prototype test
+
             if (slickValue <= 1f && prevVal > 1f)
             {
                 AudioManager.instance.PlayOmnicientSoundClip(sfxBank.PowerDown(), 1f, false, false);
