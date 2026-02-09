@@ -124,12 +124,7 @@ public class LevelManager : MonoBehaviour
         AudioManager.instance.FilterMusic();
         if (!gameEnded)
         {
-            Debug.Log("Pausing game while game has not ended");
             UIManager.instance.PauseScript();
-        }
-        else
-        {
-            Debug.Log("Pausing game because game has ended");
         }
     }
     public void ResumeGame()
