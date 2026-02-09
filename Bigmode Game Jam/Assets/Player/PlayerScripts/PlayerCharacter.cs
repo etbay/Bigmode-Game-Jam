@@ -211,6 +211,15 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
         UIManager.instance.UpdateSpeedDisplay(horizontalVel.magnitude);
         LevelManager.instance.TrackSpeed(horizontalVel.magnitude);
         _state.Acceleration = Vector3.zero;
+        /*
+        if (isSpeedCapped)
+        {
+            Vector3 planarVelocity = new Vector3(currentVelocity.x, 0f, currentVelocity.z);
+            planarVelocity = Vector3.ClampMagnitude(planarVelocity, SlickometerData.CappedSpeed);
+            currentVelocity.x = planarVelocity.x;
+            currentVelocity.z = planarVelocity.z;
+        }
+        */
 
         if (motor.GroundingStatus.IsStableOnGround)
         {
@@ -444,6 +453,15 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     #region Airborne Logic
     private void HandleAirborneMovement(ref Vector3 currentVelocity, float deltaTime)
     {
+        if (_state.Grounded && isSpeedCapped)
+        {
+            Vector3 planarVelocity = new Vector3(currentVelocity.x, 0f, currentVelocity.z);
+            planarVelocity = Vector3.ClampMagnitude(planarVelocity, SlickometerData.CappedSpeed);
+            currentVelocity.x = planarVelocity.x;
+            currentVelocity.z = planarVelocity.z;
+        }
+
+
         if (slidingAudio.isPlaying)
         {
             slidingAudio.Stop();
