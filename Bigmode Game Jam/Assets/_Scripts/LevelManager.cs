@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
     public static LevelManager instance;
     public static bool gameRunning = true;
     public static bool gameEnded = false;
-    [SerializeField] LevelData data;
+    [SerializeField] public LevelData data;
     private int numEnemies;
     private int numKills;
     private float topSpeed;
