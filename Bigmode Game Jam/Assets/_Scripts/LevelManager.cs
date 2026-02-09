@@ -95,6 +95,7 @@ public class LevelManager : MonoBehaviour
         AudioManager.instance.StopFilterMusic();
         gameEnded = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Timeslow.instance.DeactivateSlowMode();
     }
     public void TrackSpeed(float speed)
     {
