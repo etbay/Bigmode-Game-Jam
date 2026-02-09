@@ -11481,6 +11481,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: -663302868664580476, guid: 489ed550d11a423438fc6a4ece014867, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -663302868664580476, guid: 489ed550d11a423438fc6a4ece014867, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: -473846438653843838, guid: 489ed550d11a423438fc6a4ece014867, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -11533,6 +11541,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 3895624168947706528, guid: 489ed550d11a423438fc6a4ece014867, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 28f4a75b91a4c4d4280a504e2fb1cc1c, type: 2}
     - target: {fileID: 4306074148823154430, guid: 489ed550d11a423438fc6a4ece014867, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -11583,7 +11595,30 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 489ed550d11a423438fc6a4ece014867, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1303702103930456068}
+    - targetCorrespondingSourceObject: {fileID: -711636312065185134, guid: 489ed550d11a423438fc6a4ece014867, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9130901342682276721}
   m_SourcePrefab: {fileID: 100100000, guid: 489ed550d11a423438fc6a4ece014867, type: 3}
+--- !u!1 &1097311618848567468 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -711636312065185134, guid: 489ed550d11a423438fc6a4ece014867, type: 3}
+  m_PrefabInstance: {fileID: 8729574294959774270}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9130901342682276721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097311618848567468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 317c67ba7459b9042afb879471684c31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  fullColor: {r: 0.2622873, g: 0.51572317, b: 0.16055527, a: 0}
+  halfFullColor: {r: 0.754717, g: 0.72106814, b: 0.154266, a: 0}
+  emptyColor: {r: 0.7725491, g: 0.18823531, b: 0.14117648, a: 0}
 --- !u!4 &3965011231628360303 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3592991635772727215, guid: 489ed550d11a423438fc6a4ece014867, type: 3}

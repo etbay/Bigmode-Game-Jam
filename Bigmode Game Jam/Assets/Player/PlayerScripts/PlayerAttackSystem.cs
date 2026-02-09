@@ -89,8 +89,9 @@ public class PlayerAttackSystem : MonoBehaviour
     {
         if (delayTimer <= shotDelay)
         {
-            delayTimer += Time.deltaTime;
+            delayTimer += Timeslow.IsSlowed ? Time.deltaTime / Timeslow.slowFactor : Time.deltaTime;
         }
+        
         if (_reqestedAttack && delayTimer >= shotDelay)
         {
             Shoot();
