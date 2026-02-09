@@ -57,7 +57,6 @@ public class Timeslow : MonoBehaviour
             }
             IsSlowed = true;
             ActivateSlowMode();
-            SlickometerData.CurrentSlickDrainRate = SlickometerData.TimeslowSlickDrainRate;
         }
         else if (((Player.SlickValue <= 1.0f) && IsSlowed) || (Player.SlickValue > 1.0f && _inputActions.Player.Ability.WasPressedThisFrame() && IsSlowed))
         {
@@ -67,7 +66,6 @@ public class Timeslow : MonoBehaviour
             }
             IsSlowed = false;
             DeactivateSlowMode();
-            SlickometerData.CurrentSlickDrainRate = SlickometerData.BaseSlickDrainRate;
         }
     }
 
@@ -77,14 +75,16 @@ public class Timeslow : MonoBehaviour
         Time.timeScale = slowFactor;
         audioSource = AudioManager.instance?.PlayOmnicientSoundClip(timeSlow, 1f, false, false);
         AudioManager.instance.TimeAudioStretch(0.6f);
+        SlickometerData.CurrentSlickDrainRate = SlickometerData.TimeslowSlickDrainRate;
     }
 
-    private void DeactivateSlowMode()
+    public void DeactivateSlowMode()
     {
         OnTimeslowToggled?.Invoke();
         StartCoroutine(gun.FireTrackedTracers());
         Time.timeScale = 1f;
         audioSource = AudioManager.instance?.PlayOmnicientSoundClip(timeResume, 1f, false, false);
         AudioManager.instance.TimeAudioStretch(1f);
+        SlickometerData.CurrentSlickDrainRate = SlickometerData.BaseSlickDrainRate;
     }
 }
