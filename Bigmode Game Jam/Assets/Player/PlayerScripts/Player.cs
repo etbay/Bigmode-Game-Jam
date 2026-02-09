@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
                 slickValue = 1f;
             if (slickValue > maxSlick && SlickometerData.CurrentSlickDrainRate != SlickometerData.TimeslowSlickDrainRate)
             {
-                SlickometerData.CurrentSlickDrainRate = SlickometerData.OverSlickDrainRate;
+                SlickometerData.CurrentSlickDrainRate = SlickometerData.OverSlickDrainRate + (slickValue - 4) * SlickometerData.OverSlickDrainRamp;
                 Debug.Log("Overslicking!");
                 Debug.Log($"Value:{slickValue}");
             }
