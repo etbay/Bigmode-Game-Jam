@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float slickSpeedMultStrength = 1.2f;
     [SerializeField] private float maxSlick = 4f;
     public static event System.Action SlickGained;
+    public static event System.Action SlickChanged;
     private static float slickValue = 4f;
     private bool escaped = false;
     private bool slickDrains = true;
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour
         }
         set
         {
+            SlickChanged?.Invoke();
             float prevVal = slickValue;
             if (value > slickValue)
                 SlickGained?.Invoke();
@@ -82,7 +84,7 @@ public class Player : MonoBehaviour
         if (slickDrains)
         {
             float prevVal = slickValue;
-            slickValue -= Time.deltaTime * SlickometerData.CurrentSlickDrainRate;
+            SlickValue -= Time.deltaTime * SlickometerData.CurrentSlickDrainRate;
             slickValue = Mathf.Clamp(slickValue, 1f, maxSlick);
             if (slickValue <= 1f && prevVal > 1f)
             {
@@ -103,12 +105,12 @@ public class Player : MonoBehaviour
 
         if (input.SlickometerFill.WasPressedThisFrame())
         {
-            slickValue = maxSlick;
+            SlickValue = maxSlick;
         }
 
         if (input.SlickometerEmpty.WasPressedThisFrame())
         {
-            slickValue = 1f;
+            SlickValue = 1f;
         }
         if (LevelManager.gameRunning && escaped)
         {
