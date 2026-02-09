@@ -7,6 +7,7 @@ public class LevelSaveData : ScriptableObject
     public string sceneName;
     [NonSerialized] public TimeSpan playerTime;
     public Ranking.Rank playerRank;
+    [NonSerialized] public TimeSpan playerTimeKilledEnemies;
     public bool completed;
     public bool unlocked;
 }
@@ -18,7 +19,7 @@ public static class LevelDataSaveUtility
         return $"Level_{sceneName}_{field}";
     }
 
-    static bool CompareData(LevelSaveData oldData, LevelSaveData newData)
+    static bool CompareRankedData(LevelSaveData oldData, LevelSaveData newData)
     {
         // level unlocked
         if (!oldData.unlocked && newData.unlocked)
@@ -38,13 +39,28 @@ public static class LevelDataSaveUtility
             newData.playerTime > TimeSpan.Zero &&
             newData.playerTime < oldData.playerTime)
         {
-
             // the new time is shorter then the last
             return true;
         }
 
         return false;
     }
+
+    private static bool CompareEnemyTimeData(LevelSaveData oldData, LevelSaveData newData)
+    {
+        if (newData.playerTimeKilledEnemies != null && 
+            oldData.completed && newData.completed && 
+            oldData.playerTimeKilledEnemies < newData.playerTimeKilledEnemies)
+        {
+            return true;
+        }
+
+        return false;
+    }
+    // TO-DO:
+    // Avoid:
+    // - Overwriting fastest level time with fastest killed enemies time
+    // - Saving both if faster than both
 
     public static void SmartSave(LevelSaveData newData)
     {
@@ -58,9 +74,14 @@ public static class LevelDataSaveUtility
         Load(oldData);
 
         // Compare old vs new
-        if (CompareData(oldData, newData))
+        if (CompareRankedData(oldData, newData))
         {
-            Save(newData);
+            SaveRankedData(newData);
+        }
+
+        if (CompareEnemyTimeData(oldData, newData))
+        {
+            SaveEnemyTimeData(newData);
         }
 
         // Cleanup temp object
@@ -68,7 +89,7 @@ public static class LevelDataSaveUtility
     }
 
     // ---------- SAVE ----------
-    public static void Save(LevelSaveData level)
+    public static void SaveRankedData(LevelSaveData level)
     {
         // TimeSpan -> ticks (long split into 2 ints)
         long ticks = level.playerTime.Ticks;
@@ -85,6 +106,18 @@ public static class LevelDataSaveUtility
         //Debug.Log($"Ticks: {level.playerTime.Ticks}");
     }
 
+    private static void SaveEnemyTimeData(LevelSaveData level)
+    {
+        long ticks = level.playerTime.Ticks;
+        PlayerPrefs.SetInt(Key(level.sceneName, "Time_Low_Enemies"), (int)(ticks & 0xFFFFFFFF));
+        PlayerPrefs.SetInt(Key(level.sceneName, "Time_High_Enemies"), (int)(ticks >> 32));
+
+        PlayerPrefs.SetInt(Key(level.sceneName, "Completed"), level.completed ? 1 : 0);
+        PlayerPrefs.SetInt(Key(level.sceneName, "Unlocked"), level.unlocked ? 1 : 0);
+
+        PlayerPrefs.Save();
+    }
+
     // ---------- LOAD ----------
     public static void Load(LevelSaveData level)
     {
@@ -93,6 +126,11 @@ public static class LevelDataSaveUtility
         int high = PlayerPrefs.GetInt(Key(level.sceneName, "Time_High"), 0);
         long ticks = ((long)high << 32) | (uint)low;
         level.playerTime = new TimeSpan(ticks);
+
+        low = PlayerPrefs.GetInt(Key(level.sceneName, "Time_Low_Enemies"));
+        high = PlayerPrefs.GetInt(Key(level.sceneName, "Time_High_Enemies"));
+        ticks = ((long)high << 32) | (uint)low;
+        level.playerTimeKilledEnemies = new TimeSpan(ticks);
 
         // Rank
         level.playerRank = (Ranking.Rank)
@@ -120,6 +158,8 @@ public static class LevelDataSaveUtility
     {
         PlayerPrefs.DeleteKey(Key(level.sceneName, "Time_Low"));
         PlayerPrefs.DeleteKey(Key(level.sceneName, "Time_High"));
+        PlayerPrefs.DeleteKey(Key(level.sceneName, "Time_Low_Enemies"));
+        PlayerPrefs.DeleteKey(Key(level.sceneName, "Time_High_Enemies"));
         PlayerPrefs.DeleteKey(Key(level.sceneName, "Rank"));
         PlayerPrefs.DeleteKey(Key(level.sceneName, "Completed"));
         PlayerPrefs.DeleteKey(Key(level.sceneName, "Unlocked"));
