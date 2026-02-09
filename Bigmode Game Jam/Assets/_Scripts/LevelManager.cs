@@ -69,6 +69,13 @@ public class LevelManager : MonoBehaviour
         // set the next level to unlocked
         PlayerPrefs.SetInt(LevelDataSaveUtility.Key(data.nextLevel, "Unlocked"), 1);
 
+        // update top speed
+        float oldTopSpeed = PlayerPrefs.GetFloat("Top_Speed", 0.0f);
+        if (topSpeed > oldTopSpeed)
+        {
+            PlayerPrefs.SetFloat("Top_Speed", topSpeed);
+        }
+
         ScriptableObject.Destroy(saveData);
     }
 
