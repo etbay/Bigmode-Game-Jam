@@ -48,14 +48,13 @@ public static class LevelDataSaveUtility
 
     private static bool CompareEnemyTimeData(LevelSaveData oldData, LevelSaveData newData)
     {
-        if (newData.playerTimeKilledEnemies != null && 
-            oldData.completed && newData.completed && 
-            oldData.playerTimeKilledEnemies < newData.playerTimeKilledEnemies)
-        {
-            return true;
-        }
+        if (newData.playerTimeKilledEnemies == TimeSpan.Zero)
+            return false;
 
-        return false;
+        if (oldData.playerTimeKilledEnemies == TimeSpan.Zero)
+            return true;
+
+        return newData.playerTimeKilledEnemies < oldData.playerTimeKilledEnemies;
     }
     // TO-DO:
     // Avoid:
@@ -79,6 +78,7 @@ public static class LevelDataSaveUtility
             SaveRankedData(newData);
         }
 
+        Debug.Log("comparing data");
         if (CompareEnemyTimeData(oldData, newData))
         {
             SaveEnemyTimeData(newData);
@@ -108,7 +108,7 @@ public static class LevelDataSaveUtility
 
     private static void SaveEnemyTimeData(LevelSaveData level)
     {
-        long ticks = level.playerTime.Ticks;
+        long ticks = level.playerTimeKilledEnemies.Ticks;
         PlayerPrefs.SetInt(Key(level.sceneName, "Time_Low_Enemies"), (int)(ticks & 0xFFFFFFFF));
         PlayerPrefs.SetInt(Key(level.sceneName, "Time_High_Enemies"), (int)(ticks >> 32));
 

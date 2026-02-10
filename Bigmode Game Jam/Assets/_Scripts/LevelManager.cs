@@ -61,8 +61,10 @@ public class LevelManager : MonoBehaviour
         saveData.unlocked = true;
         saveData.completed = true;
         saveData.playerTime = timerData;
-        if (numKills == numEnemies)
+        if (numKills >= numEnemies)
+        {
             saveData.playerTimeKilledEnemies = timerData;
+        }
         saveData.playerRank = rank;
         LevelDataSaveUtility.SmartSave(saveData);
         

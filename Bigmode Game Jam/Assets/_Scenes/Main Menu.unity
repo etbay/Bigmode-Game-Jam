@@ -390,7 +390,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Killed All Enemies \nBest Time"
+  m_text: Massacre Time
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b336397a1f493b348ac20b17b48c1943, type: 2}
   m_sharedMaterial: {fileID: 8786861811105624194, guid: b336397a1f493b348ac20b17b48c1943, type: 2}
